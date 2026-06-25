@@ -53,6 +53,13 @@ Y abrir `http://localhost:8080/`.
   API key. Si no responde (caída del servicio, sin red), la app genera un
   perfil de elevación sintético (ondulación + ruido, con la pendiente acotada)
   para que la carrera nunca se rompa por esto.
+- **Ajustar ruta a carreteras**: servicio de routing [OSRM](http://project-osrm.org/)
+  operado por [routing.openstreetmap.de](https://routing.openstreetmap.de/),
+  perfil "foot" (caminos/aceras/calles peatonales), gratuito y sin API key. El
+  botón "Ajustar ruta a carreteras" sustituye los puntos dibujados a mano por
+  el trazado real que devuelve el servicio. Si no responde o no encuentra un
+  camino entre los puntos, se muestra un error y la ruta dibujada se mantiene
+  intacta (no rompe la app).
 - **Teselas del mapa**: [CARTO](https://carto.com/attributions) (`light_all`),
   elegidas por servir con cabeceras CORS, necesarias para poder capturar el
   mini-mapa de la tarjeta con `html2canvas` sin error de "tainted canvas".
@@ -65,6 +72,8 @@ hay red, la app degrada con elegancia (ver más abajo) en lugar de romperse.
 - Sin conexión a Nominatim: la búsqueda de ubicación no devuelve resultados,
   pero se puede seguir navegando el mapa manualmente y dibujando la ruta.
 - Sin conexión a Open-Elevation: se usa el perfil de elevación sintético.
+- Sin conexión al servicio de routing: "Ajustar ruta a carreteras" muestra un
+  error y la ruta dibujada a mano se mantiene sin cambios.
 - Rutas muy largas se densifican con un punto cada ~10 m, con un tope de 5000
   puntos (se amplía el espaciado automáticamente para no colgar el navegador).
 
