@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GhostPace — Crea una carrera falsa estilo Strava</title>
+  <meta name="description" content="Dibuja una ruta en el mapa, elige el ritmo y genera una tarjeta estilo Strava y un GPX de una carrera que nunca corriste. Para entretenimiento, no afiliado con Strava." />
+
+  <link rel="stylesheet" href="css/vendor/leaflet.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/card.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>GhostPace</h1>
+    <p class="tagline">Dibuja una ruta, elige tu ritmo y genera una carrera que nunca corriste: tarjeta para compartir + GPX para subir a Strava/Garmin si quieres.</p>
+  </header>
+
+  <main class="app-main">
+    <section class="panel panel-map" aria-label="Dibujar ruta">
+      <div class="map-wrap">
+        <div id="map" class="map-container"></div>
+        <div class="map-search-overlay">
+          <div class="search-box">
+            <input type="text" id="location-search" placeholder="Buscar ciudad o dirección…" autocomplete="off" />
+            <ul id="search-results" class="search-results" hidden></ul>
+          </div>
+          <button id="btn-locate" type="button" class="btn-icon-round" title="Usar mi ubicación" aria-label="Usar mi ubicación">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="map-actions">
+        <button id="btn-undo" type="button" class="btn btn-secondary">Deshacer último punto</button>
+        <button id="btn-clear" type="button" class="btn btn-secondary">Limpiar ruta</button>
+      </div>
+      <p class="route-distance">Distancia dibujada: <strong id="route-distance-value">0.00 km</strong></p>
+      <p class="hint">Haz clic en el mapa para ir añadiendo puntos de la ruta (mínimo 2).</p>
+    </section>
+
+    <section class="panel panel-form" aria-label="Datos de la carrera">
+      <h2>Datos de la carrera</h2>
+      <form id="activity-form">
+        <label>
+          Nombre de la actividad
+          <input type="text" id="input-title" placeholder="Carrera matutina" maxlength="60" />
+        </label>
+        <label class="slider-label">
+          <span class="slider-label-row">
+            <span>Ritmo medio</span>
+            <span id="input-pace-display" class="slider-value">5:30 /km</span>
+          </span>
+          <input type="range" id="input-pace" min="180" max="600" step="5" value="330" />
+        </label>
+        <label class="slider-label">
+          <span class="slider-label-row">
+            <span>Inconsistencia de ritmo</span>
+            <span id="input-inconsistency-display" class="slider-value">50%</span>
+          </span>
+          <input type="range" id="input-inconsistency" min="0" max="100" step="5" value="50" />
+          <span class="slider-hint">0% = ritmo perfectamente constante. 100% = muy variable entre kilómetros.</span>
+        </label>
+        <label>
+          Fecha y hora de inicio
+          <input type="datetime-local" id="input-datetime" required />
+        </label>
+        <div class="switch-row">
+          <span>Incluir frecuencia cardíaca</span>
+          <label class="switch">
+            <input type="checkbox" id="input-include-hr" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+        <label id="hr-zone-wrapper" hidden>
+          FC objetivo (bpm)
+          <input type="number" id="input-hr-zone" min="100" max="190" value="150" />
+        </label>
+        <button type="submit" id="btn-generate" class="btn btn-primary" disabled>Generar carrera falsa</button>
+      </form>
+      <p id="form-error" class="form-error" role="alert" hidden></p>
+    </section>
+
+    <section class="panel panel-result" id="result-panel" hidden aria-label="Resultado">
+      <h2>Resultado</h2>
+      <div id="activity-card" class="activity-card">
+        <p class="card-disclaimer">No afiliado con Strava — solo para entretenimiento/parodia</p>
+        <div class="card-header">
+          <span class="card-brand">GhostPace</span>
+          <span class="card-date" id="card-date"></span>
+        </div>
+        <h3 class="card-title" id="card-title">Carrera</h3>
+        <div class="card-stats">
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9v3M11 9v3M15 9v3M19 9v3"/></svg>
+            <span class="stat-value" id="stat-distance"></span>
+            <span class="stat-label">Distancia</span>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span class="stat-value" id="stat-time"></span>
+            <span class="stat-label">Tiempo</span>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+            <span class="stat-value" id="stat-pace"></span>
+            <span class="stat-label">Ritmo medio</span>
+          </div>
+        </div>
+        <div class="card-stats card-stats-secondary">
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19 9 7l4 6 3-4 5 10z"/></svg>
+            <span class="stat-value" id="stat-elevation"></span>
+            <span class="stat-label">Desnivel +</span>
+          </div>
+          <div class="stat" id="stat-hr-wrapper" hidden>
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 20s-7-4.35-9.5-8.5C1 8 2.5 5 5.5 5c2 0 3.5 1.3 4.5 3 1-1.7 2.5-3 4.5-3 3 0 4.5 3 3 6.5C19 15.65 12 20 12 20z"/></svg>
+            <span class="stat-value" id="stat-hr"></span>
+            <span class="stat-label">FC media</span>
+          </div>
+          <div class="stat">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21c4 0 7-2.5 7-6.5 0-2.5-1.5-4-2.5-5 .3 2-1 3-1.8 2 1-2 0-4.5-2.2-6 .5 2-1 3.5-2.5 5C8.5 11.8 7 13.3 7 15.5 7 19 9 21 12 21z"/></svg>
+            <span class="stat-value" id="stat-calories"></span>
+            <span class="stat-label">Kcal aprox.</span>
+          </div>
+        </div>
+        <div id="card-map-preview" class="card-map-preview"></div>
+        <table class="card-splits">
+          <thead>
+            <tr><th>Km</th><th>Ritmo</th><th>Tiempo</th></tr>
+          </thead>
+          <tbody id="card-splits-body"></tbody>
+        </table>
+        <div class="card-chart-wrapper">
+          <canvas id="card-elevation-chart"></canvas>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button id="btn-download-png" type="button" class="btn btn-primary">Descargar imagen (PNG)</button>
+        <button id="btn-download-gpx" type="button" class="btn btn-secondary">Descargar GPX</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>
+      Mapas © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors,
+      teselas de <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>.
+      GhostPace no está afiliado con Strava, Garmin ni ninguna marca de fitness. Uso bajo tu propia responsabilidad.
+    </p>
+  </footer>
+
+  <div id="loading-overlay" class="loading-overlay" hidden>
+    <div class="spinner" aria-hidden="true"></div>
+    <p id="loading-message">Generando…</p>
+  </div>
+
+  <script src="js/vendor/leaflet.js"></script>
+  <script src="js/vendor/chart.umd.js"></script>
+  <script src="js/vendor/html2canvas.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/geo-utils.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/elevation.js"></script>
+  <script src="js/activity-generator.js"></script>
+  <script src="js/gpx-export.js"></script>
+  <script src="js/card-renderer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
