@@ -11,6 +11,9 @@ window.GP = window.GP || {};
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
   const DEFAULT_CENTER = { lat: 40.4168, lng: -3.7038 }; // Madrid, fallback si no hay geolocalización
   const ROUTE_COLOR = '#fc4c02';
+  // Servicio gratuito de routing (OSRM) operado por OpenStreetMap.de, perfil "foot"
+  // (caminos/aceras/calles peatonales, más realista para una carrera que "driving").
+  const ROUTING_URL = 'https://routing.openstreetmap.de/routed-foot/route/v1/foot/';
 
   let map = null;
   let routePoints = [];
@@ -112,6 +115,33 @@ window.GP = window.GP || {};
     if (map) map.flyTo([lat, lng], zoom);
   }
 
+  // Sustituye los puntos dibujados a mano por el trazado real devuelto por el
+  // servicio de routing (caminos/calles), conservando el inicio y el final.
+  async function snapRouteToRoads() {
+    if (routePoints.length < 2) {
+      throw new Error('Dibuja al menos 2 puntos en el mapa antes de ajustar la ruta.');
+    }
+    const coords = routePoints.map((p) => `${p.lng},${p.lat}`).join(';');
+    const url = `${ROUTING_URL}${coords}?overview=full&geometries=geojson`;
+    let res;
+    try {
+      res = await fetch(url);
+    } catch (err) {
+      throw new Error('No se pudo contactar con el servicio de rutas. Comprueba tu conexión e inténtalo de nuevo.');
+    }
+    if (!res.ok) throw new Error(`El servicio de rutas respondió ${res.status}`);
+    const data = await res.json();
+    if (data.code !== 'Ok' || !data.routes || !data.routes[0]) {
+      throw new Error('No se encontró un camino real entre esos puntos. Prueba a separarlos menos o a dibujar más cerca de calles/senderos.');
+    }
+
+    routePoints = data.routes[0].geometry.coordinates.map(([lng, lat]) => ({ lat, lng }));
+    markers.forEach((m) => map.removeLayer(m));
+    markers = [];
+    redrawPolyline();
+    notifyRouteChange();
+  }
+
   function locateUser() {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
@@ -154,6 +184,7 @@ window.GP = window.GP || {};
     searchLocation,
     flyToLocation,
     locateUser,
+    snapRouteToRoads,
     TILE_URL,
     TILE_ATTRIBUTION,
   };

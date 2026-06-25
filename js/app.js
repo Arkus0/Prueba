@@ -14,6 +14,7 @@
     distanceValue: document.getElementById('route-distance-value'),
     btnUndo: document.getElementById('btn-undo'),
     btnClear: document.getElementById('btn-clear'),
+    btnSnapRoads: document.getElementById('btn-snap-roads'),
     locationSearch: document.getElementById('location-search'),
     searchResults: document.getElementById('search-results'),
     form: document.getElementById('activity-form'),
@@ -75,6 +76,17 @@
         await window.GP.map.locateUser();
       } catch (err) {
         console.warn('[GhostPace] Ubicación no disponible:', err.message);
+      }
+    });
+    els.btnSnapRoads.addEventListener('click', async () => {
+      showError('');
+      showLoading('Ajustando la ruta a carreteras y caminos…');
+      try {
+        await window.GP.map.snapRouteToRoads();
+      } catch (err) {
+        showError(err.message);
+      } finally {
+        hideLoading();
       }
     });
   }
