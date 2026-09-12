@@ -140,6 +140,11 @@ function conectarEventos() {
       filtros.diasVisibles += 3;
       return repintarConservandoBusqueda();
     }
+
+    if (objetivo('[data-mas-busqueda]')) {
+      filtros.diasBusqueda += 21;
+      return repintarConservandoBusqueda();
+    }
   });
 
   let temporizador = null;

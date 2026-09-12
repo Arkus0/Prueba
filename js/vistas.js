@@ -21,6 +21,7 @@ export const filtros = {
   nivel: 'todo',
   busqueda: '',
   diasVisibles: 3,
+  diasBusqueda: 7,
 };
 
 const DIAS_POR_TANDA = 3;
@@ -42,6 +43,16 @@ function chipsHTML(opciones, activa, atributo) {
         ${punto ? `<span class="punto punto-${esc(punto)}"></span>` : ''}${esc(texto)}
       </button>`)
     .join('')}</div>`;
+}
+
+/** Botón para ampliar la ventana de búsqueda sin descargarlo todo de golpe. */
+function masDias() {
+  const disponibles = fechasDisponibles().length;
+  if (filtros.diasBusqueda >= disponibles) {
+    return `<p class="vacio">Ya estás viendo los ${disponibles} días descargados.</p>`;
+  }
+  return `<button class="mas" type="button" data-mas-busqueda>Buscar también en días anteriores
+    (ahora: ${filtros.diasBusqueda} de ${disponibles})</button>`;
 }
 
 function pie() {
@@ -102,7 +113,7 @@ export async function vistaHoy(cont) {
 
 export async function vistaContratos(cont) {
   cont.innerHTML = '<div class="cargando"></div><div class="cargando"></div>';
-  await cargarUltimos(Math.max(filtros.diasVisibles, 7));
+  await cargarUltimos(filtros.diasBusqueda);
 
   const consulta = normalizarBusqueda(filtros.busqueda);
   let items = itemsCargados().filter((i) => i.tipo === 'contrato');
@@ -139,6 +150,7 @@ export async function vistaContratos(cont) {
       en los últimos ${esc(String(diasCargados()))} días publicados · <strong>${esc(euros(total) || '0 €')}</strong></p>
     ${listaHTML(items.slice(0, 120), 'Ningún contrato encaja con esa búsqueda.')}
     ${items.length > 120 ? `<p class="vacio">Mostramos los 120 primeros de ${items.length}. Afina la búsqueda para ver el resto.</p>` : ''}
+    ${masDias()}
     ${pie()}`;
 }
 
@@ -146,7 +158,7 @@ export async function vistaContratos(cont) {
 
 export async function vistaPersonas(cont) {
   cont.innerHTML = '<div class="cargando"></div><div class="cargando"></div>';
-  await cargarUltimos(Math.max(filtros.diasVisibles, 7));
+  await cargarUltimos(filtros.diasBusqueda);
 
   const todos = itemsCargados().filter((i) => i.categoria === 'personas');
   const consulta = normalizarBusqueda(filtros.busqueda);
@@ -189,6 +201,7 @@ export async function vistaPersonas(cont) {
       ['situacion', 'Otros cambios'],
     ], filtros.subtipo, 'subtipo')}
     ${listaHTML(items.slice(0, 120), 'No hay nada de esto en los días descargados.')}
+    ${masDias()}
     ${pie()}`;
 }
 
