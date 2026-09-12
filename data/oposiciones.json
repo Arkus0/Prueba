@@ -1,6 +1,136 @@
 {
- "generado": "2026-09-12T19:41:46.656Z",
+ "generado": "2026-09-12T19:46:28.530Z",
  "convocatorias": [
+  {
+   "id": "BOE-A-2026-18352",
+   "tipo": "oposicion",
+   "fecha": "2026-08-31",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 25 de agosto de 2026, de la Universidad de León, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 102,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "nacionalidad, el cónyuge de ciudadano español y el de nacionales otros Estados miembros de la Unión Europea, siempre que no estén separados de derecho y sus descendientes y los de su cónyuge siempre…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18352",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/31/pdfs/BOE-A-2026-18352.pdf",
+   "frase": "Las Universidades convocan 102 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18132",
+   "tipo": "oposicion",
+   "fecha": "2026-08-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18132",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18132.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18133",
+   "tipo": "oposicion",
+   "fecha": "2026-08-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18133",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18133.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18494",
+   "tipo": "oposicion",
+   "fecha": "2026-09-02",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 29 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la Escala de Técnico Diplomado de Laboratorio y Talleres.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "A2",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea, los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18494",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18494.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18554",
+   "tipo": "oposicion",
+   "fecha": "2026-09-03",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 13 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la categoría de Técnico Auxiliar de Laboratorios y Talleres.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "C1",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea; los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-17",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18554",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/03/pdfs/BOE-A-2026-18554.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": true
+  },
   {
    "id": "BOE-A-2026-18736",
    "tipo": "oposicion",
@@ -80,6 +210,137 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18741",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18741.pdf",
    "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18318",
+   "tipo": "oposicion",
+   "fecha": "2026-08-31",
+   "organismo": "Ministerio para la Transición Ecológica y el Reto Demográfico",
+   "titulo": "Resolución de 6 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-21",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18318",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/31/pdfs/BOE-A-2026-18318.pdf",
+   "frase": "El Ministerio para la Transición Ecológica y el Reto Demográfico abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18351",
+   "tipo": "oposicion",
+   "fecha": "2026-08-31",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 23 de julio de 2026, conjunta de la Universidad Complutense de Madrid y la Consejería de Sanidad de la Comunidad de Madrid, por la que se convoca concurso de acceso a plazas vinculadas de cuerpos docentes universitarios.",
+   "plazas": 221,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": "Estar en posesión del título de Especialista que para cada plaza se especifica en el anexo I de esta convocatoria.",
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-21",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18351",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/31/pdfs/BOE-A-2026-18351.pdf",
+   "frase": "Las Universidades convocan 221 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18376",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18376",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18376.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18383",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio del Interior",
+   "titulo": "Resolución de 21 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en la Dirección General de la Guardia Civil.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18383",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18383.pdf",
+   "frase": "El Ministerio del Interior abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18219",
+   "tipo": "oposicion",
+   "fecha": "2026-08-27",
+   "organismo": "Ministerio de Transportes y Movilidad Sostenible",
+   "titulo": "Resolución de 29 de julio de 2026, de la Subsecretaría, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, en el Cuerpo de Técnicos Especialistas en Reproducción Cartográfica.",
+   "plazas": 31,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad: Las personas aspirantes deberán tener la nacionalidad española.",
+   "tasa": "15,57",
+   "comoApuntarse": "Solicitud por internet (modelo 790), en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-24",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18219",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/27/pdfs/BOE-A-2026-18219.pdf",
+   "frase": "El Ministerio de Transportes y Movilidad Sostenible convoca 31 plazas.",
    "abierta": true
   },
   {
@@ -235,6 +496,154 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18740",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18740.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18384",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio de Educación, Formación Profesional y Deportes",
+   "titulo": "Resolución de 18 de agosto de 2026, de la Dirección de la Agencia Estatal Comisión Española para la Lucha Antidopaje en el Deporte, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, como personal laboral fijo, fuera de convenio.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18384",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18384.pdf",
+   "frase": "El Ministerio de Educación, Formación Profesional y Deportes convoca 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18387",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Comunidad Autónoma del Principado de Asturias",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en el Instituto de Medicina Legal y Ciencias Forenses.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18387",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18387.pdf",
+   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18388",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Comunidad Autónoma del Principado de Asturias",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en los partidos judiciales de Oviedo, Gijón y Avilés.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18388",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18388.pdf",
+   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18403",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser nacional de un Estado miembro de la Unión Europea o nacional de aquellos Estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18403",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18403.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18404",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 22825,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser de un estado miembro de la Unión Europea o nacional de aquellos estados a los cuales, en virtud de tratados internacionales firmados por la Unión Europea y ratificados por…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18404",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18404.pdf",
+   "frase": "Las Universidades convocan 22.825 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-18405",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 22899,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser nacional de un estado miembro de la Unión Europea o nacional de aquellos estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18405",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18405.pdf",
+   "frase": "Las Universidades convocan 22.899 plazas.",
    "abierta": true
   },
   {
@@ -443,6 +852,162 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-18018",
+   "tipo": "oposicion",
+   "fecha": "2026-08-22",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 29 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la Escala de Técnico Superior de Laboratorio.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "A1",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea, los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-04",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18018",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/22/pdfs/BOE-A-2026-18018.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18019",
+   "tipo": "oposicion",
+   "fecha": "2026-08-22",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 29 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la Escala de Técnico Superior de Laboratorio.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "A1",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea; los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-04",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18019",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/22/pdfs/BOE-A-2026-18019.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18001",
+   "tipo": "oposicion",
+   "fecha": "2026-08-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre y promoción interna, a la Escala de Técnico/a de Gestión Sistemas y Tecnología de la Información.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "C1",
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea; los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-04",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18001",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/21/pdfs/BOE-A-2026-18001.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18454",
+   "tipo": "oposicion",
+   "fecha": "2026-09-02",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 18 de agosto de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puestos de trabajo en la Escuela Judicial.",
+   "plazas": null,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-07",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18454",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18454.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18455",
+   "tipo": "oposicion",
+   "fecha": "2026-09-02",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 18 de agosto de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en el Centro de Documentación Judicial.",
+   "plazas": null,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-07",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18455",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18455.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18375",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Orden PJC/908/2026, de 25 de agosto, por la que se convocan para su provisión destinos vacantes en la Carrera Fiscal.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 10,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": null,
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-11",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18375",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18375.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes convoca 1 plaza.",
+   "abierta": false
+  },
+  {
    "id": "BOE-A-2026-18780",
    "tipo": "oposicion",
    "fecha": "2026-09-08",
@@ -482,6 +1047,153 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18724",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18724.pdf",
    "frase": "El Ministerio de Hacienda abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18648",
+   "tipo": "oposicion",
+   "fecha": "2026-09-05",
+   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
+   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se amplía el plazo para aprobar la relación de personas admitidas y excluidas, y anunciar fecha, hora y lugar de celebración del primer ejercicio de la fase de oposición del proceso selectivo para ingreso, por el sistema de acceso libre y promoción interna, como personal laboral fijo en los grupos profesionales M3, M2, M1, E2 y E1 sujetos al IV Convenio colectivo único para el personal laboral de la Administración General del Estado, convocado por Resolución de 6 de julio de 2026.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18648",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/05/pdfs/BOE-A-2026-18648.pdf",
+   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18588",
+   "tipo": "oposicion",
+   "fecha": "2026-09-04",
+   "organismo": "Ministerio del Interior",
+   "titulo": "Resolución de 27 de agosto de 2026, de la Subsecretaría, por la que se aprueba la relación provisional de personas admitidas y excluidas y se anuncia fecha, hora y lugar de celebración del primer ejercicio de la fase de oposición, del proceso selectivo para ingreso, por el sistema general de acceso libre y por promoción interna, como personal laboral fijo en los grupos profesionales M3, M2, M1, E2 y E1, sujetos al IV Convenio colectivo único de la Administración General del Estado, convocado por Resolución de 3 de julio de 2026.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18588",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/04/pdfs/BOE-A-2026-18588.pdf",
+   "frase": "El Ministerio del Interior abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18589",
+   "tipo": "oposicion",
+   "fecha": "2026-09-04",
+   "organismo": "Ministerio de Sanidad",
+   "titulo": "Resolución de 21 de agosto de 2026, de la Subsecretaría, por la que se aprueba la relación provisional de personas admitidas y excluidas y se anuncia fecha, hora y lugar de celebración del primer ejercicio de la fase de oposición, del proceso selectivo para ingreso, por el sistema general de acceso libre y promoción interna, como personal laboral fijo, en los grupos profesionales M3 y M1, sujetos al IV Convenio colectivo único para el personal laboral de la Administración General del Estado, convocado por Resolución de 3 de julio de 2026.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18589",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/04/pdfs/BOE-A-2026-18589.pdf",
+   "frase": "El Ministerio de Sanidad abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18371",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 28 de julio de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en la Escuela Judicial.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": "A1",
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18371",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18371.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18372",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 28 de julio de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en la Escuela Judicial.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": "A1",
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18372",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18372.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18373",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 28 de julio de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en el Servicio de Formación Continua en la Escuela Judicial.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": "A1",
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18373",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18373.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18114",
+   "tipo": "oposicion",
+   "fecha": "2026-08-25",
+   "organismo": "Comunidad Autónoma de Canarias",
+   "titulo": "Resolución de 21 de agosto de 2026, de la Dirección General de Personal, de la Consejería de Educación, Formación Profesional, Actividad Física y Deportes, por la que se publica la convocatoria del procedimiento selectivo excepcional de estabilización, por el sistema de concurso, para el ingreso en los Cuerpos de Catedráticos de Música y Artes Escénicas y de Profesores de Música y Artes Escénicas, y se convoca plaza de la especialidad de Escena Lírica.",
+   "plazas": 1,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18114",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18114.pdf",
+   "frase": "La Comunidad Autónoma de Canarias convoca 1 plaza.",
    "abierta": false
   }
  ]

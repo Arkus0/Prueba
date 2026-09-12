@@ -1,15 +1,15 @@
 {
  "version": 2,
- "generado": "2026-09-12T19:37:54.167Z",
+ "generado": "2026-09-12T19:42:19.827Z",
  "ventana": {
   "desde": "2026-09-06",
   "hasta": "2026-09-12",
   "dias": 7
  },
  "cobertura": {
-  "desde": "2026-09-04",
+  "desde": "2025-07-01",
   "hasta": "2026-09-12",
-  "dias": 9
+  "dias": 378
  },
  "demo": false,
  "avisos": [],
@@ -18,26 +18,10 @@
    "clave": "boe",
    "nombre": "Boletín Oficial del Estado",
    "estado": "ok",
-   "registros": 559,
-   "dias": 7,
+   "registros": 42007,
+   "dias": 439,
    "mensaje": null,
    "url": "https://www.boe.es/datosabiertos/"
-  },
-  {
-   "clave": "placsp",
-   "nombre": "Plataforma de Contratación del Sector Público",
-   "estado": "ok",
-   "registros": 8940,
-   "mensaje": null,
-   "url": "https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos"
-  },
-  {
-   "clave": "pge",
-   "nombre": "Presupuestos Generales del Estado",
-   "estado": "no-disponible",
-   "registros": 0,
-   "mensaje": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
-   "url": "https://www.sepg.pap.hacienda.gob.es/sitios/sepg/es-ES/Presupuestos/Paginas/Presupuestos.aspx"
   }
  ],
  "totales": {
@@ -101,18 +85,684 @@
   {
    "fecha": "2026-09-05",
    "contratos": 52,
-   "personas": 0,
+   "personas": 24,
    "importe": 2936642
   },
   {
    "fecha": "2026-09-04",
    "contratos": 430,
-   "personas": 0,
+   "personas": 34,
    "importe": 34398437
+  },
+  {
+   "fecha": "2026-09-03",
+   "contratos": 0,
+   "personas": 40,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-09-02",
+   "contratos": 0,
+   "personas": 62,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-09-01",
+   "contratos": 0,
+   "personas": 42,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-31",
+   "contratos": 0,
+   "personas": 46,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-29",
+   "contratos": 0,
+   "personas": 15,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-28",
+   "contratos": 0,
+   "personas": 13,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-27",
+   "contratos": 0,
+   "personas": 40,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-26",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-25",
+   "contratos": 0,
+   "personas": 23,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-24",
+   "contratos": 0,
+   "personas": 71,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-22",
+   "contratos": 0,
+   "personas": 6,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-21",
+   "contratos": 0,
+   "personas": 7,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-20",
+   "contratos": 0,
+   "personas": 36,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-19",
+   "contratos": 0,
+   "personas": 19,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-18",
+   "contratos": 0,
+   "personas": 19,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-17",
+   "contratos": 0,
+   "personas": 31,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-15",
+   "contratos": 0,
+   "personas": 34,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-14",
+   "contratos": 0,
+   "personas": 24,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-13",
+   "contratos": 0,
+   "personas": 36,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-12",
+   "contratos": 0,
+   "personas": 23,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-11",
+   "contratos": 0,
+   "personas": 41,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-10",
+   "contratos": 0,
+   "personas": 87,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-08",
+   "contratos": 0,
+   "personas": 39,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-07",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-06",
+   "contratos": 0,
+   "personas": 44,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-05",
+   "contratos": 0,
+   "personas": 51,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-04",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-03",
+   "contratos": 0,
+   "personas": 44,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-08-01",
+   "contratos": 0,
+   "personas": 38,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-31",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-30",
+   "contratos": 0,
+   "personas": 60,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-29",
+   "contratos": 0,
+   "personas": 69,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-28",
+   "contratos": 0,
+   "personas": 54,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-27",
+   "contratos": 0,
+   "personas": 57,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-25",
+   "contratos": 0,
+   "personas": 30,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-24",
+   "contratos": 0,
+   "personas": 29,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-23",
+   "contratos": 0,
+   "personas": 46,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-22",
+   "contratos": 0,
+   "personas": 49,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-21",
+   "contratos": 0,
+   "personas": 66,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-20",
+   "contratos": 0,
+   "personas": 70,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-18",
+   "contratos": 0,
+   "personas": 36,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-17",
+   "contratos": 0,
+   "personas": 56,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-16",
+   "contratos": 0,
+   "personas": 48,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-15",
+   "contratos": 0,
+   "personas": 57,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-14",
+   "contratos": 0,
+   "personas": 40,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-13",
+   "contratos": 0,
+   "personas": 71,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-11",
+   "contratos": 0,
+   "personas": 42,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-10",
+   "contratos": 0,
+   "personas": 54,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-09",
+   "contratos": 0,
+   "personas": 59,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-08",
+   "contratos": 0,
+   "personas": 68,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-07",
+   "contratos": 0,
+   "personas": 66,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-06",
+   "contratos": 0,
+   "personas": 57,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-04",
+   "contratos": 0,
+   "personas": 35,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-03",
+   "contratos": 0,
+   "personas": 37,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-02",
+   "contratos": 0,
+   "personas": 60,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-07-01",
+   "contratos": 0,
+   "personas": 46,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-30",
+   "contratos": 0,
+   "personas": 77,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-29",
+   "contratos": 0,
+   "personas": 68,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-27",
+   "contratos": 0,
+   "personas": 20,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-26",
+   "contratos": 0,
+   "personas": 25,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-25",
+   "contratos": 0,
+   "personas": 91,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-24",
+   "contratos": 0,
+   "personas": 63,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-23",
+   "contratos": 0,
+   "personas": 42,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-22",
+   "contratos": 0,
+   "personas": 77,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-20",
+   "contratos": 0,
+   "personas": 49,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-19",
+   "contratos": 0,
+   "personas": 51,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-18",
+   "contratos": 0,
+   "personas": 61,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-17",
+   "contratos": 0,
+   "personas": 49,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-16",
+   "contratos": 0,
+   "personas": 59,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-15",
+   "contratos": 0,
+   "personas": 94,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-13",
+   "contratos": 0,
+   "personas": 25,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-12",
+   "contratos": 0,
+   "personas": 54,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-11",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-10",
+   "contratos": 0,
+   "personas": 57,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-09",
+   "contratos": 0,
+   "personas": 65,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-08",
+   "contratos": 0,
+   "personas": 82,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-06",
+   "contratos": 0,
+   "personas": 48,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-05",
+   "contratos": 0,
+   "personas": 77,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-04",
+   "contratos": 0,
+   "personas": 45,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-03",
+   "contratos": 0,
+   "personas": 64,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-02",
+   "contratos": 0,
+   "personas": 45,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-06-01",
+   "contratos": 0,
+   "personas": 48,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-30",
+   "contratos": 0,
+   "personas": 24,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-29",
+   "contratos": 0,
+   "personas": 19,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-28",
+   "contratos": 0,
+   "personas": 82,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-27",
+   "contratos": 0,
+   "personas": 48,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-26",
+   "contratos": 0,
+   "personas": 61,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-25",
+   "contratos": 0,
+   "personas": 60,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-23",
+   "contratos": 0,
+   "personas": 42,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-22",
+   "contratos": 0,
+   "personas": 60,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-21",
+   "contratos": 0,
+   "personas": 68,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-20",
+   "contratos": 0,
+   "personas": 33,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-19",
+   "contratos": 0,
+   "personas": 58,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-18",
+   "contratos": 0,
+   "personas": 47,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-16",
+   "contratos": 0,
+   "personas": 9,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-15",
+   "contratos": 0,
+   "personas": 55,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-14",
+   "contratos": 0,
+   "personas": 53,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-13",
+   "contratos": 0,
+   "personas": 76,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-12",
+   "contratos": 0,
+   "personas": 64,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-11",
+   "contratos": 0,
+   "personas": 70,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-09",
+   "contratos": 0,
+   "personas": 37,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-08",
+   "contratos": 0,
+   "personas": 48,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-07",
+   "contratos": 0,
+   "personas": 56,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-06",
+   "contratos": 0,
+   "personas": 57,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-05",
+   "contratos": 0,
+   "personas": 76,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-04",
+   "contratos": 0,
+   "personas": 79,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-02",
+   "contratos": 0,
+   "personas": 38,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-05-01",
+   "contratos": 0,
+   "personas": 56,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-04-30",
+   "contratos": 0,
+   "personas": 60,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-04-29",
+   "contratos": 0,
+   "personas": 58,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-04-28",
+   "contratos": 0,
+   "personas": 63,
+   "importe": 0
   }
  ],
  "reparto": {
-  "dias": 9,
+  "dias": 30,
   "porOrganismo": [
    {
     "clave": "Junta de Gobierno Local del Ayuntamiento de Alpedrete",
@@ -567,28 +1217,181 @@
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 559,
-   "libresDesignaciones": 38,
-   "nombramientos": 33,
-   "ceses": 1,
+   "documentos": 999,
+   "libresDesignaciones": 61,
+   "nombramientos": 61,
+   "ceses": 4,
    "plazas": 0,
-   "subvenciones": 75,
+   "subvenciones": 136,
    "contratos": 8940,
    "importeContratos": 1735195078
+  },
+  {
+   "mes": "2026-08",
+   "documentos": 2136,
+   "libresDesignaciones": 123,
+   "nombramientos": 190,
+   "ceses": 11,
+   "plazas": 0,
+   "subvenciones": 289,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-07",
+   "documentos": 3224,
+   "libresDesignaciones": 200,
+   "nombramientos": 381,
+   "ceses": 29,
+   "plazas": 0,
+   "subvenciones": 363,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-06",
+   "documentos": 3354,
+   "libresDesignaciones": 208,
+   "nombramientos": 305,
+   "ceses": 25,
+   "plazas": 0,
+   "subvenciones": 333,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-05",
+   "documentos": 2748,
+   "libresDesignaciones": 198,
+   "nombramientos": 303,
+   "ceses": 13,
+   "plazas": 0,
+   "subvenciones": 333,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-04",
+   "documentos": 2699,
+   "libresDesignaciones": 181,
+   "nombramientos": 256,
+   "ceses": 28,
+   "plazas": 0,
+   "subvenciones": 368,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-03",
+   "documentos": 2734,
+   "libresDesignaciones": 177,
+   "nombramientos": 297,
+   "ceses": 23,
+   "plazas": 0,
+   "subvenciones": 424,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-02",
+   "documentos": 2594,
+   "libresDesignaciones": 182,
+   "nombramientos": 298,
+   "ceses": 28,
+   "plazas": 0,
+   "subvenciones": 410,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2026-01",
+   "documentos": 2592,
+   "libresDesignaciones": 140,
+   "nombramientos": 212,
+   "ceses": 12,
+   "plazas": 0,
+   "subvenciones": 730,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-12",
+   "documentos": 3911,
+   "libresDesignaciones": 149,
+   "nombramientos": 422,
+   "ceses": 34,
+   "plazas": 0,
+   "subvenciones": 652,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-11",
+   "documentos": 3221,
+   "libresDesignaciones": 158,
+   "nombramientos": 337,
+   "ceses": 19,
+   "plazas": 0,
+   "subvenciones": 368,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-10",
+   "documentos": 3489,
+   "libresDesignaciones": 171,
+   "nombramientos": 389,
+   "ceses": 24,
+   "plazas": 0,
+   "subvenciones": 603,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-09",
+   "documentos": 2944,
+   "libresDesignaciones": 163,
+   "nombramientos": 233,
+   "ceses": 23,
+   "plazas": 0,
+   "subvenciones": 456,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-08",
+   "documentos": 2208,
+   "libresDesignaciones": 111,
+   "nombramientos": 149,
+   "ceses": 20,
+   "plazas": 0,
+   "subvenciones": 294,
+   "contratos": 0,
+   "importeContratos": 0
+  },
+  {
+   "mes": "2025-07",
+   "documentos": 3154,
+   "libresDesignaciones": 209,
+   "nombramientos": 384,
+   "ceses": 46,
+   "plazas": 0,
+   "subvenciones": 409,
+   "contratos": 0,
+   "importeContratos": 0
   }
  ],
  "presupuesto": {
   "disponible": false,
-  "motivo": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
-  "intentos": []
+  "motivo": "No se ha consultado en esta ingesta."
  },
  "umbrales": {
   "importeAlto": 1000000,
   "minimoDetalle": 50000
  },
  "oposiciones": {
-  "abiertas": 17,
-  "plazasAbiertas": 108,
-  "total": 19
+  "abiertas": 33,
+  "plazasAbiertas": 46190,
+  "total": 48
  }
 }
