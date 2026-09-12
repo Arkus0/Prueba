@@ -386,7 +386,13 @@ async function main() {
   const resumenes = new Map();
   for (const fecha of fechas) {
     const dia = await leerDia(salida, fecha);
-    resumenes.set(fecha, dia.resumen || resumenDeDia(dia.items || []));
+    if (!dia.resumen) {
+      // Fichero de una version anterior: le calculamos el resumen y lo dejamos
+      // al dia, para no tener que recalcularlo en cada ingesta.
+      dia.resumen = resumenDeDia(dia.items || []);
+      await writeFile(path.join(salida, 'dias', `${fecha}.json`), JSON.stringify(dia));
+    }
+    resumenes.set(fecha, dia.resumen);
   }
 
   const ultimas = (n) => fechas.slice(0, n).map((f) => resumenes.get(f));

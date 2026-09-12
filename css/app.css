@@ -5,7 +5,8 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: color-mix(in srgb, var(--fondo) 88%, transparent);
+  /* Casi opaca: con más transparencia el texto de debajo se leía a través. */
+  background: color-mix(in srgb, var(--fondo) 97%, transparent);
   backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid var(--linea);
   padding: 10px 16px 8px;
@@ -46,7 +47,7 @@
   z-index: 30;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  background: color-mix(in srgb, var(--superficie) 94%, transparent);
+  background: color-mix(in srgb, var(--superficie) 97%, transparent);
   backdrop-filter: saturate(180%) blur(14px);
   border-top: 1px solid var(--linea);
   padding-bottom: env(safe-area-inset-bottom);
