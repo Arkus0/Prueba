@@ -108,6 +108,20 @@ async function probarCrudo() {
   return salida;
 }
 
+/** Devuelve el XML tal cual de la primera entrada que contenga un texto. */
+async function buscarEntrada(aguja) {
+  for (const url of CANDIDATAS) {
+    const texto = await bajar(url, { intentos: 1, tiempoLimiteMs: 30000 }).catch(() => null);
+    if (!texto) continue;
+    const posicion = texto.indexOf(aguja);
+    if (posicion === -1) continue;
+    const inicio = texto.lastIndexOf('<entry', posicion);
+    const fin = texto.indexOf('</entry>', posicion);
+    return { url, xml: texto.slice(inicio, fin + 8).slice(0, 9000) };
+  }
+  return { encontrado: false };
+}
+
 export default async function handler(peticion, respuesta) {
   const url = new URL(peticion.url, 'https://local');
   const fuente = url.searchParams.get('fuente') || 'todas';
@@ -118,6 +132,7 @@ export default async function handler(peticion, respuesta) {
 
   try {
     if (fuente === 'crudo') salida.crudo = await probarCrudo();
+    if (fuente === 'entrada') salida.entrada = await buscarEntrada(url.searchParams.get('texto') || 'Alpedrete');
     if (fuente === 'boe' || fuente === 'todas') salida.boe = await probarBOE(dias);
     if (fuente === 'placsp' || fuente === 'todas') salida.placsp = await probarPLACSP(paginas, dias);
   } catch (error) {

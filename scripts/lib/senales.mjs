@@ -64,7 +64,7 @@ export const SENALES = {
 export const IMPORTE_ALTO = 1_000_000;
 
 /** Procedimientos que, segun el codigo CODICE, no compiten en abierto. */
-const PROCEDIMIENTOS_SIN_COMPETENCIA = new Set(['4', '6', '9', '100']);
+const PROCEDIMIENTOS_SIN_COMPETENCIA = new Set(['4', '9', '100']);
 
 /**
  * Calcula las senales de un contrato ya normalizado.
@@ -72,18 +72,26 @@ const PROCEDIMIENTOS_SIN_COMPETENCIA = new Set(['4', '6', '9', '100']);
  */
 export function senalesDeContrato(contrato) {
   const claves = [];
-  const texto = `${contrato.objeto || ''} ${contrato.procedimiento || ''} ${contrato.estado || ''}`.toLowerCase();
+  const procedimiento = `${contrato.procedimiento || ''}`.toLowerCase();
+  const situacion = `${contrato.estado || ''} ${contrato.resultado || ''}`.toLowerCase();
+  const objeto = `${contrato.objeto || ''}`.toLowerCase();
 
-  if (
+  const esMenor = Boolean(contrato.esMenor) || String(contrato.procedimientoCodigo) === '6' || /contrato menor/.test(procedimiento);
+  if (esMenor) claves.push('contrato-menor');
+
+  // Un contrato menor ya se adjudica directamente por definición: marcarlo
+  // además como "sin concurso" sería repetir lo mismo y alarmar de balde.
+  if (!esMenor && (
     PROCEDIMIENTOS_SIN_COMPETENCIA.has(String(contrato.procedimientoCodigo)) ||
-    /sin publicidad|negociado sin|adjudicaci[oó]n directa/.test(texto)
-  ) claves.push('sin-competencia');
+    /sin publicidad|negociado sin|adjudicaci[oó]n directa/.test(procedimiento)
+  )) claves.push('sin-competencia');
 
-  if (contrato.ofertas === 1) claves.push('un-licitador');
-  if (contrato.esMenor || /contrato menor/.test(texto)) claves.push('contrato-menor');
-  if (/medio propio|tragsa|ineco|isdefe|tragsatec|segipsa|indra sistemas de seguridad/.test(texto)) claves.push('medio-propio');
-  if (/desierto|desierta/.test(texto) || String(contrato.resultadoCodigo) === '3') claves.push('desierto');
-  if (/modificaci[oó]n|modificado/.test(texto)) claves.push('modificado');
+  if (!esMenor && contrato.ofertas === 1) claves.push('un-licitador');
+  if (/medio propio|tragsa|ineco|isdefe|tragsatec|segipsa/.test(objeto)) claves.push('medio-propio');
+  if (/desierto|desierta/.test(situacion) || String(contrato.resultadoCodigo) === '3') claves.push('desierto');
+  // Solo cuenta como modificación si lo dice el estado del expediente: en el
+  // objeto, "modificación" suele describir la obra, no un cambio de contrato.
+  if (/modificaci[oó]n|modificado/.test(situacion)) claves.push('modificado');
 
   const importe = contrato.importeAdjudicado ?? contrato.importe;
   if (typeof importe === 'number' && importe >= IMPORTE_ALTO) claves.push('importe-alto');

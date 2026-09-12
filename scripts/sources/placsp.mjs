@@ -13,7 +13,7 @@
 
 import { bajar, restarDias } from '../lib/red.mjs';
 import { parsearXML, buscar, buscarTodos, texto, textoDe, hijos } from '../lib/xml.mjs';
-import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, conArticuloMayus } from '../lib/texto.mjs';
+import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, conArticuloMayus, recortar } from '../lib/texto.mjs';
 import { senalesDeContrato } from '../lib/senales.mjs';
 
 const BASE = 'https://contrataciondelsectorpublico.gob.es/sindicacion';
@@ -104,11 +104,19 @@ export function leerResumen(resumen) {
   return datos;
 }
 
+/**
+ * Ningun contrato publico espanol vale diez mil millones de euros. Si sale una
+ * cifra asi es que hemos leido mal el numero, y preferimos no dar ninguna.
+ */
+const TECHO_RAZONABLE = 10_000_000_000;
+
 function primerNumero(nodo, ...nombres) {
   for (const nombre of nombres) {
     const valor = textoDe(nodo, nombre);
     const numero = numeroCodice(valor);
-    if (numero !== null) return numero;
+    if (numero === null) continue;
+    if (numero > TECHO_RAZONABLE || numero < 0) continue;
+    return numero;
   }
   return null;
 }
@@ -197,18 +205,16 @@ function enlaceDeEntry(entry) {
 /** Una linea en castellano llano. El objeto oficial sigue visible en la ficha. */
 export function fraseDeContrato(c) {
   const quien = conArticuloMayus(c.organismo);
-  const objeto = c.objeto ? c.objeto.charAt(0).toLowerCase() + c.objeto.slice(1) : null;
+  const objeto = c.objeto ? recortar(c.objeto.charAt(0).toLowerCase() + c.objeto.slice(1), 110) : null;
+  if (!quien || !objeto) return null;
 
-  if (c.adjudicatario && objeto && quien) {
-    return `${quien} contrata a ${c.adjudicatario} para ${objeto}.`;
-  }
-  if (c.resultado === 'Desierta' && quien && objeto) {
-    return `${quien} no encontró a nadie para ${objeto}.`;
-  }
-  if (quien && objeto) {
-    return `${quien} busca quien se encargue de ${objeto}.`;
-  }
-  return null;
+  const frase = c.adjudicatario
+    ? `${quien} contrata a ${c.adjudicatario} para ${objeto}`
+    : c.resultado === 'Desierta'
+      ? `${quien} no encontró a nadie para ${objeto}`
+      : `${quien} busca quien se encargue de ${objeto}`;
+
+  return /[.…!?]$/.test(frase) ? frase : `${frase}.`;
 }
 
 /**

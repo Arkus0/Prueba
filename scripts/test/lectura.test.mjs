@@ -18,7 +18,28 @@ const fixture = (nombre) => readFile(path.join(AQUI, '..', 'fixtures', nombre), 
 test('los números españoles y los CODICE se leen distinto y bien', () => {
   assert.equal(numeroES('1.234.567,89'), 1234567.89);
   assert.equal(numeroCodice('1234567.89'), 1234567.89);
+  assert.equal(numeroCodice('1.234.567,89'), 1234567.89, 'algunos organismos publican a la española');
+  assert.equal(numeroCodice('1234567,89'), 1234567.89);
   assert.equal(numeroES('no hay cifra'), null);
+});
+
+test('ante un importe con formato imposible, ninguna cifra', () => {
+  // Este caso multiplicaba por cien el precio de un contrato real.
+  assert.equal(numeroCodice('16.754.259.84'), null);
+  assert.equal(numeroCodice('mil euros'), null);
+  assert.equal(numeroCodice(''), null);
+  assert.equal(numeroCodice('0.00'), 0);
+});
+
+test('un importe desmesurado se descarta en vez de publicarse', async () => {
+  const { parsearXML: leer, buscarTodos: todos } = await import('../lib/xml.mjs');
+  const xml = `<feed><entry><id>x</id><updated>2026-09-01T00:00:00Z</updated>
+    <ContractFolderStatus><ProcurementProject><Name>Prueba</Name>
+    <BudgetAmount><TaxExclusiveAmount>99999999999.00</TaxExclusiveAmount></BudgetAmount>
+    </ProcurementProject></ContractFolderStatus></entry></feed>`;
+  const contrato = contratoDesdeEntry(todos(leer(xml), 'entry')[0], {});
+  assert.equal(contrato.importe, null);
+  assert.ok(contrato.senales.includes('sin-importe'));
 });
 
 test('solo se acepta un importe si lleva euros al lado', () => {

@@ -12,15 +12,33 @@ export function numeroES(cadena) {
   return Number.isFinite(n) ? n : null;
 }
 
-/** "1234567.89" -> 1234567.89 (formato de los XML CODICE, punto decimal). */
+/**
+ * Importes de los XML CODICE. El formato de la norma es "1234567.89" con punto
+ * decimal, pero algunos organismos publican a la espanola. Distinguimos por la
+ * forma exacta de la cadena y, si no encaja en ninguna, devolvemos null.
+ *
+ * Antes esto caia en numeroES, que quita los puntos por considerarlos
+ * separadores de millar: un contrato de 16.754.259,84 EUR acababa publicado
+ * como 1.675.425.984 EUR. Mejor no dar cifra que dar una cifra de mas.
+ */
 export function numeroCodice(cadena) {
   if (cadena === null || cadena === undefined) return null;
-  const limpio = String(cadena).trim().replace(/\s| /g, '');
-  if (!/^-?\d+(\.\d+)?$/.test(limpio)) {
-    // Algunos organismos publican con formato espanol aunque no toque.
-    return numeroES(limpio);
-  }
-  const n = Number(limpio);
+  const limpio = String(cadena).trim().replace(/[\s\u00a0]/g, '');
+  if (limpio === '') return null;
+
+  // Formato CODICE: 1234567.89 (un unico punto, decimal)
+  if (/^-?\d+(\.\d{1,6})?$/.test(limpio)) return finito(Number(limpio));
+
+  // Formato espanol con separador de millares: 1.234.567,89
+  if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(limpio)) return numeroES(limpio);
+
+  // Coma decimal sin millares: 1234567,89
+  if (/^-?\d+,\d{1,6}$/.test(limpio)) return finito(Number(limpio.replace(',', '.')));
+
+  return null;
+}
+
+function finito(n) {
   return Number.isFinite(n) ? n : null;
 }
 
@@ -88,18 +106,43 @@ export function nombrePropio(texto) {
       return trozo[0].toUpperCase() + trozo.slice(1);
     })
     .join('')
-    .replace(SIGLAS_EMPRESA, (sigla) => sigla.replace(/[.\s]/g, '').toUpperCase());
+    .replace(SIGLAS_EMPRESA, (sigla) => sigla.replace(/[.\s]/g, '').toUpperCase())
+    .replace(ACRONIMOS, (a) => a.toUpperCase());
 }
 
 /** S.A., s.l.u., S. A. ... al final de un nombre de empresa. */
 const SIGLAS_EMPRESA = /\b(s\.?\s?[al]\.?u?\.?|s\.?\s?c\.?\s?p?\.?)(?=$|[\s,;)])/gi;
 
+/** Formas societarias y siglas que no se escriben como palabra. */
+const ACRONIMOS = /\b(sme|aie|ute|slp|sam|scl|scoop|ong|ceip|ies|cra|epe|eppe|epel|mp|sau|slu)\b/gi;
+
+/**
+ * Género del nombre de un organismo, por la terminación de su primera palabra.
+ * Una lista de excepciones se queda corta enseguida ("Alcaldía", "Consejería",
+ * "Diputación"...); la regla de terminación acierta casi siempre.
+ */
+export function esFemenino(nombre) {
+  const primera = String(nombre || '').trim().split(/[\s,]/)[0]
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (/^(dia|mapa|tranvia)$/.test(primera)) return false;          // día, mapa
+  if (/(ma|ema|ama|oma|ista)$/.test(primera)) return false;        // programa, sistema, periodista
+  return /(a|cion|sion|dad|tad|tud|ez|umbre|ie)$/.test(primera);
+}
+
 /** "Ministerio de Defensa" -> "el Ministerio de Defensa". */
 export function conArticuloOrganismo(organismo) {
   if (!organismo) return null;
   const nombre = nombrePropio(organismo);
-  const femeninos = /^(Direcci[oó]n|Subsecretar[ií]a|Secretar[ií]a|Agencia|Universidad|Comunidad|Comisi[oó]n|Confederaci[oó]n|Jefatura|Gerencia|Entidad|Autoridad|Oficina|Delegaci[oó]n|Mutualidad|Tesorer[ií]a|Intervenci[oó]n|Sociedad|Junta|Mancomunidad|Fundaci[oó]n|Empresa|Red|Casa)/i;
-  return `${femeninos.test(nombre) ? 'la' : 'el'} ${nombre}`;
+  return `${esFemenino(nombre) ? 'la' : 'el'} ${nombre}`;
+}
+
+/** Corta un texto largo por la última palabra entera. */
+export function recortar(texto, maximo = 120) {
+  const limpio = String(texto || '').trim();
+  if (limpio.length <= maximo) return limpio;
+  const corte = limpio.slice(0, maximo);
+  const espacio = corte.lastIndexOf(' ');
+  return `${corte.slice(0, espacio > maximo * 0.6 ? espacio : maximo).replace(/[\s,;:.]+$/, '')}…`;
 }
 
 /** Igual, pero para empezar una frase. */
