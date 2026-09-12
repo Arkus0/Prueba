@@ -17,6 +17,7 @@ export const filtros = {
   categoria: 'todo',
   subtipo: 'todo',
   orden: 'relevancia',
+  nivel: 'todo',
   busqueda: '',
   diasVisibles: 3,
 };
@@ -104,6 +105,7 @@ export async function vistaContratos(cont) {
 
   const consulta = normalizarBusqueda(filtros.busqueda);
   let items = itemsCargados().filter((i) => i.tipo === 'contrato');
+  if (filtros.nivel !== 'todo') items = items.filter((i) => i.nivel === filtros.nivel);
   if (consulta) items = items.filter((i) => paraBuscar(i).includes(consulta));
 
   if (filtros.orden === 'importe') {
@@ -126,6 +128,12 @@ export async function vistaContratos(cont) {
       ['importe', 'Los más caros'],
       ['sin-competencia', 'Sin concurso'],
     ], filtros.orden, 'orden')}
+    ${chipsHTML([
+      ['todo', 'Toda España'],
+      ['estado', 'Estado'],
+      ['autonomica', 'Comunidades'],
+      ['local', 'Ayuntamientos'],
+    ], filtros.nivel, 'nivel')}
     <p class="seccion-intro"><strong>${items.length}</strong> contratos${consulta ? ` con “${esc(filtros.busqueda)}”` : ''}
       en los últimos ${esc(String(diasCargados()))} días publicados · <strong>${esc(euros(total) || '0 €')}</strong></p>
     ${listaHTML(items.slice(0, 120), 'Ningún contrato encaja con esa búsqueda.')}
@@ -185,30 +193,50 @@ export async function vistaPersonas(cont) {
 
 /* -------------------------------- Reparto -------------------------------- */
 
-function barras(datos, total, opciones = {}) {
+/**
+ * Una sola serie, un solo color, valores escritos al lado de cada barra.
+ * `datos` son {clave, valor, nota}; el porcentaje se mide contra lo que enseña
+ * este gráfico, nunca contra un total de otro sitio.
+ */
+function barras(datos, opciones = {}) {
   if (!datos?.length) return '<p class="vacio">Sin datos suficientes todavía.</p>';
-  const maximo = Math.max(...datos.map((d) => d.importe)) || 1;
-  // El porcentaje se mide contra lo que enseña este gráfico, no contra otro total.
-  const suma = datos.reduce((s, d) => s + d.importe, 0) || null;
-  total = suma;
+  const enEuros = opciones.formato !== 'numero';
+  const maximo = Math.max(...datos.map((d) => d.valor)) || 1;
+  const suma = datos.reduce((s, d) => s + d.valor, 0) || null;
+  const escribir = (v) => (enEuros ? euros(v) : new Intl.NumberFormat('es-ES').format(v));
+  const exacto = (v) => (enEuros ? eurosExacto(v) : String(v));
+
   return `<div class="barras">${datos
     .map((d) => {
-      const ancho = Math.max(1.5, (d.importe / maximo) * 100);
-      const parte = total ? Math.round((d.importe / total) * 100) : null;
-      const etiqueta = `${d.clave}: ${eurosExacto(d.importe)} en ${d.n} ${d.n === 1 ? 'registro' : 'registros'}`;
-      const interactiva = opciones.buscable ? ` data-buscar="${esc(d.clave)}"` : '';
+      const ancho = Math.max(1.5, (d.valor / maximo) * 100);
+      const parte = suma && !opciones.sinPorcentaje ? Math.round((d.valor / suma) * 100) : null;
+      const nota = [d.nota, parte !== null ? `${parte}% de lo mostrado` : null].filter(Boolean).join(' · ');
       const eti = opciones.buscable ? 'button' : 'div';
-      return `<${eti} class="barra-fila"${interactiva} type="button" aria-label="${esc(etiqueta)}">
+      const extra = opciones.buscable ? ` type="button" data-buscar="${esc(d.clave)}"` : '';
+      return `<${eti} class="barra-fila"${extra} aria-label="${esc(`${d.clave}: ${exacto(d.valor)}`)}">
           <span class="barra-cabeza">
             <span class="barra-nombre">${esc(d.clave)}</span>
-            <span class="barra-valor cifra">${esc(euros(d.importe))}</span>
+            <span class="barra-valor cifra">${esc(escribir(d.valor))}</span>
           </span>
           <span class="barra-pista"><span class="barra-relleno" style="width:${ancho.toFixed(1)}%"></span></span>
-          <span class="barra-nota">${d.n} ${d.n === 1 ? 'registro' : 'registros'}${parte !== null ? ` · ${parte}% de lo listado` : ''}</span>
+          ${nota ? `<span class="barra-nota">${esc(nota)}</span>` : ''}
         </${eti}>`;
     })
     .join('')}</div>`;
 }
+
+/** Los agregados del índice vienen como {clave, n, importe}. */
+const comoBarras = (filas = []) => filas.map((d) => ({
+  clave: d.clave,
+  valor: d.importe,
+  nota: `${d.n} ${d.n === 1 ? 'registro' : 'registros'}`,
+}));
+
+const MESES_CORTOS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const nombreDeMes = (mes) => {
+  const [anio, m] = mes.split('-');
+  return `${MESES_CORTOS[Number(m) - 1]} ${anio.slice(2)}`;
+};
 
 export async function vistaReparto(cont) {
   const i = estado.indice;
@@ -222,12 +250,14 @@ export async function vistaReparto(cont) {
     ? Math.round((t.importeSinCompetencia / (t.importeAdjudicado || t.importeContratos)) * 100)
     : 0;
 
+  const historico = (i.historico || []).slice(0, 14).reverse();
+  const conHistorico = historico.length > 1;
   const presupuesto = i.presupuesto || {};
   const bloquePGE = presupuesto.disponible
     ? `<section class="seccion">
         <h2 class="seccion-titulo">Presupuesto del Estado por partidas</h2>
         <p class="seccion-intro">Lo que el Estado tiene <em>previsto</em> gastar, según ${esc(presupuesto.fuente || 'la fuente oficial')}.</p>
-        ${barras((presupuesto.partidas || []).slice(0, 15).map((p) => ({ clave: p.nombre, importe: p.importe, n: 1 })), presupuesto.total)}
+        ${barras((presupuesto.partidas || []).slice(0, 15).map((p) => ({ clave: p.nombre, valor: p.importe })))}
         <p class="barra-nota" style="margin-top:10px"><a href="${esc(presupuesto.url)}" target="_blank" rel="noopener noreferrer">Fuente</a></p>
       </section>`
     : `<section class="seccion">
@@ -249,33 +279,46 @@ export async function vistaReparto(cont) {
       <div class="rejilla-cifras">
         <div class="panel destacado"><span class="destacado-cifra cifra">${esc(String(t.contratos || 0))}</span><span class="destacado-pie">contratos</span></div>
         <div class="panel destacado"><span class="destacado-cifra cifra">${porcentajeSinConcurso}%</span><span class="destacado-pie">del dinero, sin concurso abierto</span></div>
-        <div class="panel destacado"><span class="destacado-cifra cifra">${esc(euros(t.importeSubvenciones) || '0 €')}</span><span class="destacado-pie">en ayudas y convenios</span></div>
+        <div class="panel destacado"><span class="destacado-cifra cifra">${t.importeSubvenciones ? esc(euros(t.importeSubvenciones)) : esc(String(t.subvenciones || 0))}</span><span class="destacado-pie">${t.importeSubvenciones ? 'en ayudas y convenios' : 'ayudas y convenios publicados'}</span></div>
         <div class="panel destacado"><span class="destacado-cifra cifra">${esc(String(t.libresDesignaciones || 0))}</span><span class="destacado-pie">puestos por libre designación</span></div>
       </div>
       <p class="seccion-intro" style="margin-top:12px">Esto es lo que se ha <strong>publicado</strong> en este periodo,
-        no el gasto total del Estado. Sirve para ver a dónde va el dinero que sí se hace público cada día.</p>
+        no el gasto total del Estado. Sirve para ver a dónde va el dinero que sí se hace público cada día.
+        ${i.cobertura?.desde ? `Tenemos datos desde el ${esc(i.cobertura.desde)}.` : ''}</p>
     </section>
 
     <section class="seccion">
       <h2 class="seccion-titulo">Quién gasta</h2>
-      <p class="seccion-intro">Toca un organismo para ver sus contratos.</p>
-      ${barras((reparto.porOrganismo || []).slice(0, 12), totalOrganismos, { buscable: true })}
+      <p class="seccion-intro">Últimos ${esc(String(reparto.dias || 30))} días publicados. Toca un organismo para ver sus contratos.</p>
+      ${barras(comoBarras((reparto.porOrganismo || []).slice(0, 12)), { buscable: true })}
     </section>
 
     <section class="seccion">
       <h2 class="seccion-titulo">Quién cobra</h2>
-      ${barras((reparto.empresas || []).slice(0, 10), totalContratos, { buscable: true })}
+      ${barras(comoBarras((reparto.empresas || []).slice(0, 10)), { buscable: true })}
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">Qué administración</h2>
+      ${barras(comoBarras(reparto.porNivel || []))}
     </section>
 
     <section class="seccion">
       <h2 class="seccion-titulo">Cómo se decide</h2>
-      ${barras((reparto.porProcedimiento || []).slice(0, 8), totalContratos)}
+      ${barras(comoBarras((reparto.porProcedimiento || []).slice(0, 8)))}
     </section>
 
     <section class="seccion">
       <h2 class="seccion-titulo">En qué</h2>
-      ${barras((reparto.porTipo || []).slice(0, 6), totalContratos)}
+      ${barras(comoBarras((reparto.porTipo || []).slice(0, 6)))}
     </section>
+
+    ${conHistorico ? `
+    <section class="seccion">
+      <h2 class="seccion-titulo">Mes a mes</h2>
+      <p class="seccion-intro">Puestos cubiertos por libre designación, según el BOE de cada mes.</p>
+      ${barras(historico.map((h) => ({ clave: nombreDeMes(h.mes), valor: h.libresDesignaciones, nota: `${h.documentos} documentos` })), { formato: 'numero', sinPorcentaje: true })}
+    </section>` : ''}
 
     ${bloquePGE}
     ${pie()}`;

@@ -6,7 +6,7 @@
 
 import { estado, glosarioDe, senalDe } from './datos.js';
 import {
-  euros, eurosExacto, porHabitante, fechaCorta, fechaLarga,
+  euros, eurosExacto, porHabitante, fechaCorta, fechaLarga, recortar,
   NOMBRES_CATEGORIA, NOMBRES_SUBTIPO,
 } from './formato.js';
 
@@ -63,7 +63,9 @@ export function tarjetaHTML(item, opciones = {}) {
   const importe = importeDe(item);
   const corto = euros(importe);
   const escala = porHabitante(importe);
-  const frase = item.frase || item.titulo || 'Documento oficial';
+  // Sin frase llana enseñamos el título oficial, pero recortado: algunos
+  // ocupan un párrafo entero y la tarjeta deja de leerse de un vistazo.
+  const frase = item.frase || recortar(item.titulo, 150) || 'Documento oficial';
   const mostrarOrganismo = item.organismo && !frase.includes(item.organismo);
 
   return `

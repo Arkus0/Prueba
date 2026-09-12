@@ -1,20 +1,25 @@
 /**
- * Ingesta diaria: lee las fuentes oficiales y deja en data/ ficheros pequenos
- * que el movil pueda descargar sin sufrir.
+ * Ingesta: lee las fuentes oficiales y deja en data/ ficheros pequenos que el
+ * movil pueda descargar sin sufrir.
  *
- *   node scripts/build.mjs [--dias=7] [--salida=data] [--demo]
+ *   node scripts/build.mjs                        ultimos 7 dias
+ *   node scripts/build.mjs --dias=30              ultimos 30 dias
+ *   node scripts/build.mjs --desde=2025-07-01 --solo=boe   relleno historico
+ *   node scripts/build.mjs --demo                 datos de ejemplo, para la interfaz
  *
  * Reglas de la casa:
  *  - Ningun dato se inventa. Si una fuente falla, se anota en data/index.json
  *    y la app lo dice en pantalla.
  *  - Cada registro conserva el enlace a su documento oficial.
+ *  - Los ficheros diarios se FUNDEN, no se reescriben: asi un relleno del BOE
+ *    no se lleva por delante los contratos ya publicados de ese mismo dia.
  */
 
 import { mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-import { ultimosDias, comoISO } from './lib/red.mjs';
+import { ultimosDias, comoISO, restarDias } from './lib/red.mjs';
 import { GLOSARIO } from './lib/texto.mjs';
 import { SENALES, IMPORTE_ALTO } from './lib/senales.mjs';
 import { sumarioDelDia, recorrerSumario } from './sources/boe.mjs';
@@ -24,10 +29,26 @@ import { parsearXML, buscarTodos } from './lib/xml.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 
-/** Contratos pequenos que no guardamos uno a uno (si contamos su importe). */
+/** Contratos pequenos que no guardamos uno a uno (si cuentan en los totales). */
 const MINIMO_DETALLE = 50_000;
-const LIMITE_DIARIO = 400;
-const DIAS_QUE_GUARDAMOS = 120;
+/** Tope de contratos por dia. Los documentos del BOE nunca se recortan: son
+ *  pocos y son justo lo que no sale en ningun sitio. */
+const LIMITE_CONTRATOS_DIA = 300;
+const DIAS_QUE_GUARDAMOS = 550;
+/** Ventanas de los resumenes del indice. */
+const VENTANA_PORTADA = 7;
+const VENTANA_REPARTO = 30;
+/** Cuantos sumarios del BOE pedimos a la vez en un relleno largo. */
+const EN_PARALELO = 4;
+
+/** Como se llama cada nivel de administracion en la pantalla. */
+const NIVELES = {
+  estado: 'Estado',
+  autonomica: 'Comunidades autónomas',
+  local: 'Ayuntamientos y diputaciones',
+  universidad: 'Universidades',
+  justicia: 'Administración de Justicia',
+};
 
 function argumento(nombre, porDefecto) {
   const encontrado = process.argv.find((a) => a.startsWith(`--${nombre}=`));
@@ -35,15 +56,14 @@ function argumento(nombre, porDefecto) {
 }
 const hayBandera = (nombre) => process.argv.includes(`--${nombre}`);
 
-/** Lo interesante no es solo lo caro: las senales tambien suben en la lista. */
+/**
+ * Orden de la lista: manda el dinero, y a igualdad de cifra suben las que
+ * llevan una senal que merece una mirada.
+ */
 function relevancia(item) {
   const base = Number(item.importeAdjudicado ?? item.importe ?? 0) || 0;
-  let extra = 0;
-  for (const senal of item.senales || []) {
-    if (SENALES[senal]?.tono === 'aviso') extra += 2_000_000;
-  }
-  if (item.categoria === 'personas') extra += 250_000;
-  return base + extra;
+  const avisos = (item.senales || []).filter((s) => SENALES[s]?.tono === 'aviso').length;
+  return base + (avisos ? 25_000 : 0) + (item.categoria === 'personas' ? 10_000 : 0);
 }
 
 function comoItemContrato(c) {
@@ -52,6 +72,7 @@ function comoItemContrato(c) {
     tipo: 'contrato',
     fecha: c.fecha,
     categoria: 'contratos',
+    nivel: c.nivel,
     organismo: c.organismo,
     titulo: c.objeto,
     frase: c.frase,
@@ -82,6 +103,7 @@ function comoItemBOE(b) {
     fecha: b.fecha,
     categoria: b.categoria,
     subtipo: b.subtipo,
+    nivel: 'estado',
     organismo: b.organismo,
     titulo: b.titulo,
     frase: b.frase,
@@ -95,16 +117,105 @@ function comoItemBOE(b) {
   };
 }
 
-function sumar(mapa, clave, importe) {
+/* --------------------------- Resumen de un dia --------------------------- */
+
+const sumaEn = (mapa, clave, importe) => {
   if (!clave) return;
-  const actual = mapa.get(clave) || { clave, n: 0, importe: 0 };
+  const actual = mapa[clave] || { n: 0, importe: 0 };
   actual.n += 1;
   if (typeof importe === 'number') actual.importe += importe;
-  mapa.set(clave, actual);
+  mapa[clave] = actual;
+};
+
+const esLibreDesignacion = (i) => i.subtipo === 'libre-designacion' || i.subtipo === 'libre-designacion-resuelta';
+
+/**
+ * Cuentas de un dia, calculadas sobre TODOS sus registros (tambien los que no
+ * guardamos uno a uno). Guardarlas permite reconstruir el indice sin volver a
+ * descargar nada.
+ */
+function resumenDeDia(items) {
+  const r = {
+    contratos: 0, importeContratos: 0, importeAdjudicado: 0,
+    sinCompetencia: 0, importeSinCompetencia: 0, menores: 0,
+    documentos: 0, subvenciones: 0, importeSubvenciones: 0,
+    nombramientos: 0, ceses: 0, libresDesignaciones: 0, empleo: 0, plazas: 0,
+    porOrganismo: {}, porEmpresa: {}, porTipo: {}, porProcedimiento: {}, porNivel: {},
+  };
+
+  for (const i of items) {
+    const importe = i.importeAdjudicado ?? i.importe ?? null;
+
+    if (i.tipo === 'contrato') {
+      r.contratos += 1;
+      if (typeof i.importe === 'number') r.importeContratos += i.importe;
+      if (typeof i.importeAdjudicado === 'number') r.importeAdjudicado += i.importeAdjudicado;
+      if (i.esMenor) r.menores += 1;
+      if ((i.senales || []).includes('sin-competencia')) {
+        r.sinCompetencia += 1;
+        if (typeof importe === 'number') r.importeSinCompetencia += importe;
+      }
+      sumaEn(r.porOrganismo, i.organismo, importe);
+      if (i.adjudicatario) sumaEn(r.porEmpresa, i.adjudicatario, importe);
+      sumaEn(r.porTipo, i.tipoContrato, importe);
+      sumaEn(r.porProcedimiento, i.procedimiento, importe);
+      sumaEn(r.porNivel, NIVELES[i.nivel] || null, importe);
+      continue;
+    }
+
+    r.documentos += 1;
+    if (i.categoria === 'subvenciones') {
+      r.subvenciones += 1;
+      if (typeof i.importe === 'number') r.importeSubvenciones += i.importe;
+    }
+    if (i.subtipo === 'nombramiento') r.nombramientos += 1;
+    if (i.subtipo === 'cese') r.ceses += 1;
+    if (esLibreDesignacion(i)) r.libresDesignaciones += 1;
+    if (i.subtipo === 'empleo') {
+      r.empleo += 1;
+      const plazas = (i.titulo || '').match(/(\d{1,5})\s+plazas?/i);
+      if (plazas) r.plazas += Number(plazas[1]);
+    }
+    if (i.organismo && typeof i.importe === 'number' && i.categoria !== 'personas') {
+      sumaEn(r.porOrganismo, i.organismo, i.importe);
+    }
+  }
+  return r;
+}
+
+/** Suma los resumenes de varios dias en uno. */
+function acumular(resumenes) {
+  const total = resumenDeDia([]);
+  for (const r of resumenes) {
+    for (const [clave, valor] of Object.entries(r)) {
+      if (typeof valor === 'number') total[clave] += valor;
+      else for (const [k, v] of Object.entries(valor || {})) {
+        const actual = total[clave][k] || { n: 0, importe: 0 };
+        total[clave][k] = { n: actual.n + v.n, importe: actual.importe + v.importe };
+      }
+    }
+  }
+  return total;
 }
 
 const ordenar = (mapa, tope) =>
-  [...mapa.values()].sort((a, b) => b.importe - a.importe || b.n - a.n).slice(0, tope);
+  Object.entries(mapa || {})
+    .map(([clave, v]) => ({ clave, n: v.n, importe: Math.round(v.importe) }))
+    .sort((a, b) => b.importe - a.importe || b.n - a.n)
+    .slice(0, tope);
+
+/* ------------------------------- Ficheros -------------------------------- */
+
+async function diasEnDisco(salida) {
+  if (!existsSync(path.join(salida, 'dias'))) return [];
+  const ficheros = await readdir(path.join(salida, 'dias'));
+  return ficheros.filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).map((f) => f.replace('.json', '')).sort().reverse();
+}
+
+const leerDia = async (salida, fecha) =>
+  JSON.parse(await readFile(path.join(salida, 'dias', `${fecha}.json`), 'utf8'));
+
+/* --------------------------------- Demo ---------------------------------- */
 
 async function fuentesDemo() {
   const boeCrudo = JSON.parse(await readFile(path.join(RAIZ, 'scripts/fixtures/boe-sumario.json'), 'utf8'));
@@ -115,219 +226,225 @@ async function fuentesDemo() {
     .map((e) => contratoDesdeEntry(e, {}))
     .filter(Boolean)
     .map((c) => ({ ...c, fecha: hoy }));
-  return { boe, contratos, avisos: ['MODO DEMO: datos de ejemplo, no son reales.'] };
+  return { boe, contratos };
 }
+
+/* --------------------------------- Main ---------------------------------- */
 
 async function main() {
   const dias = Number(argumento('dias', '7'));
+  const desde = argumento('desde', null);
+  const solo = argumento('solo', null);
   const salida = path.resolve(RAIZ, argumento('salida', 'data'));
   const demo = hayBandera('demo');
   const generado = new Date().toISOString();
 
-  const fechas = ultimosDias(dias);
-  const desdeISO = comoISO(fechas[fechas.length - 1]);
-  const hastaISO = comoISO(fechas[0]);
+  const fechasBOE = desde ? rangoDeFechas(desde) : ultimosDias(dias);
   const fuentes = [];
   const avisos = [];
+  if (demo) avisos.push('MODO DEMO: los datos son de ejemplo, no son reales.');
 
-  console.log(`Ingesta ${desdeISO} → ${hastaISO}${demo ? ' (DEMO)' : ''}`);
+  console.log(`Ingesta ${comoISO(fechasBOE[fechasBOE.length - 1])} → ${comoISO(fechasBOE[0])}${demo ? ' (DEMO)' : ''}${solo ? ` (solo ${solo})` : ''}`);
 
   let itemsBOE = [];
   let contratos = [];
-  let presupuesto = { disponible: false, motivo: 'No se ha intentado.' };
+  let presupuesto = null;
 
   if (demo) {
     const d = await fuentesDemo();
     itemsBOE = d.boe;
     contratos = d.contratos;
-    avisos.push(...d.avisos);
-    fuentes.push({ clave: 'demo', estado: 'ok', registros: itemsBOE.length + contratos.length, mensaje: 'Datos de ejemplo' });
+    fuentes.push({ clave: 'demo', nombre: 'Datos de ejemplo', estado: 'ok', registros: itemsBOE.length + contratos.length });
   } else {
-    // --- BOE -------------------------------------------------------------
-    let diasLeidos = 0;
-    const erroresBOE = [];
-    for (const fecha of fechas) {
+    if (solo !== 'placsp') {
+      const { items, diasLeidos, errores } = await leerBOE(fechasBOE);
+      itemsBOE = items;
+      fuentes.push({
+        clave: 'boe',
+        nombre: 'Boletín Oficial del Estado',
+        estado: items.length > 0 ? 'ok' : 'error',
+        registros: items.length,
+        dias: diasLeidos,
+        mensaje: errores.length ? `${errores.length} días con error · ${errores.slice(0, 2).join(' · ')}` : null,
+        url: 'https://www.boe.es/datosabiertos/',
+      });
+    }
+
+    if (solo !== 'boe') {
       try {
-        const { items } = await sumarioDelDia(fecha);
-        itemsBOE.push(...items);
-        diasLeidos += 1;
+        const resultado = await leerContratos(dias);
+        contratos = resultado.contratos;
+        fuentes.push({
+          clave: 'placsp',
+          nombre: 'Plataforma de Contratación del Sector Público',
+          estado: 'ok',
+          registros: contratos.length,
+          mensaje: resultado.errores.length ? resultado.errores.join(' · ') : null,
+          url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
+        });
       } catch (error) {
-        erroresBOE.push(`${comoISO(fecha)}: ${error.message || error}`);
-        console.warn(`  ⚠ ${error.message || error}`);
+        fuentes.push({
+          clave: 'placsp',
+          nombre: 'Plataforma de Contratación del Sector Público',
+          estado: 'error',
+          registros: 0,
+          mensaje: String(error.message || error),
+          url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
+        });
+        console.warn(`  ⚠ PLACSP: ${error.message || error}`);
       }
-    }
-    fuentes.push({
-      clave: 'boe',
-      nombre: 'Boletín Oficial del Estado',
-      estado: itemsBOE.length > 0 ? 'ok' : 'error',
-      registros: itemsBOE.length,
-      dias: diasLeidos,
-      mensaje: erroresBOE.length ? erroresBOE.slice(0, 3).join(' · ') : null,
-      url: 'https://www.boe.es/datosabiertos/',
-    });
 
-    // --- Plataforma de Contratación --------------------------------------
-    try {
-      const resultado = await leerContratos(dias);
-      contratos = resultado.contratos;
+      try {
+        presupuesto = await leerPresupuesto();
+      } catch (error) {
+        presupuesto = { disponible: false, motivo: String(error.message || error) };
+      }
       fuentes.push({
-        clave: 'placsp',
-        nombre: 'Plataforma de Contratación del Sector Público',
-        estado: 'ok',
-        registros: contratos.length,
-        mensaje: resultado.errores.length ? resultado.errores.join(' · ') : null,
-        url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
+        clave: 'pge',
+        nombre: 'Presupuestos Generales del Estado',
+        estado: presupuesto.disponible ? 'ok' : 'no-disponible',
+        registros: presupuesto.disponible ? presupuesto.partidas.length : 0,
+        mensaje: presupuesto.disponible ? null : presupuesto.motivo,
+        url: 'https://www.sepg.pap.hacienda.gob.es/sitios/sepg/es-ES/Presupuestos/Paginas/Presupuestos.aspx',
       });
-    } catch (error) {
-      fuentes.push({
-        clave: 'placsp',
-        nombre: 'Plataforma de Contratación del Sector Público',
-        estado: 'error',
-        registros: 0,
-        mensaje: String(error.message || error),
-        url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
-      });
-      console.warn(`  ⚠ PLACSP: ${error.message || error}`);
-    }
-
-    // --- Presupuestos Generales del Estado (mejor esfuerzo) ---------------
-    try {
-      presupuesto = await leerPresupuesto();
-    } catch (error) {
-      presupuesto = { disponible: false, motivo: String(error.message || error) };
-    }
-    fuentes.push({
-      clave: 'pge',
-      nombre: 'Presupuestos Generales del Estado',
-      estado: presupuesto.disponible ? 'ok' : 'no-disponible',
-      registros: presupuesto.disponible ? presupuesto.partidas.length : 0,
-      mensaje: presupuesto.disponible ? null : presupuesto.motivo,
-      url: 'https://www.sepg.pap.hacienda.gob.es/sitios/sepg/es-ES/Presupuestos/Paginas/Presupuestos.aspx',
-    });
-  }
-
-  // --- Reparto en ficheros por dia ---------------------------------------
-  const porDia = new Map();
-  const anadir = (item) => {
-    if (!item.fecha) return;
-    if (!porDia.has(item.fecha)) porDia.set(item.fecha, { items: [], omitidos: 0, importeOmitido: 0 });
-    porDia.get(item.fecha).items.push(item);
-  };
-
-  for (const b of itemsBOE) anadir(comoItemBOE(b));
-
-  const totales = {
-    contratos: 0,
-    importeContratos: 0,
-    importeAdjudicado: 0,
-    sinCompetencia: 0,
-    importeSinCompetencia: 0,
-    documentosBOE: itemsBOE.length,
-    subvenciones: 0,
-    importeSubvenciones: 0,
-    nombramientos: 0,
-    libresDesignaciones: 0,
-    plazas: 0,
-  };
-
-  const porOrganismo = new Map();
-  const porEmpresa = new Map();
-  const porTipo = new Map();
-  const porProcedimiento = new Map();
-  const porCategoria = new Map();
-
-  for (const c of contratos) {
-    const item = comoItemContrato(c);
-    const importe = c.importeAdjudicado ?? c.importe ?? null;
-    totales.contratos += 1;
-    if (typeof c.importe === 'number') totales.importeContratos += c.importe;
-    if (typeof c.importeAdjudicado === 'number') totales.importeAdjudicado += c.importeAdjudicado;
-    if (c.senales.includes('sin-competencia')) {
-      totales.sinCompetencia += 1;
-      if (typeof importe === 'number') totales.importeSinCompetencia += importe;
-    }
-    sumar(porOrganismo, c.organismo, importe);
-    if (c.adjudicatario) sumar(porEmpresa, c.adjudicatario, importe);
-    sumar(porTipo, c.tipo, importe);
-    sumar(porProcedimiento, c.procedimiento, importe);
-    sumar(porCategoria, 'contratos', importe);
-
-    const relevante =
-      (typeof importe === 'number' && importe >= MINIMO_DETALLE) ||
-      c.senales.some((s) => SENALES[s]?.tono === 'aviso');
-
-    if (relevante) {
-      anadir(item);
-    } else if (c.fecha) {
-      if (!porDia.has(c.fecha)) porDia.set(c.fecha, { items: [], omitidos: 0, importeOmitido: 0 });
-      const dia = porDia.get(c.fecha);
-      dia.omitidos += 1;
-      if (typeof importe === 'number') dia.importeOmitido += importe;
     }
   }
 
-  for (const b of itemsBOE) {
-    if (b.categoria === 'subvenciones') {
-      totales.subvenciones += 1;
-      if (typeof b.importe === 'number') totales.importeSubvenciones += b.importe;
-      sumar(porCategoria, 'subvenciones', b.importe);
-    }
-    if (b.subtipo === 'nombramiento') totales.nombramientos += 1;
-    if (b.subtipo === 'libre-designacion' || b.subtipo === 'libre-designacion-resuelta') totales.libresDesignaciones += 1;
-    if (b.subtipo === 'empleo') {
-      const plazas = (b.titulo.match(/(\d{1,5})\s+plazas?/i) || [])[1];
-      if (plazas) totales.plazas += Number(plazas);
-    }
-    if (b.categoria === 'presupuesto') sumar(porCategoria, 'presupuesto', b.importe);
-    if (b.organismo && typeof b.importe === 'number' && b.categoria !== 'personas') {
-      sumar(porOrganismo, b.organismo, b.importe);
-    }
+  if (!demo && fuentes.length && fuentes.every((f) => f.estado === 'error')) {
+    console.error('\nNinguna fuente respondió. No se toca data/.');
+    process.exit(1);
   }
 
+  // --- Fundir con lo que ya hay, dia a dia -------------------------------
   await mkdir(path.join(salida, 'dias'), { recursive: true });
-  const resumenDias = [];
-  for (const [fecha, dia] of [...porDia.entries()].sort((a, b) => (a[0] < b[0] ? 1 : -1))) {
-    dia.items.sort((a, b) => relevancia(b) - relevancia(a));
-    const recortados = dia.items.slice(0, LIMITE_DIARIO);
-    const importeDia = dia.items.reduce((t, i) => t + (Number(i.importeAdjudicado ?? i.importe) || 0), 0);
-    await writeFile(
-      path.join(salida, 'dias', `${fecha}.json`),
-      JSON.stringify({
-        fecha,
-        generado,
-        items: recortados,
-        omitidos: dia.omitidos + Math.max(0, dia.items.length - recortados.length),
-        importeOmitido: Math.round(dia.importeOmitido),
-      }),
-    );
-    resumenDias.push({
+
+  const nuevosPorDia = new Map();
+  const apuntar = (item) => {
+    if (!item.fecha) return;
+    if (!nuevosPorDia.has(item.fecha)) nuevosPorDia.set(item.fecha, []);
+    nuevosPorDia.get(item.fecha).push(item);
+  };
+  for (const b of itemsBOE) apuntar(comoItemBOE(b));
+  for (const c of contratos) apuntar(comoItemContrato(c));
+
+  for (const [fecha, nuevos] of nuevosPorDia) {
+    const previo = existsSync(path.join(salida, 'dias', `${fecha}.json`))
+      ? await leerDia(salida, fecha)
+      : null;
+
+    // Los que ya estaban y no vuelven a venir se conservan; los repetidos se
+    // actualizan con la version nueva (un contrato puede pasar a adjudicado).
+    const porId = new Map((previo?.items || []).map((i) => [i.id, i]));
+    const tocados = new Set();
+    for (const item of nuevos) {
+      porId.set(item.id, item);
+      tocados.add(item.tipo);
+    }
+    const todos = [...porId.values()];
+
+    // Los contratos pequenos sin nada que senalar cuentan, pero no se listan.
+    const relevante = (i) => i.tipo !== 'contrato' ||
+      (typeof (i.importeAdjudicado ?? i.importe) === 'number' && (i.importeAdjudicado ?? i.importe) >= MINIMO_DETALLE) ||
+      (i.senales || []).some((s) => SENALES[s]?.tono === 'aviso');
+
+    const listables = todos.filter(relevante).sort((a, b) => relevancia(b) - relevancia(a));
+    const documentos = listables.filter((i) => i.tipo === 'boe');
+    const contratosDia = listables.filter((i) => i.tipo === 'contrato');
+    const guardados = [...documentos, ...contratosDia.slice(0, LIMITE_CONTRATOS_DIA)]
+      .sort((a, b) => relevancia(b) - relevancia(a));
+
+    const enGuardados = new Set(guardados);
+    const fuera = todos.filter((i) => !enGuardados.has(i));
+
+    // Los contratos que no se listan siguen contando: guardamos su agregado
+    // aparte para poder reconstruir el total sin tenerlos uno a uno. Si esta
+    // ingesta no ha traido contratos (un relleno del BOE, por ejemplo), se
+    // conserva el agregado anterior en vez de perderlo.
+    const huboContratos = tocados.has('contrato');
+    const resumenFuera = huboContratos
+      ? resumenDeDia(fuera)
+      : acumular([resumenDeDia(fuera), previo?.resumenFuera || resumenDeDia([])]);
+
+    await writeFile(path.join(salida, 'dias', `${fecha}.json`), JSON.stringify({
       fecha,
-      items: recortados.length,
-      omitidos: dia.omitidos + Math.max(0, dia.items.length - recortados.length),
-      importe: Math.round(importeDia + dia.importeOmitido),
-      contratos: dia.items.filter((i) => i.tipo === 'contrato').length + dia.omitidos,
-      personas: dia.items.filter((i) => i.categoria === 'personas').length,
-    });
+      generado,
+      resumen: acumular([resumenDeDia(guardados), resumenFuera]),
+      resumenFuera,
+      items: guardados,
+      omitidos: resumenFuera.contratos,
+      importeOmitido: Math.round(resumenFuera.importeAdjudicado || resumenFuera.importeContratos),
+    }));
   }
 
-  // --- Indice --------------------------------------------------------------
+  // --- Indice: se reconstruye a partir de lo que hay en disco -------------
+  const fechas = await diasEnDisco(salida);
+  const resumenes = new Map();
+  for (const fecha of fechas) {
+    const dia = await leerDia(salida, fecha);
+    resumenes.set(fecha, dia.resumen || resumenDeDia(dia.items || []));
+  }
+
+  const ultimas = (n) => fechas.slice(0, n).map((f) => resumenes.get(f));
+  const portada = acumular(ultimas(VENTANA_PORTADA));
+  const reparto = acumular(ultimas(VENTANA_REPARTO));
+
+  const porMes = {};
+  for (const [fecha, r] of resumenes) {
+    const mes = fecha.slice(0, 7);
+    const actual = porMes[mes] || { mes, documentos: 0, libresDesignaciones: 0, nombramientos: 0, ceses: 0, plazas: 0, subvenciones: 0, contratos: 0, importeContratos: 0 };
+    actual.documentos += r.documentos;
+    actual.libresDesignaciones += r.libresDesignaciones;
+    actual.nombramientos += r.nombramientos;
+    actual.ceses += r.ceses;
+    actual.plazas += r.plazas;
+    actual.subvenciones += r.subvenciones;
+    actual.contratos += r.contratos;
+    actual.importeContratos += Math.round(r.importeAdjudicado || r.importeContratos);
+    porMes[mes] = actual;
+  }
+
   const indice = {
-    version: 1,
+    version: 2,
     generado,
-    ventana: { desde: desdeISO, hasta: hastaISO, dias },
+    ventana: { desde: fechas[Math.min(VENTANA_PORTADA, fechas.length) - 1] || null, hasta: fechas[0] || null, dias: Math.min(VENTANA_PORTADA, fechas.length) },
+    cobertura: { desde: fechas[fechas.length - 1] || null, hasta: fechas[0] || null, dias: fechas.length },
     demo,
     avisos,
     fuentes,
-    totales: Object.fromEntries(Object.entries(totales).map(([k, v]) => [k, Math.round(v)])),
-    dias: resumenDias,
-    reparto: {
-      porOrganismo: ordenar(porOrganismo, 40),
-      empresas: ordenar(porEmpresa, 30),
-      porTipo: ordenar(porTipo, 10),
-      porProcedimiento: ordenar(porProcedimiento, 12),
-      porCategoria: ordenar(porCategoria, 10),
+    totales: {
+      contratos: portada.contratos,
+      importeContratos: Math.round(portada.importeContratos),
+      importeAdjudicado: Math.round(portada.importeAdjudicado),
+      sinCompetencia: portada.sinCompetencia,
+      importeSinCompetencia: Math.round(portada.importeSinCompetencia),
+      menores: portada.menores,
+      documentosBOE: portada.documentos,
+      subvenciones: portada.subvenciones,
+      importeSubvenciones: Math.round(portada.importeSubvenciones),
+      nombramientos: portada.nombramientos,
+      ceses: portada.ceses,
+      libresDesignaciones: portada.libresDesignaciones,
+      plazas: portada.plazas,
     },
-    presupuesto,
+    dias: fechas.slice(0, 120).map((fecha) => {
+      const r = resumenes.get(fecha);
+      return {
+        fecha,
+        contratos: r.contratos,
+        personas: r.nombramientos + r.ceses + r.libresDesignaciones + r.empleo,
+        importe: Math.round(r.importeAdjudicado || r.importeContratos),
+      };
+    }),
+    reparto: {
+      dias: Math.min(VENTANA_REPARTO, fechas.length),
+      porOrganismo: ordenar(reparto.porOrganismo, 40),
+      empresas: ordenar(reparto.porEmpresa, 30),
+      porTipo: ordenar(reparto.porTipo, 10),
+      porProcedimiento: ordenar(reparto.porProcedimiento, 12),
+      porNivel: ordenar(reparto.porNivel, 6),
+    },
+    historico: Object.values(porMes).sort((a, b) => (a.mes < b.mes ? 1 : -1)),
+    presupuesto: presupuesto || { disponible: false, motivo: 'No se ha consultado en esta ingesta.' },
     umbrales: { importeAlto: IMPORTE_ALTO, minimoDetalle: MINIMO_DETALLE },
   };
 
@@ -335,26 +452,56 @@ async function main() {
   await writeFile(path.join(salida, 'glosario.json'), JSON.stringify(GLOSARIO, null, 1));
   await writeFile(path.join(salida, 'senales.json'), JSON.stringify(SENALES, null, 1));
 
-  // --- Limpieza: no guardamos mas de DIAS_QUE_GUARDAMOS ficheros diarios ---
-  if (existsSync(path.join(salida, 'dias'))) {
-    const ficheros = (await readdir(path.join(salida, 'dias'))).filter((f) => f.endsWith('.json')).sort().reverse();
-    for (const viejo of ficheros.slice(DIAS_QUE_GUARDAMOS)) {
-      await rm(path.join(salida, 'dias', viejo));
+  for (const viejo of fechas.slice(DIAS_QUE_GUARDAMOS)) {
+    await rm(path.join(salida, 'dias', `${viejo}.json`));
+  }
+
+  console.log('\nResumen:');
+  console.log(`  Días con datos:    ${fechas.length} (${indice.cobertura.desde} → ${indice.cobertura.hasta})`);
+  console.log(`  Contratos (7 d):   ${portada.contratos} · ${(portada.importeContratos / 1e6).toFixed(1)} M€ presupuestados`);
+  console.log(`  Documentos BOE:    ${portada.documentos}`);
+  console.log(`  Libre designación: ${portada.libresDesignaciones}`);
+  for (const f of fuentes) console.log(`  Fuente ${f.clave}: ${f.estado}${f.mensaje ? ` — ${f.mensaje}` : ''}`);
+}
+
+/** Todas las fechas desde una dada hasta hoy, de la mas reciente a la mas antigua. */
+function rangoDeFechas(desdeISO) {
+  const fechas = [];
+  const fin = new Date(`${desdeISO}T00:00:00Z`);
+  const hoy = new Date();
+  let actual = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth(), hoy.getUTCDate()));
+  while (actual >= fin) {
+    fechas.push(new Date(actual));
+    actual = new Date(actual.getTime() - 86400000);
+  }
+  return fechas;
+}
+
+/** Lee los sumarios en tandas: un relleno de un año son cientos de peticiones. */
+async function leerBOE(fechas) {
+  const items = [];
+  const errores = [];
+  let diasLeidos = 0;
+
+  for (let i = 0; i < fechas.length; i += EN_PARALELO) {
+    const tanda = fechas.slice(i, i + EN_PARALELO);
+    const resultados = await Promise.all(tanda.map(async (fecha) => {
+      try {
+        const { items: delDia } = await sumarioDelDia(fecha, { log() {} });
+        return { ok: true, fecha, delDia };
+      } catch (error) {
+        return { ok: false, fecha, mensaje: String(error.message || error) };
+      }
+    }));
+    for (const r of resultados) {
+      if (r.ok) { items.push(...r.delDia); diasLeidos += 1; }
+      else errores.push(r.mensaje);
+    }
+    if (fechas.length > 30 && (i + EN_PARALELO) % 100 < EN_PARALELO) {
+      console.log(`  BOE: ${i + tanda.length}/${fechas.length} días, ${items.length} documentos`);
     }
   }
-
-  console.log(`\nResumen:`);
-  console.log(`  Contratos leídos: ${totales.contratos} (${(totales.importeContratos / 1e6).toFixed(1)} M€ presupuestados)`);
-  console.log(`  Sin competencia:  ${totales.sinCompetencia}`);
-  console.log(`  Documentos BOE:   ${totales.documentosBOE}`);
-  console.log(`  Días con datos:   ${resumenDias.length}`);
-  for (const f of fuentes) console.log(`  Fuente ${f.clave}: ${f.estado}${f.mensaje ? ` — ${f.mensaje}` : ''}`);
-
-  const sinDatos = fuentes.filter((f) => f.estado === 'error');
-  if (sinDatos.length === fuentes.length) {
-    console.error('\nNinguna fuente respondió. No se toca data/.');
-    process.exitCode = 1;
-  }
+  return { items, diasLeidos, errores };
 }
 
 main().catch((error) => {

@@ -24,7 +24,8 @@ const indice = await leer('index.json').catch((error) => {
 });
 
 if (indice) {
-  exigir(indice.version === 1, 'index.json sin versión reconocible');
+  exigir(indice.version >= 1, 'index.json sin versión reconocible');
+  exigir(Boolean(indice.cobertura?.desde), 'index.json sin cobertura de fechas');
   exigir(typeof indice.generado === 'string', 'index.json sin fecha de generación');
   exigir(Array.isArray(indice.fuentes) && indice.fuentes.length > 0, 'index.json sin lista de fuentes');
   exigir(Array.isArray(indice.dias), 'index.json sin días');
@@ -47,6 +48,7 @@ if (indice) {
     const dia = await leer(path.join('dias', fichero));
     exigir(dia.fecha === fichero.replace('.json', ''), `${fichero}: la fecha de dentro no coincide con el nombre`);
     exigir(Array.isArray(dia.items), `${fichero}: sin lista de items`);
+    exigir(Boolean(dia.resumen), `${fichero}: sin resumen del día`);
     for (const item of dia.items) {
       totalItems += 1;
       exigir(Boolean(item.id), `${fichero}: hay un item sin identificador`);
@@ -61,6 +63,7 @@ if (indice) {
   exigir(sinEnlace === 0, `${sinEnlace} registros sin enlace al documento oficial`);
 
   console.log(`Revisión de ${DATA}`);
+  console.log(`  Cobertura:         ${indice.cobertura?.desde} → ${indice.cobertura?.hasta}`);
   console.log(`  Días:              ${ficheros.length}`);
   console.log(`  Registros:         ${totalItems}`);
   console.log(`  Con frase llana:   ${conFrase} (${totalItems ? Math.round((conFrase / totalItems) * 100) : 0}%)`);

@@ -115,6 +115,12 @@ function conectarEventos() {
       return repintarConservandoBusqueda();
     }
 
+    const nivel = objetivo('[data-nivel]');
+    if (nivel) {
+      filtros.nivel = nivel.dataset.nivel;
+      return repintarConservandoBusqueda();
+    }
+
     if (objetivo('[data-mas-dias]')) {
       filtros.diasVisibles += 3;
       return repintarConservandoBusqueda();

@@ -81,6 +81,15 @@ export function tituloDeDia(iso) {
   return larga.charAt(0).toUpperCase() + larga.slice(1);
 }
 
+/** Corta por la última palabra entera. El texto completo sigue en la ficha. */
+export function recortar(texto, maximo = 150) {
+  const limpio = String(texto || '').trim();
+  if (limpio.length <= maximo) return limpio;
+  const corte = limpio.slice(0, maximo);
+  const espacio = corte.lastIndexOf(' ');
+  return `${corte.slice(0, espacio > maximo * 0.6 ? espacio : maximo).replace(/[\s,;:.]+$/, '')}…`;
+}
+
 export const NOMBRES_CATEGORIA = {
   contratos: 'Contrato',
   personas: 'Personas',
