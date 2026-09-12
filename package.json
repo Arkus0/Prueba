@@ -1,0 +1,15 @@
+{
+  "name": "dinero-publico",
+  "version": "1.0.0",
+  "private": true,
+  "description": "En que se gasta el Estado el dinero publico, explicado en cristiano.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "ingest": "node scripts/build.mjs",
+    "demo": "node scripts/build.mjs --demo",
+    "test": "node --test scripts/test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "dev": "python3 -m http.server 8080"
+  }
+}

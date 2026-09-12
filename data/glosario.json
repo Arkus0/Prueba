@@ -1,0 +1,102 @@
+{
+ "libre designacion": {
+  "termino": "Libre designación",
+  "breve": "Lo elige el órgano que nombra, sin baremo de méritos puntuado.",
+  "largo": "Es una forma legal de cubrir puestos de responsabilidad en la Administración. En vez de ordenar a los candidatos por méritos y nota, como en un concurso, el cargo elige a quien quiere entre quienes cumplen los requisitos mínimos, y puede cesarle cuando quiera. Es un procedimiento legal y habitual en puestos de confianza; lo interesante es saber cuántos puestos se cubren así y en qué organismos."
+ },
+ "concurso": {
+  "termino": "Concurso",
+  "breve": "El puesto se da por méritos puntuados, no por decisión personal.",
+  "largo": "Sistema para cubrir puestos en el que los candidatos se ordenan por una baremación pública: experiencia, antigüedad, formación, cursos. Gana quien más puntos suma. Es lo contrario de la libre designación."
+ },
+ "oposicion": {
+  "termino": "Oposición",
+  "breve": "Exámenes para entrar como funcionario: gana la nota.",
+  "largo": "Proceso selectivo con pruebas para entrar en la función pública. El concurso-oposición mezcla exámenes con méritos ya acumulados (experiencia previa, por ejemplo)."
+ },
+ "cese": {
+  "termino": "Cese",
+  "breve": "Se le retira el puesto a alguien, con o sin motivo publicado.",
+  "largo": "Fin del nombramiento en un puesto. En los puestos de libre designación puede producirse en cualquier momento y el BOE no suele explicar la razón."
+ },
+ "procedimiento abierto": {
+  "termino": "Procedimiento abierto",
+  "breve": "Concurso normal: puede presentarse cualquier empresa.",
+  "largo": "La forma ordinaria de contratar: se publica el contrato, cualquier empresa que cumpla los requisitos puede presentar oferta y gana la mejor según los criterios publicados. Es el procedimiento con más competencia."
+ },
+ "negociado sin publicidad": {
+  "termino": "Negociado sin publicidad",
+  "breve": "Sin anuncio previo: la Administración habla solo con quien elige.",
+  "largo": "La Administración invita directamente a una o varias empresas y negocia con ellas, sin publicar antes el contrato. La ley solo lo permite en casos tasados (urgencia, que solo exista un proveedor posible, contratos declarados desiertos…). Es legal, pero es el procedimiento con menos competencia, así que conviene mirarlo."
+ },
+ "contrato menor": {
+  "termino": "Contrato menor",
+  "breve": "Contrato pequeño que se adjudica directamente, sin concurso.",
+  "largo": "Contratos por debajo de cierto importe (40.000 € en obras y 15.000 € en servicios y suministros, sin IVA) que pueden adjudicarse directamente a una empresa. Son rápidos y legales; el riesgo conocido es trocear un gasto grande en muchos contratos menores para evitar el concurso."
+ },
+ "acuerdo marco": {
+  "termino": "Acuerdo marco",
+  "breve": "Lista cerrada de empresas a las que luego se les va comprando.",
+  "largo": "Se selecciona por concurso a un grupo de empresas y, durante unos años, los pedidos concretos se reparten entre ellas sin volver a licitar desde cero."
+ },
+ "desierto": {
+  "termino": "Desierto",
+  "breve": "Nadie se presentó o ninguna oferta valía: el contrato se queda sin adjudicar.",
+  "largo": "El contrato se publica pero no se adjudica, porque no hubo ofertas o ninguna cumplía. Suele abrir la puerta a repetirlo por un procedimiento con menos publicidad."
+ },
+ "licitacion": {
+  "termino": "Licitación",
+  "breve": "El concurso en el que las empresas compiten por un contrato.",
+  "largo": "Todo el proceso desde que la Administración publica lo que quiere comprar hasta que elige empresa."
+ },
+ "adjudicacion": {
+  "termino": "Adjudicación",
+  "breve": "El momento en que se decide qué empresa se queda el contrato.",
+  "largo": "Resolución que asigna el contrato a una empresa por un importe concreto. Hasta entonces solo hay un presupuesto previsto."
+ },
+ "organo de contratacion": {
+  "termino": "Órgano de contratación",
+  "breve": "Quien firma y paga: el ministerio, hospital o entidad concreta.",
+  "largo": "La unidad de la Administración con capacidad para firmar ese contrato. No es \"el Estado\" en abstracto: es una dirección general, un hospital, una universidad o una empresa pública concreta."
+ },
+ "valor estimado": {
+  "termino": "Valor estimado",
+  "breve": "Lo máximo que puede llegar a costar, prórrogas incluidas.",
+  "largo": "Cálculo del coste total del contrato incluyendo posibles prórrogas y modificaciones, sin IVA. Suele ser mayor que el presupuesto de salida."
+ },
+ "sin iva": {
+  "termino": "Sin IVA",
+  "breve": "La cifra no incluye el impuesto; lo pagado es algo más.",
+  "largo": "Los importes de contratación se publican normalmente sin IVA. Con IVA general (21%), lo que sale de la caja pública es aproximadamente un 21% más."
+ },
+ "subvencion": {
+  "termino": "Subvención",
+  "breve": "Dinero público entregado sin recibir un producto a cambio.",
+  "largo": "Entrega de dinero a una persona, empresa o entidad para una finalidad de interés público, sin contraprestación directa. Puede repartirse en concurrencia competitiva (compiten solicitudes) o de forma nominativa (va a un beneficiario concreto ya decidido)."
+ },
+ "concurrencia competitiva": {
+  "termino": "Concurrencia competitiva",
+  "breve": "Las ayudas se reparten comparando solicitudes con criterios públicos.",
+  "largo": "Forma de repartir subvenciones en la que se publican las bases, se presentan solicitudes y se ordenan por puntuación hasta agotar el dinero."
+ },
+ "convenio": {
+  "termino": "Convenio",
+  "breve": "Acuerdo entre administraciones o con entidades, a menudo con dinero.",
+  "largo": "Acuerdo de colaboración que no es un contrato ni una subvención al uso, pero que muchas veces mueve dinero público. Se publica en el BOE con su importe y su plazo."
+ },
+ "encargo a medio propio": {
+  "termino": "Encargo a medio propio",
+  "breve": "El trabajo se da a una empresa pública sin concurso.",
+  "largo": "La Administración encarga el trabajo a una empresa o entidad de su propiedad (Tragsa, Ineco, Isdefe…) sin licitación, porque legalmente se considera una prolongación de sí misma. Legal, pero saca ese dinero del circuito de competencia."
+ },
+ "real decreto": {
+  "termino": "Real decreto",
+  "breve": "Norma aprobada por el Gobierno, por debajo de la ley.",
+  "largo": "Norma del Consejo de Ministros. Cuando reparte dinero (créditos extraordinarios, transferencias a comunidades), el importe aparece en el propio texto."
+ },
+ "credito extraordinario": {
+  "termino": "Crédito extraordinario",
+  "breve": "Dinero añadido fuera de lo presupuestado.",
+  "largo": "Gasto que no estaba en el presupuesto y se aprueba aparte durante el año. Suele ir acompañado de la explicación de de dónde sale ese dinero."
+ }
+}
