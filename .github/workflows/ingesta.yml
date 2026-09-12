@@ -47,11 +47,14 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git pull --rebase --autostash
           git add data
           if git diff --cached --quiet; then
             echo 'Sin cambios en los datos.'
             exit 0
           fi
           git commit -m "Datos oficiales al $(date -u +%Y-%m-%d)"
-          git push
+          # Primero se commitea y luego se rebasa: si se hace al revés, los
+          # ficheros nuevos sin seguimiento bloquean el pull.
+          git fetch origin "${{ github.ref_name }}"
+          git rebase -X theirs "origin/${{ github.ref_name }}" || { git rebase --abort; exit 1; }
+          git push origin "HEAD:${{ github.ref_name }}"

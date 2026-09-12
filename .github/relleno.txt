@@ -4,4 +4,4 @@
 #
 # Ojo: cada día son ~100 documentos, así que un año largo son decenas de miles
 # de registros y unos minutos de tarea.
-desde: 2025-07-01
+desde: 2025-07-01   # relanzado con los lectores corregidos
