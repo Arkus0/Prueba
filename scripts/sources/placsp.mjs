@@ -13,7 +13,7 @@
 
 import { bajar, restarDias } from '../lib/red.mjs';
 import { parsearXML, buscar, buscarTodos, texto, textoDe, hijos } from '../lib/xml.mjs';
-import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, conArticuloMayus, recortar } from '../lib/texto.mjs';
+import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, sujetoYVerbo, recortar } from '../lib/texto.mjs';
 import { senalesDeContrato } from '../lib/senales.mjs';
 
 const BASE = 'https://contrataciondelsectorpublico.gob.es/sindicacion';
@@ -204,16 +204,17 @@ function enlaceDeEntry(entry) {
 
 /** Una linea en castellano llano. El objeto oficial sigue visible en la ficha. */
 export function fraseDeContrato(c) {
-  const quien = conArticuloMayus(c.organismo);
   const objeto = c.objeto ? recortar(c.objeto.charAt(0).toLowerCase() + c.objeto.slice(1), 110) : null;
-  if (!quien || !objeto) return null;
+  if (!c.organismo || !objeto) return null;
 
-  const frase = c.adjudicatario
-    ? `${quien} contrata a ${c.adjudicatario} para ${objeto}`
+  const verbo = c.adjudicatario
+    ? `contrata a ${c.adjudicatario} para ${objeto}`
     : c.resultado === 'Desierta'
-      ? `${quien} no encontró a nadie para ${objeto}`
-      : `${quien} busca quien se encargue de ${objeto}`;
+      ? `no encuentra a nadie para ${objeto}`
+      : `busca quien se encargue de ${objeto}`;
 
+  const frase = sujetoYVerbo(c.organismo, verbo);
+  if (!frase) return null;
   return /[.…!?]$/.test(frase) ? frase : `${frase}.`;
 }
 

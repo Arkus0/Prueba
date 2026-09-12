@@ -52,7 +52,20 @@ test('solo se acepta un importe si lleva euros al lado', () => {
 test('el artículo del organismo concuerda', () => {
   assert.equal(conArticuloOrganismo('MINISTERIO DE DEFENSA'), 'el Ministerio de Defensa');
   assert.equal(conArticuloOrganismo('DIRECCIÓN GENERAL DE TRÁFICO'), 'la Dirección General de Tráfico');
+  assert.equal(conArticuloOrganismo('ALCALDÍA DEL AYUNTAMIENTO DE X'), 'la Alcaldía del Ayuntamiento de X');
   assert.equal(nombrePropio('LIMPIEZAS DEL NORTE S.A.'), 'Limpiezas del Norte SA');
+});
+
+test('con un organismo en plural, también el verbo', async () => {
+  const { sujetoYVerbo } = await import('../lib/texto.mjs');
+  assert.equal(sujetoYVerbo('MINISTERIO DE HACIENDA', 'abre un proceso'), 'El Ministerio de Hacienda abre un proceso');
+  assert.equal(sujetoYVerbo('UNIVERSIDADES', 'abre un proceso'), 'Las Universidades abren un proceso');
+  assert.equal(sujetoYVerbo('CORTES GENERALES', 'convoca plazas'), 'Las Cortes Generales convocan plazas');
+  assert.equal(sujetoYVerbo('JUZGADOS DE PRIMERA INSTANCIA', 'publica algo'), 'Los Juzgados de Primera Instancia publican algo');
+  // La palabra que va delante del verbo no se conjuga.
+  assert.equal(sujetoYVerbo('UNIVERSIDADES', 'ya ha elegido'), 'Las Universidades ya han elegido');
+  // En pasado no vale añadir una "n": se deja como está antes que inventarse una palabra.
+  assert.equal(sujetoYVerbo('UNIVERSIDADES', 'no encontró a nadie'), 'Las Universidades no encontró a nadie');
 });
 
 test('el XML se lee por nombre local, sin importar el prefijo', () => {

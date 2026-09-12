@@ -12,7 +12,7 @@
 
 import { bajar } from '../lib/red.mjs';
 import { parsearXML, buscar, texto as textoDe2 } from '../lib/xml.mjs';
-import { conArticuloMayus, recortar } from '../lib/texto.mjs';
+import { sujetoYVerbo, recortar, numeroES } from '../lib/texto.mjs';
 
 /** Solo pedimos el texto completo de lo que parece una convocatoria de plazas. */
 const PARECE_CONVOCATORIA =
@@ -36,14 +36,25 @@ export function pareceConvocatoria(item) {
   return PARECE_CONVOCATORIA.test(t);
 }
 
-/** Plazas convocadas: preferimos la cifra que va pegada a "se convocan". */
+/**
+ * Plazas convocadas. Se prueban varias formas, de la más fiable a la más
+ * general, y se aceptan cifras con separador de millar ("1.115 plazas").
+ */
 export function plazasEn(texto) {
-  const cercaDeConvocan = texto.match(/se\s+convocan?[^.]{0,120}?\b(\d{1,5})\s+plazas/i);
-  if (cercaDeConvocan) return Number(cercaDeConvocan[1]);
-  const total = texto.match(/total\s+de\s+(\d{1,5})\s+plazas/i);
-  if (total) return Number(total[1]);
-  const suelto = texto.match(/\b(\d{1,5})\s+plazas\b/i);
-  return suelto ? Number(suelto[1]) : null;
+  const patrones = [
+    /(?:un\s+)?total\s+de\s+([\d.]{1,9})\s+plazas/i,
+    /n[úu]mero\s+(?:total\s+)?de\s+plazas[^\d]{0,25}([\d.]{1,9})/i,
+    /se\s+convocan?[^.]{0,150}?\b([\d.]{1,9})\s+plazas/i,
+    /(?:cubrir|proveer|ofertar?|provisi[óo]n de)[^.]{0,80}?\b([\d.]{1,9})\s+plazas/i,
+    /\b([\d.]{1,9})\s+plazas\b/i,
+  ];
+  for (const patron of patrones) {
+    const m = texto.match(patron);
+    if (!m) continue;
+    const n = numeroES(m[1]);
+    if (n && n > 0 && n < 100000 && Number.isInteger(n)) return n;
+  }
+  return /\b(?:una|1)\s+plaza\b/i.test(texto) ? 1 : null;
 }
 
 /** "plazo de veinte días hábiles" -> { dias: 20, tipo: 'hábiles' }. */
@@ -121,12 +132,12 @@ export function detallesDesdeTexto(contenido) {
 }
 
 /** Una línea que se entienda de un vistazo. */
-function fraseDeOposicion(convocatoria) {
-  const quien = conArticuloMayus(convocatoria.organismo) || 'Un organismo público';
-  if (convocatoria.plazas) {
-    return `${quien} convoca ${convocatoria.plazas} ${convocatoria.plazas === 1 ? 'plaza' : 'plazas'}${convocatoria.grupo ? ` del subgrupo ${convocatoria.grupo}` : ''}.`;
-  }
-  return `${quien} abre un proceso selectivo.`;
+function fraseDeOposicion(c) {
+  const plazas = c.plazas
+    ? `convoca ${c.plazas.toLocaleString('es-ES')} ${c.plazas === 1 ? 'plaza' : 'plazas'}${c.grupo ? ` del subgrupo ${c.grupo}` : ''}`
+    : `abre un proceso selectivo${c.sistema && c.sistema !== 'Proceso selectivo' ? ` por ${c.sistema.toLowerCase()}` : ''}`;
+  const frase = sujetoYVerbo(c.organismo, plazas);
+  return frase ? `${frase}.` : `Se convocan plazas de empleo público${c.plazas ? `: ${c.plazas}` : ''}.`;
 }
 
 /**

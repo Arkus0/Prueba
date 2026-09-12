@@ -124,16 +124,70 @@ const ACRONIMOS = /\b(sme|aie|ute|slp|sam|scl|scoop|ong|ceip|ies|cra|epe|eppe|ep
 export function esFemenino(nombre) {
   const primera = String(nombre || '').trim().split(/[\s,]/)[0]
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  if (/^(dia|mapa|tranvia)$/.test(primera)) return false;          // día, mapa
-  if (/(ma|ema|ama|oma|ista)$/.test(primera)) return false;        // programa, sistema, periodista
-  return /(a|cion|sion|dad|tad|tud|ez|umbre|ie)$/.test(primera);
+  return generoDePalabra(primera) === 'f';
+}
+
+const GENERO_A_MANO = { cortes: 'f', aguas: 'f', costas: 'f', obras: 'f', juzgados: 'm', tribunales: 'm' };
+
+function generoDePalabra(palabra) {
+  if (GENERO_A_MANO[palabra]) return GENERO_A_MANO[palabra];
+  if (/^(dia|mapa|tranvia)$/.test(palabra)) return 'm';            // día, mapa
+  if (/(ma|ema|ama|oma|ista)$/.test(palabra)) return 'm';          // programa, sistema, periodista
+  return /(a|cion|sion|dad|tad|tud|ez|umbre|ie)$/.test(palabra) ? 'f' : 'm';
+}
+
+/** Palabras que en castellano acaban en -s sin ser plurales. */
+const SINGULARES_EN_S = /^(pais|analisis|interes|ingles|frances|jueves|martes|lunes|viernes|cadiz|badajoz)$/;
+
+/**
+ * Género y número de un organismo, para que el artículo y el verbo concuerden.
+ * "UNIVERSIDADES" tiene que dar "las Universidades ... abren", no "el ... abre".
+ */
+export function analizarOrganismo(organismo) {
+  if (!organismo) return null;
+  const nombre = nombrePropio(organismo);
+  const primera = nombre.trim().split(/[\s,]/)[0]
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+  const plural = /(es|as|os)$/.test(primera) && primera.length > 4 && !SINGULARES_EN_S.test(primera);
+  const singular = plural ? primera.replace(/es$/, '').replace(/s$/, '') : primera;
+  const femenino = generoDePalabra(plural ? primera : singular) === 'f'
+    || (plural && generoDePalabra(singular) === 'f');
+
+  const articulo = plural ? (femenino ? 'las' : 'los') : (femenino ? 'la' : 'el');
+  return { nombre, plural, femenino, articulo, con: `${articulo} ${nombre}` };
+}
+
+/** Palabras que no son el verbo aunque vayan delante. */
+const ANTES_DEL_VERBO = new Set(['no', 'ya', 'aun', 'aún', 'todavia', 'todavía', 'solo', 'sólo']);
+
+/**
+ * "MINISTERIO DE X" + "abre" -> "El Ministerio de X abre".
+ * "UNIVERSIDADES"  + "abre" -> "Las Universidades abren".
+ */
+export function sujetoYVerbo(organismo, verbo) {
+  const datos = analizarOrganismo(organismo);
+  if (!datos) return null;
+  const sujeto = datos.con.charAt(0).toUpperCase() + datos.con.slice(1);
+  if (!datos.plural) return `${sujeto} ${verbo}`;
+
+  // El plural de presente se forma añadiendo una "n" (abre -> abren). En
+  // pasado no (encontró -> encontraron), así que ahí no tocamos nada: las
+  // frases que generamos están todas en presente a propósito.
+  let conjugado = false;
+  const enPlural = verbo.split(' ').map((palabra) => {
+    if (conjugado || ANTES_DEL_VERBO.has(palabra.toLowerCase())) return palabra;
+    conjugado = true;
+    if (palabra.endsWith('n') || /[áéíóú]$/.test(palabra)) return palabra;
+    return `${palabra}n`;
+  }).join(' ');
+  return `${sujeto} ${enPlural}`;
 }
 
 /** "Ministerio de Defensa" -> "el Ministerio de Defensa". */
 export function conArticuloOrganismo(organismo) {
-  if (!organismo) return null;
-  const nombre = nombrePropio(organismo);
-  return `${esFemenino(nombre) ? 'la' : 'el'} ${nombre}`;
+  const datos = analizarOrganismo(organismo);
+  return datos ? datos.con : null;
 }
 
 /** Corta un texto largo por la última palabra entera. */

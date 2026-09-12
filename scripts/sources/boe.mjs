@@ -10,7 +10,7 @@
 
 import { bajar, comoAAAAMMDD, comoISO } from '../lib/red.mjs';
 import { parsearXML } from '../lib/xml.mjs';
-import { importeEnTexto, limpiarTitulo, jergaEn, nombrePropio, conArticuloOrganismo, conArticuloMayus } from '../lib/texto.mjs';
+import { importeEnTexto, limpiarTitulo, jergaEn, nombrePropio, conArticuloOrganismo, sujetoYVerbo } from '../lib/texto.mjs';
 import { senalesDeBOE } from '../lib/senales.mjs';
 
 const BASE = 'https://boe.es';
@@ -104,9 +104,10 @@ function paraQue(titulo) {
 /** Reescritura a lenguaje llano. Si no estamos seguros, devolvemos null. */
 export function fraseLlana(titulo, subtipo, organismo) {
   const t = limpiarTitulo(titulo);
-  const quien = organismo ? nombrePropio(organismo) : null;
   const conArticulo0 = conArticuloOrganismo(organismo);
-  const Quien = conArticuloMayus(organismo);
+  /** "El Ministerio de X hace algo" / "Las Universidades hacen algo". */
+  const di = (verbo) => sujetoYVerbo(organismo, verbo) || `Un organismo del Estado ${verbo}`;
+  const hayOrganismo = Boolean(organismo);
 
   if (subtipo === 'nombramiento') {
     const persona1 = t.match(/se nombra\s+a\s+(?:don|doña|dª|d\.)?\s*([^,]{3,80}?),?\s+(?:como\s+)?([^.]{3,120})\.?$/i);
@@ -116,57 +117,51 @@ export function fraseLlana(titulo, subtipo, organismo) {
   }
 
   if (subtipo === 'libre-designacion-resuelta') {
-    if (/se declara desierta/.test(t)) {
-      return `${Quien || 'Un organismo del Estado'} deja sin cubrir un puesto de libre designación.`;
-    }
-    if (/se resuelve|se adjudica/.test(t)) {
-      return `${Quien || 'Un organismo del Estado'} ya ha elegido a quien ocupa un puesto de libre designación.`;
-    }
-    return `${Quien || 'Un organismo del Estado'} mueve un puesto de libre designación.`;
+    if (/se declara desierta/.test(t)) return `${di('deja sin cubrir un puesto de libre designación')}.`;
+    if (/se resuelve|se adjudica/.test(t)) return `${di('ya ha elegido a quien ocupa un puesto de libre designación')}.`;
+    return `${di('mueve un puesto de libre designación')}.`;
   }
 
   if (subtipo === 'situacion') {
     const jubilacion = t.match(/se declara la jubilaci[oó]n[^.]*?\b(?:de|del|de la)\s+(?:[Mm]agistrad[oa]|[Jj]uez|[Ff]iscal|[Ll]etrad[oa]|[Ss]ecretari[oa]|[Dd]on|[Dd]oña|[Dd]ª|[Dd]\.)\s*([^.,]{3,70})/);
     if (jubilacion) return `Se jubila ${limpiarPersona(jubilacion[1])}.`;
-    if (/excedencia/.test(t)) return `${Quien || 'Un organismo del Estado'} concede una excedencia.`;
+    if (/excedencia/.test(t)) return `${di('concede una excedencia')}.`;
     if (/servicios especiales/.test(t)) return `Alguien pasa a servicios especiales${conArticulo0 ? ` en ${conArticulo0}` : ''}.`;
     return null;
   }
 
   if (subtipo === 'cese') {
     const cese = t.match(/se dispone el cese\s+(?:de\s+)?(?:don|doña|dª|d\.)?\s*([^,]{3,80}?)(?:,|\s+como|\s+en el cargo)/i);
-    if (cese) return `Cesa ${cese[1].trim()}${conArticulo0 ? ` en ${conArticulo0}` : ''}.`;
+    if (cese) return `Cesa ${limpiarPersona(cese[1])}${conArticulo0 ? ` en ${conArticulo0}` : ''}.`;
   }
 
   if (subtipo === 'libre-designacion') {
-    return `${Quien || 'Un organismo del Estado'} cubre puestos por libre designación: elige el cargo, sin baremo de méritos.`;
+    return `${di('cubre puestos por libre designación, sin baremo de méritos')}.`;
   }
 
-  if (subtipo === 'empleo') {
+  if (subtipo === 'empleo' && hayOrganismo) {
     const plazas = t.match(/(\d{1,5})\s+plazas?/i);
-    if (plazas && Quien) return `${Quien} convoca ${plazas[1]} plazas.`;
-    if (/relaci[oó]n de (personas )?aprobad/i.test(t) && Quien) return `${Quien} publica quién ha aprobado.`;
-    if (/lista[s]? (provisional |definitiva )?de (personas )?(admitid|aspirante|excluid)/i.test(t) && Quien) {
-      return `${Quien} publica la lista de admitidos de un proceso selectivo.`;
+    if (plazas) return `${di(`convoca ${plazas[1]} plazas`)}.`;
+    if (/relaci[oó]n de (personas )?aprobad/i.test(t)) return `${di('publica quién ha aprobado')}.`;
+    if (/lista[s]? (provisional |definitiva )?de (personas )?(admitid|aspirante|excluid)/i.test(t)) {
+      return `${di('publica la lista de admitidos de un proceso selectivo')}.`;
     }
-    if (/se resuelve (el|la) concurso|adjudicaci[oó]n de destinos|se adjudican destinos/i.test(t) && Quien) {
-      return `${Quien} reparte destinos entre quienes ganaron un concurso.`;
+    if (/se resuelve (el|la) concurso|adjudicaci[oó]n de destinos|se adjudican destinos/i.test(t)) {
+      return `${di('reparte destinos entre quienes ganaron un concurso')}.`;
     }
-    if (/se convoca (el )?concurso/i.test(t) && Quien) return `${Quien} saca puestos a concurso de méritos.`;
-    if (/proceso selectivo|se convocan?\b/i.test(t) && Quien) return `${Quien} abre un proceso para cubrir plazas.`;
+    if (/se convoca (el )?concurso/i.test(t)) return `${di('saca puestos a concurso de méritos')}.`;
+    if (/proceso selectivo|se convocan?\b/i.test(t)) return `${di('abre un proceso para cubrir plazas')}.`;
   }
 
-  if (subtipo === 'subvencion' || subtipo === 'convenio') {
+  if ((subtipo === 'subvencion' || subtipo === 'convenio') && hayOrganismo) {
     const destino = paraQue(t);
     const verbo = subtipo === 'convenio' ? 'firma un convenio' : 'reparte ayudas';
-    if (Quien && destino) return `${Quien} ${verbo} para ${destino}.`;
-    if (Quien) return `${Quien} ${verbo}.`;
+    return `${di(destino ? `${verbo} para ${destino}` : verbo)}.`;
   }
 
-  if (subtipo === 'anuncio') {
+  if (subtipo === 'anuncio' && hayOrganismo) {
     const objeto = t.match(/objeto:?\s*([^.;]{6,90})/i);
-    if (Quien && objeto) return `${Quien} saca a concurso: ${objeto[1].trim()}.`;
-    if (Quien) return `${Quien} saca un contrato a concurso.`;
+    return `${di(objeto ? `saca a concurso: ${objeto[1].trim()}` : 'saca un contrato a concurso')}.`;
   }
 
   if (subtipo === 'norma') {
