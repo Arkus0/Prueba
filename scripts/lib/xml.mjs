@@ -134,7 +134,7 @@ export function buscar(n, nombre) {
 export function buscarTodos(n, nombre, acumulador = []) {
   if (!n) return acumulador;
   for (const h of n.hijos) {
-    if (h.nombre === nombre) acumulador.push(h);
+    if (nombre === '*' || h.nombre === nombre) acumulador.push(h);
     buscarTodos(h, nombre, acumulador);
   }
   return acumulador;

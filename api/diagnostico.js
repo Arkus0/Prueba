@@ -11,6 +11,8 @@
  *   /api/diagnostico?fuente=placsp&paginas=2
  */
 
+import { bajar } from '../scripts/lib/red.mjs';
+import { parsearXML, buscarTodos } from '../scripts/lib/xml.mjs';
 import { sumarioDelDia } from '../scripts/sources/boe.mjs';
 import { leerFeed, FEEDS } from '../scripts/sources/placsp.mjs';
 import { ultimosDias, comoISO } from '../scripts/lib/red.mjs';
@@ -61,6 +63,38 @@ async function probarPLACSP(paginas) {
   };
 }
 
+/** Candidatas de la sindicación, por si la Plataforma mueve las rutas. */
+const CANDIDATAS = [
+  'https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom',
+  'https://contrataciondelestado.es/sindicacion/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom',
+  'https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_1143/contratosMenoresPerfilesContratantes.atom',
+  'https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_1044/PlataformasAgregadasSinMenores.atom',
+];
+
+/** Qué devuelve de verdad cada URL, sin interpretar nada. */
+async function probarCrudo() {
+  const salida = [];
+  for (const url of CANDIDATAS) {
+    try {
+      const texto = await bajar(url, { intentos: 1, tiempoLimiteMs: 20000 });
+      const arbol = parsearXML(texto);
+      const entradas = buscarTodos(arbol, 'entry');
+      const primera = entradas[0];
+      salida.push({
+        url,
+        bytes: texto.length,
+        entradas: entradas.length,
+        cabeza: texto.slice(0, 400),
+        nombresDeNodo: primera ? [...new Set(buscarTodos(primera, '*').map((n) => n.nombre))].slice(0, 40) : [],
+        primeraEntrada: primera ? texto.slice(texto.indexOf('<entry'), texto.indexOf('<entry') + 2500) : null,
+      });
+    } catch (error) {
+      salida.push({ url, error: String(error.message || error) });
+    }
+  }
+  return salida;
+}
+
 export default async function handler(peticion, respuesta) {
   const url = new URL(peticion.url, 'https://local');
   const fuente = url.searchParams.get('fuente') || 'todas';
@@ -70,6 +104,7 @@ export default async function handler(peticion, respuesta) {
   const salida = { comprobado: new Date().toISOString(), fuente, dias, paginas };
 
   try {
+    if (fuente === 'crudo') salida.crudo = await probarCrudo();
     if (fuente === 'boe' || fuente === 'todas') salida.boe = await probarBOE(dias);
     if (fuente === 'placsp' || fuente === 'todas') salida.placsp = await probarPLACSP(paginas);
   } catch (error) {
