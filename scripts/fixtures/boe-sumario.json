@@ -1,0 +1,117 @@
+{
+  "status": { "code": "200", "text": "ok" },
+  "data": {
+    "sumario": {
+      "metadatos": { "publicacion": "BOE", "fecha_publicacion": "20260911" },
+      "diario": [
+        {
+          "numero": "219",
+          "sumario_diario": { "identificador": "BOE-S-2026-219" },
+          "seccion": [
+            {
+              "codigo": "1",
+              "nombre": "I. Disposiciones generales",
+              "departamento": {
+                "codigo": "7723",
+                "nombre": "MINISTERIO DE HACIENDA",
+                "texto": [
+                  {
+                    "item": {
+                      "identificador": "BOE-A-2026-18001",
+                      "titulo": "Real Decreto 700/2026, de 10 de septiembre, por el que se concede un crédito extraordinario de 45.000.000,00 euros al Ministerio de Sanidad.",
+                      "url_pdf": { "szBytes": "180000", "numPag": "3", "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18001.pdf" }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "codigo": "2A",
+              "nombre": "II. Autoridades y personal - A. Nombramientos, situaciones e incidencias",
+              "departamento": [
+                {
+                  "nombre": "MINISTERIO DE DEFENSA",
+                  "epigrafe": [
+                    {
+                      "nombre": "Nombramientos",
+                      "item": [
+                        {
+                          "identificador": "BOE-A-2026-18010",
+                          "titulo": "Resolución de 1 de septiembre de 2026, de la Subsecretaría, por la que se nombra Subdirectora General de Servicios Económicos a doña María Ruiz Ortega.",
+                          "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18010.pdf" }
+                        },
+                        {
+                          "identificador": "BOE-A-2026-18011",
+                          "titulo": "Orden DEF/900/2026, de 2 de septiembre, por la que se dispone el cese de don Luis Cano Vega como Director General de Armamento.",
+                          "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18011.pdf" }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "codigo": "2B",
+              "nombre": "II. Autoridades y personal - B. Oposiciones y concursos",
+              "departamento": {
+                "nombre": "MINISTERIO DE JUSTICIA",
+                "item": [
+                  {
+                    "identificador": "BOE-A-2026-18020",
+                    "titulo": "Resolución de 3 de septiembre de 2026, de la Subsecretaría, por la que se convoca la provisión de puestos de trabajo por el sistema de libre designación.",
+                    "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18020.pdf" }
+                  },
+                  {
+                    "identificador": "BOE-A-2026-18021",
+                    "titulo": "Resolución de 4 de septiembre de 2026, por la que se convocan 250 plazas del Cuerpo de Gestión Procesal y Administrativa.",
+                    "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18021.pdf" }
+                  }
+                ]
+              }
+            },
+            {
+              "codigo": "3",
+              "nombre": "III. Otras disposiciones",
+              "departamento": [
+                {
+                  "nombre": "MINISTERIO DE CULTURA",
+                  "item": {
+                    "identificador": "BOE-A-2026-18030",
+                    "titulo": "Resolución de 5 de septiembre de 2026, del Instituto de la Cinematografía, por la que se convocan ayudas por importe de 12.500.000 euros para la producción de largometrajes.",
+                    "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18030.pdf" }
+                  }
+                },
+                {
+                  "nombre": "MINISTERIO DEL INTERIOR",
+                  "item": {
+                    "identificador": "BOE-A-2026-18031",
+                    "titulo": "Resolución de 6 de septiembre de 2026, por la que se publica el Convenio con la Cruz Roja Española para atención humanitaria, con una aportación de 3.000.000 de euros.",
+                    "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-A-2026-18031.pdf" }
+                  }
+                }
+              ]
+            },
+            {
+              "codigo": "4",
+              "nombre": "IV. Administración de Justicia",
+              "departamento": { "nombre": "JUZGADOS DE PRIMERA INSTANCIA", "item": { "identificador": "BOE-B-2026-1", "titulo": "Edicto." } }
+            },
+            {
+              "codigo": "5A",
+              "nombre": "V. Anuncios - A. Contratación del Sector Público",
+              "departamento": {
+                "nombre": "MINISTERIO DE TRANSPORTES",
+                "item": {
+                  "identificador": "BOE-B-2026-2000",
+                  "titulo": "Anuncio de licitación de la Dirección General de Carreteras. Objeto: conservación de la A-6. Presupuesto base de licitación: 8.900.000,00 euros.",
+                  "url_pdf": { "texto": "/boe/dias/2026/09/11/pdfs/BOE-B-2026-2000.pdf" }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,85 +1,87 @@
-# GhostPace
+# Dinero público
 
-Generador de carreras falsas estilo Strava: dibuja una ruta sobre un mapa real,
-elige el ritmo, y obtén una **tarjeta de resumen (PNG)** y un **archivo GPX**
-de una carrera que nunca corriste. Inspirado en [fakemy.run](https://fakemy.run),
-con marca propia para no usar el nombre ni el logo de Strava.
+En qué se gasta el Estado tu dinero, explicado en cristiano y pensado para el móvil.
 
-> No afiliado con Strava, Garmin ni ninguna marca de fitness. Pensado para
-> entretenimiento/parodia. El uso del GPX generado es responsabilidad de quien
-> lo descarga.
+Cada día el Estado publica cientos de decisiones que mueven dinero: contratos,
+ayudas, nombramientos, créditos extraordinarios. Están todas disponibles y son
+públicas, pero repartidas entre PDFs del BOE y ficheros XML en formato CODICE que
+no lee nadie que no cobre por leerlos. Esta app los baja, los traduce a frases
+normales y los enseña en el móvil.
+
+## Qué se ve
+
+| Pestaña | Qué responde |
+|---|---|
+| **Hoy** | Qué se ha decidido hoy, día a día, con el importe y el enlace al documento |
+| **Contratos** | Quién adjudica, a qué empresa, por cuánto y con qué procedimiento |
+| **Personas** | Quién entra y quién sale, y si el puesto se cubre por concurso o por libre designación |
+| **Reparto** | A dónde va el dinero publicado: qué organismos, qué empresas, con qué procedimientos |
+
+## Reglas de la casa
+
+1. **No se inventa una cifra.** Todo dato sale de una descarga real. Si una fuente
+   falla ese día, la app lo dice en pantalla en vez de rellenar el hueco.
+2. **Siempre el original a un toque.** Cada tarjeta enlaza a su documento oficial.
+3. **Las señales describen, no acusan.** "Sin concurso abierto" o "libre designación"
+   son procedimientos legales y habituales: se marcan para que te fijes, y cada una
+   explica qué significa y qué no.
+4. **Sin jerga suelta.** Los términos oficiales se tocan y se explican.
+
+## Fuentes
+
+- **[BOE, datos abiertos](https://www.boe.es/datosabiertos/)** — sumario diario:
+  `https://boe.es/datosabiertos/api/boe/sumario/AAAAMMDD`. De ahí salen nombramientos
+  y ceses (sección II.A), oposiciones y convocatorias de libre designación (II.B),
+  ayudas y convenios (III), anuncios de contratación (V.A) y las normas que reparten
+  dinero (I).
+- **[Plataforma de Contratación del Sector Público](https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos)** —
+  sindicación Atom diaria con los datos estructurados en CODICE 2.07.
+- **Presupuestos Generales del Estado** — mejor esfuerzo vía el catálogo de
+  datos.gob.es. Hacienda no publica una API estable de partidas, así que si no se
+  puede leer, la app lo dice y enlaza al portal oficial.
 
 ## Cómo funciona
 
-1. Busca un lugar o navega el mapa, y haz clic para ir dibujando los puntos de
-   la ruta (mínimo 2, separados al menos 50 m en total).
-2. Ajusta el ritmo medio y la "inconsistencia de ritmo" (0% = ritmo perfectamente
-   constante, 100% = variación notable entre kilómetros, con un arranque algo
-   más lento y un "kick" final).
-3. Pon nombre, fecha/hora de inicio y, si quieres, activa frecuencia cardíaca.
-4. Genera la carrera: se calculan splits por km, un perfil de elevación real
-   (o sintético si la API no responde) y, si lo activaste, una curva de FC.
-5. Descarga la tarjeta en PNG y/o el GPX. El GPX es GPX 1.1 estándar con la
-   extensión de Garmin para FC por punto, compatible con la importación de
-   Strava/Garmin Connect.
+No hay servidor ni base de datos. Una tarea programada lee las fuentes una vez al
+día y deja el resultado como JSON estático en `data/`; el frontend es HTML, CSS y
+JavaScript sin dependencias ni build. Eso hace que abra al instante en el móvil,
+gaste pocos datos y siga funcionando aunque el BOE se caiga.
 
-## Stack
-
-HTML/CSS/JS estático, sin build ni backend. Las dependencias de terceros
-(Leaflet, Chart.js, html2canvas) están **vendorizadas** en `js/vendor/` y
-`css/vendor/` (copiadas de sus paquetes npm oficiales) en lugar de cargarse
-desde un CDN, para no depender de la disponibilidad de un CDN en tiempo de
-ejecución. Desplegable en Vercel (u otro hosting estático) sin pasos previos.
-
-## Ejecutar en local
-
-Hace falta servir los archivos por HTTP (no abrir `index.html` con `file://`,
-porque rompe las llamadas a Nominatim/Open-Elevation por CORS):
-
-```bash
-python3 -m http.server 8080
-# o
-npx serve .
+```
+scripts/
+  build.mjs            orquesta la ingesta y escribe data/
+  check.mjs            valida lo generado antes de publicarlo
+  sources/boe.mjs      sumario del BOE
+  sources/placsp.mjs   contratos (Atom + CODICE)
+  sources/pge.mjs      presupuesto por partidas (mejor esfuerzo)
+  lib/xml.mjs          lector de XML por nombre local, sin dependencias
+  lib/texto.mjs        números, jerga y frases en lenguaje llano
+  lib/senales.mjs      las señales y su explicación
+data/
+  index.json           resumen, agregados y estado de cada fuente
+  dias/AAAA-MM-DD.json lo publicado ese día
 ```
 
-Y abrir `http://localhost:8080/`.
+## Desarrollo
 
-## APIs externas y límites
+```bash
+npm test                 # pruebas de los lectores contra ficheros de ejemplo
+npm run demo             # genera data/ con datos de EJEMPLO, para ver la interfaz
+npm run ingest           # ingesta real (necesita salida a boe.es y a la Plataforma)
+npm run check            # valida data/
+npm run dev              # sirve la app en http://localhost:8080
+```
 
-- **Búsqueda de ubicación**: [Nominatim](https://nominatim.openstreetmap.org/)
-  (OpenStreetMap), gratuita y sin API key. Política de uso justo: máx. ~1
-  petición/segundo; la búsqueda en la app aplica *debounce* para respetarlo.
-- **Elevación**: [Open-Elevation](https://open-elevation.com/), gratuita y sin
-  API key. Si no responde (caída del servicio, sin red), la app genera un
-  perfil de elevación sintético (ondulación + ruido, con la pendiente acotada)
-  para que la carrera nunca se rompa por esto.
-- **Ajustar ruta a carreteras**: servicio de routing [OSRM](http://project-osrm.org/)
-  operado por [routing.openstreetmap.de](https://routing.openstreetmap.de/),
-  perfil "foot" (caminos/aceras/calles peatonales), gratuito y sin API key. El
-  botón "Ajustar ruta a carreteras" sustituye los puntos dibujados a mano por
-  el trazado real que devuelve el servicio. Si no responde o no encuentra un
-  camino entre los puntos, se muestra un error y la ruta dibujada se mantiene
-  intacta (no rompe la app).
-- **Teselas del mapa**: [CARTO](https://carto.com/attributions) (`light_all`),
-  elegidas por servir con cabeceras CORS, necesarias para poder capturar el
-  mini-mapa de la tarjeta con `html2canvas` sin error de "tainted canvas".
+`npm run demo` marca los datos como de ejemplo y la app lo avisa en la cabecera.
+No subas esos datos al repositorio: los reales los escribe la tarea programada
+(`.github/workflows/ingesta.yml`), que corre cada día y también a mano desde la
+pestaña Actions.
 
-Ninguna de estas APIs requiere clave ni configuración: si alguna falla o no
-hay red, la app degrada con elegancia (ver más abajo) en lugar de romperse.
+## Lo siguiente
 
-## Limitaciones conocidas
-
-- Sin conexión a Nominatim: la búsqueda de ubicación no devuelve resultados,
-  pero se puede seguir navegando el mapa manualmente y dibujando la ruta.
-- Sin conexión a Open-Elevation: se usa el perfil de elevación sintético.
-- Sin conexión al servicio de routing: "Ajustar ruta a carreteras" muestra un
-  error y la ruta dibujada a mano se mantiene sin cambios.
-- Rutas muy largas se densifican con un punto cada ~10 m, con un tope de 5000
-  puntos (se amplía el espaciado automáticamente para no colgar el navegador).
-
-## Atribución
-
-Mapas © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors,
-teselas de [CARTO](https://carto.com/attributions). Librerías de terceros:
-[Leaflet](https://leafletjs.com/), [Chart.js](https://www.chartjs.org/),
-[html2canvas](https://html2canvas.hertzen.com/).
+La capa de señales (`scripts/lib/senales.mjs`) está pensada para crecer hacia
+indicadores de riesgo calculados sobre el histórico: concentración de adjudicaciones
+en una misma empresa, desviación entre presupuesto y precio final, troceo de un
+gasto en contratos menores, plazos anormalmente cortos. Todo eso necesita meses de
+datos acumulados, así que primero toca acumularlos. El listón se mantiene:
+describir hechos verificables con su enlace, nunca insinuar.
