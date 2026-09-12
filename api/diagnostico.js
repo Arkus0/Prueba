@@ -17,6 +17,7 @@ import { sumarioDelDia } from '../scripts/sources/boe.mjs';
 import { leerFeed, FEEDS } from '../scripts/sources/placsp.mjs';
 import { ultimosDias, comoISO } from '../scripts/lib/red.mjs';
 
+
 const mudo = { log() {}, warn() {} };
 
 async function probarBOE(dias) {
@@ -43,24 +44,36 @@ async function probarBOE(dias) {
   };
 }
 
-async function probarPLACSP(paginas) {
-  const desde = comoISO(ultimosDias(3)[2]);
-  const contratos = await leerFeed(FEEDS[0], desde, mudo, paginas);
-  const campo = (nombre) => contratos.filter((c) => c[nombre] !== null && c[nombre] !== undefined).length;
-  return {
-    estado: contratos.length ? 'ok' : 'sin-datos',
-    registros: contratos.length,
-    camposLeidos: {
-      organismo: campo('organismo'),
-      objeto: campo('objeto'),
-      importe: campo('importe'),
-      procedimiento: campo('procedimiento'),
-      adjudicatario: campo('adjudicatario'),
-      estado: campo('estado'),
-    },
-    sinCompetencia: contratos.filter((c) => c.senales.includes('sin-competencia')).length,
-    muestra: contratos.slice(0, 5),
-  };
+async function probarPLACSP(paginas, dias) {
+  const salida = {};
+  for (const feed of FEEDS) {
+    try {
+      const contratos = await leerFeed(feed, dias, mudo, paginas);
+      const campo = (nombre) => contratos.filter((c) => c[nombre] !== null && c[nombre] !== undefined).length;
+      const porNivel = {};
+      for (const c of contratos) porNivel[c.nivel || 'desconocido'] = (porNivel[c.nivel || 'desconocido'] || 0) + 1;
+      salida[feed.clave] = {
+        estado: contratos.length ? 'ok' : 'sin-datos',
+        registros: contratos.length,
+        fechas: [...new Set(contratos.map((c) => c.fecha))].sort().slice(-5),
+        camposLeidos: {
+          organismo: campo('organismo'),
+          objeto: campo('objeto'),
+          importe: campo('importe'),
+          procedimiento: campo('procedimiento'),
+          adjudicatario: campo('adjudicatario'),
+          estado: campo('estado'),
+        },
+        porNivel,
+        importeTotal: Math.round(contratos.reduce((t, c) => t + (c.importeAdjudicado ?? c.importe ?? 0), 0)),
+        sinCompetencia: contratos.filter((c) => c.senales.includes('sin-competencia')).length,
+        muestra: contratos.slice(0, 3).map((c) => ({ frase: c.frase, importe: c.importe, procedimiento: c.procedimiento, estado: c.estado, nivel: c.nivel, adjudicatario: c.adjudicatario })),
+      };
+    } catch (error) {
+      salida[feed.clave] = { estado: 'error', mensaje: String(error.message || error) };
+    }
+  }
+  return salida;
 }
 
 /** Candidatas de la sindicación, por si la Plataforma mueve las rutas. */
@@ -106,7 +119,7 @@ export default async function handler(peticion, respuesta) {
   try {
     if (fuente === 'crudo') salida.crudo = await probarCrudo();
     if (fuente === 'boe' || fuente === 'todas') salida.boe = await probarBOE(dias);
-    if (fuente === 'placsp' || fuente === 'todas') salida.placsp = await probarPLACSP(paginas);
+    if (fuente === 'placsp' || fuente === 'todas') salida.placsp = await probarPLACSP(paginas, dias);
   } catch (error) {
     salida.error = String(error.message || error);
     respuesta.status(502);

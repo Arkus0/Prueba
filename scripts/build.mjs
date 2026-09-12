@@ -168,7 +168,7 @@ async function main() {
 
     // --- Plataforma de Contratación --------------------------------------
     try {
-      const resultado = await leerContratos(desdeISO);
+      const resultado = await leerContratos(dias);
       contratos = resultado.contratos;
       fuentes.push({
         clave: 'placsp',
@@ -273,7 +273,7 @@ async function main() {
       sumar(porCategoria, 'subvenciones', b.importe);
     }
     if (b.subtipo === 'nombramiento') totales.nombramientos += 1;
-    if (b.subtipo === 'libre-designacion') totales.libresDesignaciones += 1;
+    if (b.subtipo === 'libre-designacion' || b.subtipo === 'libre-designacion-resuelta') totales.libresDesignaciones += 1;
     if (b.subtipo === 'empleo') {
       const plazas = (b.titulo.match(/(\d{1,5})\s+plazas?/i) || [])[1];
       if (plazas) totales.plazas += Number(plazas);

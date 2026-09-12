@@ -91,7 +91,9 @@ export const NOMBRES_CATEGORIA = {
 export const NOMBRES_SUBTIPO = {
   nombramiento: 'Nombramiento',
   cese: 'Cese',
+  situacion: 'Cambio de situación',
   'libre-designacion': 'Libre designación',
+  'libre-designacion-resuelta': 'Libre designación',
   empleo: 'Oposiciones',
   subvencion: 'Ayuda',
   convenio: 'Convenio',

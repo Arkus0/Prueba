@@ -58,7 +58,12 @@ function clasificar(codigo, nombreSeccion, titulo) {
   const esNombramientos = codigo.startsWith('2A') || /nombramiento/.test(nombre);
   const esEmpleo = codigo.startsWith('2B') || /oposicion|oposición|concurso/.test(nombre);
   if (esNombramientos) {
-    return { categoria: 'personas', subtipo: /cese|cesa\b/.test(t) ? 'cese' : 'nombramiento' };
+    if (/libre designaci[oó]n/.test(t)) return { categoria: 'personas', subtipo: 'libre-designacion-resuelta' };
+    if (/\bcese\b|\bcesa\b/.test(t)) return { categoria: 'personas', subtipo: 'cese' };
+    if (/jubilaci[oó]n|excedencia|servicios especiales|reingreso|situaci[oó]n de/.test(t)) {
+      return { categoria: 'personas', subtipo: 'situacion' };
+    }
+    return { categoria: 'personas', subtipo: 'nombramiento' };
   }
   if (esEmpleo) {
     return {
@@ -110,6 +115,24 @@ export function fraseLlana(titulo, subtipo, organismo) {
     if (persona2) return `Nombran a ${persona2[2].trim()} ${conArticulo(persona2[1])}.`;
   }
 
+  if (subtipo === 'libre-designacion-resuelta') {
+    if (/se declara desierta/.test(t)) {
+      return `${Quien || 'Un organismo del Estado'} deja sin cubrir un puesto de libre designación.`;
+    }
+    if (/se resuelve|se adjudica/.test(t)) {
+      return `${Quien || 'Un organismo del Estado'} ya ha elegido a quien ocupa un puesto de libre designación.`;
+    }
+    return `${Quien || 'Un organismo del Estado'} mueve un puesto de libre designación.`;
+  }
+
+  if (subtipo === 'situacion') {
+    const jubilacion = t.match(/se declara la jubilaci[oó]n[^.]*?\b(?:de|del|de la)\s+(?:[Mm]agistrad[oa]|[Jj]uez|[Ff]iscal|[Ll]etrad[oa]|[Ss]ecretari[oa]|[Dd]on|[Dd]oña|[Dd]ª|[Dd]\.)\s*([^.,]{3,70})/);
+    if (jubilacion) return `Se jubila ${limpiarPersona(jubilacion[1])}.`;
+    if (/excedencia/.test(t)) return `${Quien || 'Un organismo del Estado'} concede una excedencia.`;
+    if (/servicios especiales/.test(t)) return `Alguien pasa a servicios especiales${conArticulo0 ? ` en ${conArticulo0}` : ''}.`;
+    return null;
+  }
+
   if (subtipo === 'cese') {
     const cese = t.match(/se dispone el cese\s+(?:de\s+)?(?:don|doña|dª|d\.)?\s*([^,]{3,80}?)(?:,|\s+como|\s+en el cargo)/i);
     if (cese) return `Cesa ${cese[1].trim()}${conArticulo0 ? ` en ${conArticulo0}` : ''}.`;
@@ -122,6 +145,14 @@ export function fraseLlana(titulo, subtipo, organismo) {
   if (subtipo === 'empleo') {
     const plazas = t.match(/(\d{1,5})\s+plazas?/i);
     if (plazas && Quien) return `${Quien} convoca ${plazas[1]} plazas.`;
+    if (/relaci[oó]n de (personas )?aprobad/i.test(t) && Quien) return `${Quien} publica quién ha aprobado.`;
+    if (/lista[s]? (provisional |definitiva )?de (personas )?(admitid|aspirante|excluid)/i.test(t) && Quien) {
+      return `${Quien} publica la lista de admitidos de un proceso selectivo.`;
+    }
+    if (/se resuelve (el|la) concurso|adjudicaci[oó]n de destinos|se adjudican destinos/i.test(t) && Quien) {
+      return `${Quien} reparte destinos entre quienes ganaron un concurso.`;
+    }
+    if (/se convoca (el )?concurso/i.test(t) && Quien) return `${Quien} saca puestos a concurso de méritos.`;
     if (/proceso selectivo|se convocan?\b/i.test(t) && Quien) return `${Quien} abre un proceso para cubrir plazas.`;
   }
 
@@ -147,6 +178,14 @@ export function fraseLlana(titulo, subtipo, organismo) {
   }
 
   return null;
+}
+
+/** Quita tratamientos delante de un nombre: "don Juan Pérez" -> "Juan Pérez". */
+function limpiarPersona(nombre) {
+  return nombre
+    .trim()
+    .replace(/^(don|doña|dª|d\.|sr\.|sra\.|excmo\.?|ilmo\.?)\s+/i, '')
+    .replace(/\s+/g, ' ');
 }
 
 /** Limpia el cargo de muletillas ("como Director General" -> "Director General"). */

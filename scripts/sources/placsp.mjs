@@ -11,7 +11,7 @@
  * Los ficheros se encadenan con <link rel="next">, 500 entradas cada uno.
  */
 
-import { bajar } from '../lib/red.mjs';
+import { bajar, restarDias } from '../lib/red.mjs';
 import { parsearXML, buscar, buscarTodos, texto, textoDe, hijos } from '../lib/xml.mjs';
 import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, conArticuloMayus } from '../lib/texto.mjs';
 import { senalesDeContrato } from '../lib/senales.mjs';
@@ -21,17 +21,46 @@ const BASE = 'https://contrataciondelsectorpublico.gob.es/sindicacion';
 export const FEEDS = [
   {
     clave: 'licitaciones',
+    nombre: 'Licitaciones de los perfiles del contratante',
     url: `${BASE}/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom`,
     esMenor: false,
     obligatorio: true,
   },
   {
+    clave: 'agregadas',
+    nombre: 'Plataformas autonómicas agregadas',
+    url: `${BASE}/sindicacion_1044/PlataformasAgregadasSinMenores.atom`,
+    esMenor: false,
+    obligatorio: false,
+  },
+  {
     clave: 'menores',
+    nombre: 'Contratos menores',
     url: `${BASE}/sindicacion_1143/contratosMenoresPerfilesContratantes.atom`,
     esMenor: true,
     obligatorio: false,
   },
 ];
+
+/**
+ * Quién contrata: Estado, comunidad autónoma o ayuntamiento. Se deduce del
+ * código DIR3 del organismo (E/A/L/U/J) y, si no hay, del tipo de poder
+ * adjudicador. Si no lo sabemos con certeza, se queda en null.
+ */
+const NIVEL_POR_DIR3 = { E: 'estado', A: 'autonomica', L: 'local', U: 'universidad', J: 'justicia', I: 'estado' };
+const NIVEL_POR_TIPO = { 1: 'estado', 2: 'autonomica', 3: 'local' };
+
+export function nivelAdministracion(parte) {
+  if (!parte) return null;
+  for (const id of buscarTodos(parte, 'ID')) {
+    if ((id.attrs.schemeName || '').toUpperCase() === 'DIR3') {
+      const inicial = texto(id).trim().charAt(0).toUpperCase();
+      if (NIVEL_POR_DIR3[inicial]) return NIVEL_POR_DIR3[inicial];
+    }
+  }
+  const tipo = textoDe(parte, 'ContractingPartyTypeCode');
+  return NIVEL_POR_TIPO[Number(tipo)] || null;
+}
 
 /** Codigos CODICE que conocemos con seguridad. Lo que no, se queda en null. */
 const TIPOS = { 1: 'Suministros', 2: 'Servicios', 3: 'Obras', 21: 'Gestión de servicios públicos', 31: 'Concesión de servicios', 32: 'Concesión de obras' };
@@ -146,6 +175,7 @@ export function contratoDesdeEntry(entry, opciones = {}) {
     resultadoCodigo: resultadoCodigo || null,
     fechaAdjudicacion: resultado ? textoDe(resultado, 'AwardDate') : null,
     esMenor: Boolean(opciones.esMenor) || String(procedimientoCodigo) === '6',
+    nivel: nivelAdministracion(parte),
     url: enlaceDeEntry(entry),
   };
 
@@ -181,15 +211,21 @@ export function fraseDeContrato(c) {
   return null;
 }
 
-/** Descarga un feed encadenado y devuelve los contratos dentro de la ventana. */
-export async function leerFeed(feed, desdeISO, registro = console, maxPaginas = 12) {
+/**
+ * Descarga un feed encadenado.
+ *
+ * La ventana se mide contra la entrada mas reciente del propio feed, no contra
+ * el reloj: la Plataforma publica con unos dias de retraso y medir contra hoy
+ * dejaba fuera absolutamente todo.
+ */
+export async function leerFeed(feed, dias, registro = console, maxPaginas = 10, tope = 4000) {
   const contratos = [];
   let url = feed.url;
   let pagina = 0;
-  let agotado = false;
+  let masReciente = null;
 
-  while (url && pagina < maxPaginas && !agotado) {
-    const xml = await bajar(url, { intentos: feed.obligatorio ? 3 : 1 });
+  while (url && pagina < maxPaginas && contratos.length < tope) {
+    const xml = await bajar(url, { intentos: feed.obligatorio ? 3 : 1, tiempoLimiteMs: 60000 });
     const arbol = parsearXML(xml);
     const entradas = buscarTodos(arbol, 'entry');
     if (entradas.length === 0) break;
@@ -198,30 +234,34 @@ export async function leerFeed(feed, desdeISO, registro = console, maxPaginas = 
     for (const entrada of entradas) {
       const contrato = contratoDesdeEntry(entrada, { esMenor: feed.esMenor });
       if (!contrato || !contrato.fecha) continue;
+      if (!masReciente || contrato.fecha > masReciente) masReciente = contrato.fecha;
       if (!masAntiguoEnPagina || contrato.fecha < masAntiguoEnPagina) masAntiguoEnPagina = contrato.fecha;
-      if (contrato.fecha >= desdeISO) contratos.push(contrato);
+      contratos.push(contrato);
     }
 
-    // Si toda la pagina ya es anterior a la ventana, no seguimos hacia atras.
-    if (masAntiguoEnPagina && masAntiguoEnPagina < desdeISO) agotado = true;
+    pagina += 1;
+    registro.log?.(`  PLACSP ${feed.clave}: página ${pagina}, ${contratos.length} entradas leídas`);
+
+    const limite = masReciente ? restarDias(masReciente, dias - 1) : null;
+    if (limite && masAntiguoEnPagina && masAntiguoEnPagina < limite) break;
 
     const siguiente = buscarTodos(arbol, 'link').find((l) => l.attrs.rel === 'next');
     url = siguiente ? siguiente.attrs.href : null;
-    pagina += 1;
-    registro.log?.(`  PLACSP ${feed.clave}: página ${pagina}, ${contratos.length} contratos en ventana`);
   }
 
-  return contratos;
+  const limite = masReciente ? restarDias(masReciente, dias - 1) : null;
+  return limite ? contratos.filter((c) => c.fecha >= limite) : contratos;
 }
 
 /** Lee todos los feeds configurados. Los opcionales no rompen la ingesta. */
-export async function leerContratos(desdeISO, registro = console) {
+export async function leerContratos(dias, registro = console) {
   const contratos = [];
   const errores = [];
 
   for (const feed of FEEDS) {
     try {
-      const encontrados = await leerFeed(feed, desdeISO, registro);
+      const encontrados = await leerFeed(feed, dias, registro);
+      registro.log?.(`  PLACSP ${feed.clave}: ${encontrados.length} contratos en ventana`);
       contratos.push(...encontrados);
     } catch (error) {
       const mensaje = `PLACSP/${feed.clave}: ${error.message || error}`;

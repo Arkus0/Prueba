@@ -143,10 +143,15 @@ export async function vistaPersonas(cont) {
   const consulta = normalizarBusqueda(filtros.busqueda);
   const porSubtipo = (clave) => todos.filter((i) => i.subtipo === clave);
 
-  let items = filtros.subtipo === 'todo' ? todos : porSubtipo(filtros.subtipo);
+  const esLibreDesignacion = (i) => i.subtipo === 'libre-designacion' || i.subtipo === 'libre-designacion-resuelta';
+  let items = filtros.subtipo === 'todo'
+    ? todos
+    : filtros.subtipo === 'libre-designacion'
+      ? todos.filter(esLibreDesignacion)
+      : porSubtipo(filtros.subtipo);
   if (consulta) items = items.filter((i) => paraBuscar(i).includes(consulta));
 
-  const aDedo = porSubtipo('libre-designacion').length;
+  const aDedo = todos.filter(esLibreDesignacion).length;
   const nombramientos = porSubtipo('nombramiento').length;
   const ceses = porSubtipo('cese').length;
   const plazas = estado.indice?.totales?.plazas || 0;
@@ -172,6 +177,7 @@ export async function vistaPersonas(cont) {
       ['nombramiento', 'Nombramientos'],
       ['cese', 'Ceses'],
       ['empleo', 'Oposiciones'],
+      ['situacion', 'Otros cambios'],
     ], filtros.subtipo, 'subtipo')}
     ${listaHTML(items.slice(0, 120), 'No hay nada de esto en los días descargados.')}
     ${pie()}`;

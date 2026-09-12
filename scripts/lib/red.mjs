@@ -49,6 +49,13 @@ export function comoISO(fecha) {
   return fecha.toISOString().slice(0, 10);
 }
 
+/** Resta dias a una fecha AAAA-MM-DD. */
+export function restarDias(iso, n) {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() - n);
+  return comoISO(d);
+}
+
 /** Los ultimos N dias, del mas reciente al mas antiguo. */
 export function ultimosDias(n, desde = new Date()) {
   const dias = [];
