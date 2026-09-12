@@ -72,6 +72,11 @@ npm run check            # valida data/
 npm run dev              # sirve la app en http://localhost:8080
 ```
 
+También hay un endpoint de comprobación, `/api/diagnostico`, que pregunta a las
+fuentes en el momento y responde si siguen vivas y si seguimos entendiendo lo que
+devuelven (`?fuente=boe&dias=2`, `?fuente=placsp&paginas=2`). Sirve para no tener
+que esperar al cron cuando algo huele raro.
+
 `npm run demo` marca los datos como de ejemplo y la app lo avisa en la cabecera.
 No subas esos datos al repositorio: los reales los escribe la tarea programada
 (`.github/workflows/ingesta.yml`), que corre cada día y también a mano desde la
