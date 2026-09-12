@@ -175,7 +175,9 @@ export async function vistaPersonas(cont) {
   const aDedo = todos.filter(esLibreDesignacion).length;
   const nombramientos = porSubtipo('nombramiento').length;
   const ceses = porSubtipo('cese').length;
-  const plazas = estado.indice?.totales?.plazas || 0;
+  // Las plazas de verdad salen del texto de cada convocatoria, no del titular,
+  // así que se cuentan en la pestaña Empleo.
+  const oposicionesAbiertas = estado.indice?.oposiciones?.abiertas || 0;
 
   cont.innerHTML = `
     ${avisoFuentes()}
@@ -185,7 +187,7 @@ export async function vistaPersonas(cont) {
       <div class="panel destacado"><span class="destacado-cifra cifra">${aDedo}</span><span class="destacado-pie">por libre designación</span></div>
       <div class="panel destacado"><span class="destacado-cifra cifra">${nombramientos}</span><span class="destacado-pie">nombramientos</span></div>
       <div class="panel destacado"><span class="destacado-cifra cifra">${ceses}</span><span class="destacado-pie">ceses</span></div>
-      <div class="panel destacado"><span class="destacado-cifra cifra">${plazas}</span><span class="destacado-pie">plazas convocadas</span></div>
+      <div class="panel destacado"><span class="destacado-cifra cifra">${oposicionesAbiertas}</span><span class="destacado-pie">oposiciones abiertas</span></div>
     </div>
     <div class="buscador" style="margin-top:14px">
       ${ICONOS.buscar}

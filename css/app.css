@@ -147,6 +147,13 @@
 .etiqueta-presupuesto { color: var(--c-presupuesto); }
 .tarjeta-cinta time { margin-left: auto; }
 
+/* Los nombres oficiales traen tokens largos sin espacios que desbordaban
+   la pantalla a lo ancho. Que partan por donde haga falta. */
+.tarjeta-frase, .tarjeta-organismo, .hoja-frase, .explicacion,
+.barra-nombre, .dato dd, .seccion-intro {
+  overflow-wrap: anywhere;
+}
+
 .tarjeta-frase {
   font-size: 16.5px;
   line-height: 1.38;
