@@ -1,0 +1,57 @@
+{
+ "sin-competencia": {
+  "etiqueta": "Sin concurso abierto",
+  "tono": "aviso",
+  "explica": "Se adjudicó sin publicar antes un concurso al que pudiera presentarse cualquiera. La ley lo permite en casos concretos (urgencia, proveedor único, concurso desierto). No es una irregularidad: es una decisión que quita competencia y por eso se señala."
+ },
+ "un-licitador": {
+  "etiqueta": "Una sola oferta",
+  "tono": "aviso",
+  "explica": "Hubo concurso, pero solo se presentó una empresa. Puede ser un mercado con un único proveedor capaz, o unas condiciones tan ajustadas que nadie más pudo competir."
+ },
+ "contrato-menor": {
+  "etiqueta": "Contrato menor",
+  "tono": "info",
+  "explica": "Contrato pequeño que se puede adjudicar directamente, sin concurso. Es legal y muy común. Lo que conviene vigilar es que un gasto grande no se trocee en muchos contratos menores."
+ },
+ "importe-alto": {
+  "etiqueta": "Importe grande",
+  "tono": "info",
+  "explica": "Supera el millón de euros. Lo marcamos solo para que no pase desapercibido entre contratos pequeños."
+ },
+ "desierto": {
+  "etiqueta": "Quedó desierto",
+  "tono": "info",
+  "explica": "No se adjudicó a nadie: no hubo ofertas o ninguna servía. Suele repetirse después con otro procedimiento, a menudo con menos publicidad."
+ },
+ "medio-propio": {
+  "etiqueta": "A una empresa pública",
+  "tono": "info",
+  "explica": "El trabajo se encarga a una empresa del propio sector público (Tragsa, Ineco, Isdefe…) sin concurso, porque legalmente cuenta como parte de la Administración. Legal, pero ese dinero no pasa por el mercado."
+ },
+ "modificado": {
+  "etiqueta": "Contrato modificado",
+  "tono": "aviso",
+  "explica": "El contrato se cambió después de firmarse. Las modificaciones suelen subir el precio o alargar el plazo respecto de lo que se adjudicó."
+ },
+ "libre-designacion": {
+  "etiqueta": "Libre designación",
+  "tono": "aviso",
+  "explica": "El puesto se cubre por libre designación: el órgano que nombra elige entre quienes cumplen los requisitos, sin baremo de méritos puntuado, y puede cesar a esa persona en cualquier momento. Es un procedimiento legal y habitual en puestos de confianza; lo señalamos porque cambia quién decide, no porque haya nada irregular."
+ },
+ "por-concurso": {
+  "etiqueta": "Por concurso",
+  "tono": "bueno",
+  "explica": "El puesto se cubre ordenando a los candidatos por méritos puntuados y publicados, no por decisión personal."
+ },
+ "cese": {
+  "etiqueta": "Cese",
+  "tono": "neutro",
+  "explica": "Se retira a alguien de su puesto. En los puestos de libre designación puede hacerse en cualquier momento y el BOE no suele publicar el motivo."
+ },
+ "sin-importe": {
+  "etiqueta": "Sin importe publicado",
+  "tono": "neutro",
+  "explica": "El documento oficial no incluye una cifra en euros que podamos leer automáticamente. Puede estar dentro del PDF; por eso dejamos siempre el enlace al original."
+ }
+}

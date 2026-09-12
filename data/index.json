@@ -1,0 +1,560 @@
+{
+ "version": 1,
+ "generado": "2026-09-12T19:01:34.393Z",
+ "ventana": {
+  "desde": "2026-09-06",
+  "hasta": "2026-09-12",
+  "dias": 7
+ },
+ "demo": false,
+ "avisos": [],
+ "fuentes": [
+  {
+   "clave": "boe",
+   "nombre": "Boletín Oficial del Estado",
+   "estado": "ok",
+   "registros": 559,
+   "dias": 7,
+   "mensaje": null,
+   "url": "https://www.boe.es/datosabiertos/"
+  },
+  {
+   "clave": "placsp",
+   "nombre": "Plataforma de Contratación del Sector Público",
+   "estado": "ok",
+   "registros": 5016,
+   "mensaje": null,
+   "url": "https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos"
+  },
+  {
+   "clave": "pge",
+   "nombre": "Presupuestos Generales del Estado",
+   "estado": "no-disponible",
+   "registros": 0,
+   "mensaje": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
+   "url": "https://www.sepg.pap.hacienda.gob.es/sitios/sepg/es-ES/Presupuestos/Paginas/Presupuestos.aspx"
+  }
+ ],
+ "totales": {
+  "contratos": 5016,
+  "importeContratos": 6465941726,
+  "importeAdjudicado": 1011314811,
+  "sinCompetencia": 3133,
+  "importeSinCompetencia": 283051097,
+  "documentosBOE": 559,
+  "subvenciones": 75,
+  "importeSubvenciones": 0,
+  "nombramientos": 68,
+  "libresDesignaciones": 16,
+  "plazas": 0
+ },
+ "dias": [
+  {
+   "fecha": "2026-09-12",
+   "items": 51,
+   "omitidos": 0,
+   "importe": 0,
+   "contratos": 0,
+   "personas": 47
+  },
+  {
+   "fecha": "2026-09-11",
+   "items": 120,
+   "omitidos": 0,
+   "importe": 39352,
+   "contratos": 25,
+   "personas": 36
+  },
+  {
+   "fecha": "2026-09-10",
+   "items": 400,
+   "omitidos": 995,
+   "importe": 6768556,
+   "contratos": 1290,
+   "personas": 47
+  },
+  {
+   "fecha": "2026-09-09",
+   "items": 264,
+   "omitidos": 0,
+   "importe": 1636413,
+   "contratos": 161,
+   "personas": 39
+  },
+  {
+   "fecha": "2026-09-08",
+   "items": 400,
+   "omitidos": 1414,
+   "importe": 2179107138,
+   "contratos": 1714,
+   "personas": 49
+  },
+  {
+   "fecha": "2026-09-07",
+   "items": 400,
+   "omitidos": 1505,
+   "importe": 3661338195,
+   "contratos": 1800,
+   "personas": 41
+  },
+  {
+   "fecha": "2026-09-06",
+   "items": 23,
+   "omitidos": 3,
+   "importe": 1300656,
+   "contratos": 26,
+   "personas": 0
+  }
+ ],
+ "reparto": {
+  "porOrganismo": [
+   {
+    "clave": "Junta de Gobierno Local del Ayuntamiento de Alpedrete",
+    "n": 1,
+    "importe": 1675425984
+   },
+   {
+    "clave": "Consejo de Administración-Comité de Inversiones de la Sociedad Estatal Correos y Telégrafos SA",
+    "n": 19,
+    "importe": 732850626.3199998
+   },
+   {
+    "clave": "Dirección General de Carreteras",
+    "n": 12,
+    "importe": 584858608.19
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Granada",
+    "n": 11,
+    "importe": 156313616.01
+   },
+   {
+    "clave": "Presidencia del Consorcio As Mariñas",
+    "n": 1,
+    "importe": 141646861.73
+   },
+   {
+    "clave": "Xunta de Goberno Do Concello de Santiago de Compostela",
+    "n": 4,
+    "importe": 135453425.16
+   },
+   {
+    "clave": "Secretaría General de la Consejería de Hacienda, Administraciones Públicas y Transformación Digital de la Junta de Comunidades de Castilla-la Mancha",
+    "n": 9,
+    "importe": 133895760.73
+   },
+   {
+    "clave": "Jefatura de Asuntos Económicos del Mando de Apoyo Logístico",
+    "n": 18,
+    "importe": 96780370.32000001
+   },
+   {
+    "clave": "Dirección de Adquisiciones del Mando de Apoyo Logístico del Ejército del Aire y del Espacio",
+    "n": 6,
+    "importe": 82478024.91000001
+   },
+   {
+    "clave": "Vicepresidente Tercero y Conseller de Medio Ambiente, Infraestructuras, Territorio y de la Recuperación",
+    "n": 3,
+    "importe": 77759298.83
+   },
+   {
+    "clave": "Adif Alta Velocidad - Consejo de Administración",
+    "n": 2,
+    "importe": 65214359.62
+   },
+   {
+    "clave": "Aena. Consejo de Administración",
+    "n": 2,
+    "importe": 64768436.38
+   },
+   {
+    "clave": "Dirección de Gestión Económica de la Jefatura de Apoyo Logístico de la Armada",
+    "n": 11,
+    "importe": 57008835.06
+   },
+   {
+    "clave": "Dirección General de Gestión Económica, Contratación e Infraestructuras de la Conselleria de Sanidad",
+    "n": 6,
+    "importe": 52495956.019999996
+   },
+   {
+    "clave": "Organismo Autónomo Informática del Ayuntamiento de Madrid",
+    "n": 3,
+    "importe": 45939252.03
+   },
+   {
+    "clave": "Área de Gobierno de Urbanismo, Medio Ambiente y Movilidad del Ayuntamiento de Madrid",
+    "n": 12,
+    "importe": 43079923.23
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Fuengirola",
+    "n": 5,
+    "importe": 40846169.39
+   },
+   {
+    "clave": "Consorcio de la Zona Franca de Vigo",
+    "n": 4,
+    "importe": 40084095.55
+   },
+   {
+    "clave": "Empresa Municipal de Transportes de Madrid, SA",
+    "n": 10,
+    "importe": 38261321.94
+   },
+   {
+    "clave": "Pleno del Ayuntamiento de San Roque",
+    "n": 1,
+    "importe": 37013190
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Torrevieja",
+    "n": 10,
+    "importe": 36268955.18
+   },
+   {
+    "clave": "Presidencia del Consejo de Administración de la Autoridad Portuaria de Barcelona (Port de Barcelona)",
+    "n": 19,
+    "importe": 30653447.47
+   },
+   {
+    "clave": "Área de Gobierno de Obras y Equipamientos",
+    "n": 4,
+    "importe": 30602206.900000002
+   },
+   {
+    "clave": "Autoridad Portuaria de Cartagena",
+    "n": 3,
+    "importe": 29191226.619999997
+   },
+   {
+    "clave": "Consejería de Hacienda de la Ciudad Autónoma de Melilla",
+    "n": 7,
+    "importe": 27846961.31
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Palma de Mallorca",
+    "n": 4,
+    "importe": 26307775.82
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de a Coruña",
+    "n": 12,
+    "importe": 26264091.719999995
+   },
+   {
+    "clave": "Consejo de Administración de Sociedad Mercantil Estatal Aguas de las Cuencas de España, SA (Acuaes)",
+    "n": 5,
+    "importe": 25446838.040000003
+   },
+   {
+    "clave": "Consejo de Administración de la Empresa Mancomunada del Aljarafe, SA (Aljarafesa)",
+    "n": 4,
+    "importe": 23975870.19
+   },
+   {
+    "clave": "Vicepresidencia Primera y Conselleria de Vivienda, Empleo, Juventud e Igualdad",
+    "n": 3,
+    "importe": 22732669.34
+   },
+   {
+    "clave": "Sociedad Mercantil Estatal de Infraestructuras Agrarias, SA (Seiasa)",
+    "n": 1,
+    "importe": 22418774.95
+   },
+   {
+    "clave": "Vicepresidencia del Consejo de Administración de la Entidad Pública de Saneamiento de Aguas Residuales de la Comunidad Valenciana",
+    "n": 2,
+    "importe": 21697129.040000003
+   },
+   {
+    "clave": "Departamento de Hacienda y Administración Pública",
+    "n": 1,
+    "importe": 20902739
+   },
+   {
+    "clave": "Consejo de Gobierno Insular del Cabildo Insular de Tenerife",
+    "n": 10,
+    "importe": 19394159.77
+   },
+   {
+    "clave": "Comunidad de Regantes San Isidro de Vinaceite",
+    "n": 1,
+    "importe": 18858461.06
+   },
+   {
+    "clave": "Gobierno de Zaragoza",
+    "n": 5,
+    "importe": 16999088.7
+   },
+   {
+    "clave": "Empresa Municipal de la Vivienda y Suelo de Madrid, SA",
+    "n": 4,
+    "importe": 16961581.21
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Sevilla",
+    "n": 8,
+    "importe": 15341612.15
+   },
+   {
+    "clave": "Comité Ejecutivo de la Mancomunidad de los Canales del Taibilla",
+    "n": 7,
+    "importe": 15227392.409999998
+   },
+   {
+    "clave": "Aena. Presidencia. Consejero Delegado",
+    "n": 2,
+    "importe": 14770000
+   }
+  ],
+  "empresas": [
+   {
+    "clave": "Arquisocial",
+    "n": 1,
+    "importe": 151272013.6
+   },
+   {
+    "clave": "Castromil, SA",
+    "n": 1,
+    "importe": 118877647
+   },
+   {
+    "clave": "Fcc Construcción, S.a.-Pavasal Empresa Constructora SAU",
+    "n": 1,
+    "importe": 69585000
+   },
+   {
+    "clave": "Sociedad Estatal Correos y Telegrafos, SA Sme",
+    "n": 1,
+    "importe": 45046332.44
+   },
+   {
+    "clave": "Kern Pharma, SL",
+    "n": 1,
+    "importe": 23415942
+   },
+   {
+    "clave": "Solred SA",
+    "n": 3,
+    "importe": 22297394.259999998
+   },
+   {
+    "clave": "Instalaza, SA",
+    "n": 1,
+    "importe": 21612436.8
+   },
+   {
+    "clave": "Serveo Servicios SA",
+    "n": 1,
+    "importe": 21079162.6
+   },
+   {
+    "clave": "Endesa Energia SAU",
+    "n": 1,
+    "importe": 20902739
+   },
+   {
+    "clave": "Daimler Buses España, SAU",
+    "n": 1,
+    "importe": 19723646.92
+   },
+   {
+    "clave": "Construcciones Sarrion SL",
+    "n": 1,
+    "importe": 14307629.21
+   },
+   {
+    "clave": "Eneas Servicios Integrales, SA",
+    "n": 1,
+    "importe": 13619012.62
+   },
+   {
+    "clave": "Ute Regenera Adiante",
+    "n": 1,
+    "importe": 12139529.6
+   },
+   {
+    "clave": "Iberdrola Clientes SA",
+    "n": 2,
+    "importe": 8146827.29
+   },
+   {
+    "clave": "Seranco SAU",
+    "n": 2,
+    "importe": 7859916
+   },
+   {
+    "clave": "Bbva",
+    "n": 1,
+    "importe": 7371569.93
+   },
+   {
+    "clave": "Antonio Gomila, SA",
+    "n": 2,
+    "importe": 7081560
+   },
+   {
+    "clave": "Vilor Agua y Medio Ambiente SL",
+    "n": 1,
+    "importe": 6929611
+   },
+   {
+    "clave": "Ute Elecnor Servicios y Proyectos Sau/Audeca, SLU",
+    "n": 1,
+    "importe": 6771692.26
+   },
+   {
+    "clave": "Abala - Orthem",
+    "n": 1,
+    "importe": 6498678.56
+   },
+   {
+    "clave": "Centro Día Bonestar SL",
+    "n": 1,
+    "importe": 6443753.8
+   },
+   {
+    "clave": "Viuda de Sainz, SL",
+    "n": 1,
+    "importe": 6215517.86
+   },
+   {
+    "clave": "Santa Bárbara Sistemas, SAU",
+    "n": 1,
+    "importe": 6000000
+   },
+   {
+    "clave": "Ute Serveo Servicios, SAU - Serveo Centro Especial de Empleo, SL",
+    "n": 1,
+    "importe": 5666970.75
+   },
+   {
+    "clave": "Neumaticos Atlantico, SL",
+    "n": 1,
+    "importe": 5616000
+   },
+   {
+    "clave": "Orange Espagne, SAU",
+    "n": 6,
+    "importe": 5498945.6
+   },
+   {
+    "clave": "Citanias Obras y Servicios, SLU",
+    "n": 1,
+    "importe": 5420013.77
+   },
+   {
+    "clave": "Construcciones Rubau, SA",
+    "n": 1,
+    "importe": 5387150.18
+   },
+   {
+    "clave": "Iluminaciones Ximenez, SAU",
+    "n": 1,
+    "importe": 5371757.74
+   },
+   {
+    "clave": "Inetum España, SA",
+    "n": 4,
+    "importe": 5193441.89
+   }
+  ],
+  "porTipo": [
+   {
+    "clave": "Servicios",
+    "n": 2513,
+    "importe": 4451065102.019995
+   },
+   {
+    "clave": "Obras",
+    "n": 810,
+    "importe": 788761543.8900005
+   },
+   {
+    "clave": "Suministros",
+    "n": 1513,
+    "importe": 558420193.3199997
+   }
+  ],
+  "porProcedimiento": [
+   {
+    "clave": "Concurso abierto",
+    "n": 1632,
+    "importe": 4733333142.830001
+   },
+   {
+    "clave": "Restringido",
+    "n": 85,
+    "importe": 741856820.9299998
+   },
+   {
+    "clave": "Normas internas",
+    "n": 1377,
+    "importe": 134492398.3699998
+   },
+   {
+    "clave": "Negociado con publicidad",
+    "n": 137,
+    "importe": 88692235.07999998
+   },
+   {
+    "clave": "Negociado sin publicidad",
+    "n": 7,
+    "importe": 82836937.16
+   },
+   {
+    "clave": "Contrato menor",
+    "n": 1687,
+    "importe": 10710944.290000012
+   },
+   {
+    "clave": "Derivado de acuerdo marco",
+    "n": 25,
+    "importe": 2905565.120000001
+   },
+   {
+    "clave": "Sistema dinámico de adquisición",
+    "n": 4,
+    "importe": 514359.39
+   },
+   {
+    "clave": "Concurso de proyectos",
+    "n": 1,
+    "importe": 65000
+   },
+   {
+    "clave": "Abierto simplificado",
+    "n": 1,
+    "importe": 710.88
+   }
+  ],
+  "porCategoria": [
+   {
+    "clave": "contratos",
+    "n": 5016,
+    "importe": 5850190309.699988
+   },
+   {
+    "clave": "subvenciones",
+    "n": 75,
+    "importe": 0
+   },
+   {
+    "clave": "presupuesto",
+    "n": 6,
+    "importe": 0
+   }
+  ]
+ },
+ "presupuesto": {
+  "disponible": false,
+  "motivo": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
+  "intentos": []
+ },
+ "umbrales": {
+  "importeAlto": 1000000,
+  "minimoDetalle": 50000
+ }
+}
