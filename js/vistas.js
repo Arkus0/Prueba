@@ -5,15 +5,16 @@
  */
 
 import {
-  estado, cargarUltimos, cargarDia, fechasDisponibles, itemsCargados,
-  diasCargados, fuentesConProblema,
+  estado, cargarUltimos, cargarDia, cargarOposiciones, fechasDisponibles,
+  itemsCargados, diasCargados, fuentesConProblema,
 } from './datos.js';
 import {
   euros, eurosExacto, porHabitante, tituloDeDia, paraBuscar, normalizarBusqueda,
 } from './formato.js';
-import { esc, listaHTML, ICONOS } from './ui.js';
+import { esc, listaHTML, tarjetaOposicionHTML, ICONOS } from './ui.js';
 
 export const filtros = {
+  empleo: 'abiertas',
   categoria: 'todo',
   subtipo: 'todo',
   orden: 'relevancia',
@@ -188,6 +189,51 @@ export async function vistaPersonas(cont) {
       ['situacion', 'Otros cambios'],
     ], filtros.subtipo, 'subtipo')}
     ${listaHTML(items.slice(0, 120), 'No hay nada de esto en los días descargados.')}
+    ${pie()}`;
+}
+
+/* --------------------------- Empleo público ------------------------------ */
+
+export async function vistaEmpleo(cont) {
+  cont.innerHTML = '<div class="cargando"></div><div class="cargando"></div>';
+  const convocatorias = await cargarOposiciones();
+
+  const consulta = normalizarBusqueda(filtros.busqueda);
+  const abiertas = convocatorias.filter((c) => c.abierta);
+  const plazasAbiertas = abiertas.reduce((t, c) => t + (c.plazas || 0), 0);
+
+  let lista = filtros.empleo === 'abiertas' ? abiertas : convocatorias;
+  if (consulta) {
+    lista = lista.filter((c) => normalizarBusqueda(`${c.frase} ${c.titulo} ${c.organismo} ${c.grupo || ''}`).includes(consulta));
+  }
+
+  cont.innerHTML = `
+    ${avisoFuentes()}
+    <section class="seccion">
+      <div class="panel destacado">
+        <span class="destacado-cifra cifra">${abiertas.length}</span>
+        <span class="destacado-pie">convocatorias con el plazo abierto ahora mismo${plazasAbiertas ? `, con <strong>${plazasAbiertas.toLocaleString('es-ES')} plazas</strong> en total` : ''}.</span>
+      </div>
+      <p class="seccion-intro">Todo lo que el Estado saca a concurso para trabajar en él: cuántas plazas,
+        qué hace falta para presentarse y hasta cuándo puedes apuntarte.</p>
+    </section>
+
+    <div class="buscador">
+      ${ICONOS.buscar}
+      <input type="search" id="busqueda" placeholder="Buscar cuerpo, ministerio, grupo…"
+             value="${esc(filtros.busqueda)}" autocomplete="off" aria-label="Buscar convocatorias">
+    </div>
+    ${chipsHTML([
+      ['abiertas', 'Abiertas ahora'],
+      ['todas', 'Todas las publicadas'],
+    ], filtros.empleo, 'empleo')}
+
+    ${lista.length
+      ? lista.slice(0, 100).map(tarjetaOposicionHTML).join('')
+      : `<p class="vacio">${convocatorias.length
+          ? 'Ninguna convocatoria encaja con lo que buscas.'
+          : 'Todavía no hemos leído ninguna convocatoria. Aparecen aquí en cuanto el BOE publique la siguiente.'}</p>`}
+    ${lista.length > 100 ? `<p class="vacio">Mostramos 100 de ${lista.length}. Afina la búsqueda para ver el resto.</p>` : ''}
     ${pie()}`;
 }
 

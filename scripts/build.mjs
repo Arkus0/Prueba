@@ -25,6 +25,7 @@ import { SENALES, IMPORTE_ALTO } from './lib/senales.mjs';
 import { sumarioDelDia, recorrerSumario } from './sources/boe.mjs';
 import { leerContratos, contratoDesdeEntry } from './sources/placsp.mjs';
 import { leerPresupuesto } from './sources/pge.mjs';
+import { leerOposiciones, marcarAbiertas } from './sources/oposiciones.mjs';
 import { parsearXML, buscarTodos } from './lib/xml.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -35,6 +36,10 @@ const MINIMO_DETALLE = 50_000;
  *  pocos y son justo lo que no sale en ningun sitio. */
 const LIMITE_CONTRATOS_DIA = 300;
 const DIAS_QUE_GUARDAMOS = 550;
+/** Cuanto tiempo guardamos una convocatoria despues de cerrarse el plazo. */
+const DIAS_DE_OPOSICIONES = 240;
+/** Documentos completos que bajamos por ejecucion (un relleno largo se reparte). */
+const TOPE_OPOSICIONES = 400;
 /** Ventanas de los resumenes del indice. */
 const VENTANA_PORTADA = 7;
 const VENTANA_REPARTO = 30;
@@ -448,6 +453,14 @@ async function main() {
     umbrales: { importeAlto: IMPORTE_ALTO, minimoDetalle: MINIMO_DETALLE },
   };
 
+  // --- Oposiciones: lo que hay dentro del documento, no solo el titular ---
+  const oposiciones = await actualizarOposiciones(salida, itemsBOE, demo, fechas[0]);
+  indice.oposiciones = {
+    abiertas: oposiciones.filter((o) => o.abierta).length,
+    plazasAbiertas: oposiciones.filter((o) => o.abierta).reduce((t, o) => t + (o.plazas || 0), 0),
+    total: oposiciones.length,
+  };
+
   await writeFile(path.join(salida, 'index.json'), JSON.stringify(indice, null, 1));
   await writeFile(path.join(salida, 'glosario.json'), JSON.stringify(GLOSARIO, null, 1));
   await writeFile(path.join(salida, 'senales.json'), JSON.stringify(SENALES, null, 1));
@@ -462,6 +475,50 @@ async function main() {
   console.log(`  Documentos BOE:    ${portada.documentos}`);
   console.log(`  Libre designación: ${portada.libresDesignaciones}`);
   for (const f of fuentes) console.log(`  Fuente ${f.clave}: ${f.estado}${f.mensaje ? ` — ${f.mensaje}` : ''}`);
+}
+
+/**
+ * Funde las convocatorias ya conocidas con las nuevas y recalcula cuales
+ * siguen abiertas. Solo se baja el texto de las que no conociamos.
+ */
+async function actualizarOposiciones(salida, itemsBOE, demo, ultimoDia) {
+  const fichero = path.join(salida, 'oposiciones.json');
+  const previas = existsSync(fichero)
+    ? (JSON.parse(await readFile(fichero, 'utf8')).convocatorias || [])
+    : [];
+
+  let convocatorias = previas;
+  if (!demo) {
+    const candidatas = itemsBOE.slice(0, TOPE_OPOSICIONES * 4);
+    const { nuevas } = await leerOposiciones(candidatas, previas);
+    const porId = new Map(previas.map((c) => [c.id, c]));
+    for (const nueva of nuevas.slice(0, TOPE_OPOSICIONES)) porId.set(nueva.id, nueva);
+    convocatorias = [...porId.values()];
+  } else if (previas.length === 0) {
+    const ejemplo = itemsBOE.find((i) => i.subtipo === 'empleo');
+    if (ejemplo) {
+      convocatorias = [{
+        id: ejemplo.id, tipo: 'oposicion', fecha: ejemplo.fecha, organismo: ejemplo.organismo,
+        titulo: ejemplo.titulo, frase: 'EJEMPLO: el Ministerio de Justicia convoca 250 plazas del subgrupo C1.',
+        plazas: 250, grupo: 'C1', sistema: 'Oposición', acceso: ['Acceso libre'],
+        titulacion: 'Estar en posesión del título de Bachiller o equivalente.',
+        tasa: '30,49', plazo: { dias: 20, tipo: 'hábiles' },
+        comoApuntarse: 'Solicitud por internet (modelo 790).',
+        limite: '2026-12-31', url: ejemplo.url, urlPdf: ejemplo.urlPdf,
+      }];
+    }
+  }
+
+  const corte = restarDias(ultimoDia || comoISO(new Date()), DIAS_DE_OPOSICIONES);
+  const vivas = marcarAbiertas(convocatorias.filter((c) => c.fecha >= corte))
+    .sort((a, b) => {
+      if (a.abierta !== b.abierta) return a.abierta ? -1 : 1;
+      return (a.limite || '9999') < (b.limite || '9999') ? -1 : 1;
+    });
+
+  await writeFile(fichero, JSON.stringify({ generado: new Date().toISOString(), convocatorias: vivas }, null, 1));
+  console.log(`  Oposiciones: ${vivas.filter((c) => c.abierta).length} abiertas de ${vivas.length} guardadas`);
+  return vivas;
 }
 
 /** Todas las fechas desde una dada hasta hoy, de la mas reciente a la mas antigua. */

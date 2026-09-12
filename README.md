@@ -14,7 +14,8 @@ normales y los enseña en el móvil.
 |---|---|
 | **Hoy** | Qué se ha decidido hoy, día a día, con el importe y el enlace al documento |
 | **Contratos** | Quién adjudica, a qué empresa, por cuánto y con qué procedimiento |
-| **Personas** | Quién entra y quién sale, y si el puesto se cubre por concurso o por libre designación |
+| **Empleo** | Qué oposiciones tienen el plazo abierto: plazas, requisitos, tasa y hasta cuándo puedes apuntarte |
+| **Cargos** | Quién entra y quién sale, y si el puesto se cubre por concurso o por libre designación |
 | **Reparto** | A dónde va el dinero publicado: qué organismos, qué empresas, con qué procedimientos |
 
 ## Reglas de la casa
@@ -57,10 +58,33 @@ scripts/
   lib/xml.mjs          lector de XML por nombre local, sin dependencias
   lib/texto.mjs        números, jerga y frases en lenguaje llano
   lib/senales.mjs      las señales y su explicación
+  sources/oposiciones.mjs  baja el texto de cada convocatoria y saca plazo y plazas
 data/
   index.json           resumen, agregados y estado de cada fuente
   dias/AAAA-MM-DD.json lo publicado ese día
+  oposiciones.json     convocatorias de empleo público con su plazo
 ```
+
+### Sobre las oposiciones
+
+El sumario del BOE solo trae el titular. Lo que de verdad necesita quien quiere
+presentarse —cuántas plazas, qué titulación piden, la tasa y hasta cuándo hay
+plazo— está dentro del documento, así que de cada convocatoria se descarga el
+texto completo y se extrae. La fecha tope se calcula contando desde el día
+siguiente a la publicación y saltando sábados y domingos; los festivos cambian
+según dónde presentes la solicitud, así que se muestra como aproximada y
+siempre junto al enlace al texto oficial.
+
+### Relleno del pasado
+
+`node scripts/build.mjs --desde=2025-07-01 --solo=boe` lee el sumario día a día
+hacia atrás y lo funde con lo que ya hay. La tarea *Relleno histórico del BOE*
+hace lo mismo desde Actions, o tocando `.github/relleno.txt`.
+
+Los contratos son otra escala: la Plataforma publica del orden de mil al día de
+toda España, así que el histórico completo no cabe en ficheros JSON dentro del
+repositorio y pediría una base de datos. De momento se guardan en detalle los
+últimos meses y el agregado diario de todo lo demás.
 
 ## Desarrollo
 

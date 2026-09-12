@@ -142,3 +142,33 @@ test('el glosario cubre la jerga que detectamos', async () => {
     assert.ok(GLOSARIO[clave], `falta la explicación de "${clave}"`);
   }
 });
+
+test('de una convocatoria sacamos plazas, plazo y requisitos', async () => {
+  const { detallesDesdeTexto, fechaLimite, pareceConvocatoria, plazoEn } = await import('../sources/oposiciones.mjs');
+
+  const texto = 'Se convoca proceso selectivo para ingreso, por el sistema general de acceso libre y '
+    + 'promoción interna, en el Cuerpo de Gestión Procesal y Administrativa, subgrupo A2, con un total de 250 plazas. '
+    + 'Los aspirantes deberán estar en posesión del título de Diplomado universitario o equivalente. '
+    + 'El plazo de presentación de solicitudes será de veinte días hábiles contados a partir del día siguiente al de la publicación. '
+    + 'La solicitud se cumplimentará en el modelo 790 del servicio de Inscripción de Pruebas Selectivas. '
+    + 'Los derechos de examen serán de 30,49 euros.';
+
+  const d = detallesDesdeTexto(texto);
+  assert.equal(d.plazas, 250);
+  assert.equal(d.grupo, 'A2');
+  assert.deepEqual(d.plazo, { dias: 20, tipo: 'hábiles' });
+  assert.equal(d.tasa, '30,49');
+  assert.ok(d.acceso.includes('Acceso libre'));
+  assert.match(d.titulacion, /Diplomado universitario/);
+  assert.match(d.comoApuntarse, /790/);
+
+  // 20 días hábiles desde el sábado 12/09/2026, sin contar fines de semana.
+  assert.equal(fechaLimite('2026-09-12', d.plazo), '2026-10-09');
+  assert.equal(fechaLimite('2026-09-12', null), null);
+
+  // Solo pedimos el texto completo de lo que es una convocatoria de verdad.
+  assert.equal(pareceConvocatoria({ subtipo: 'empleo', titulo: 'Resolución por la que se convoca proceso selectivo' }), true);
+  assert.equal(pareceConvocatoria({ subtipo: 'empleo', titulo: 'Resolución por la que se publica la relación de personas aprobadas' }), false);
+  assert.equal(pareceConvocatoria({ subtipo: 'nombramiento', titulo: 'Se convoca algo' }), false);
+  assert.equal(plazoEn('sin plazo aquí'), null);
+});

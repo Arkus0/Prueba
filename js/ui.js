@@ -7,7 +7,7 @@
 import { estado, glosarioDe, senalDe } from './datos.js';
 import {
   euros, eurosExacto, porHabitante, fechaCorta, fechaLarga, recortar,
-  NOMBRES_CATEGORIA, NOMBRES_SUBTIPO,
+  diasHasta, cuentaAtras, NOMBRES_CATEGORIA, NOMBRES_SUBTIPO,
 } from './formato.js';
 
 export function esc(texto) {
@@ -21,6 +21,7 @@ export const ICONOS = {
   contratos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6M9 14h6M9 17.5h4"/></svg>',
   personas: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 11.2a3 3 0 0 0 0-5.4M17.5 20a5 5 0 0 0-2.2-3.6"/></svg>',
   reparto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>',
+  empleo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 12h18"/></svg>',
   aviso: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9.2"/></svg>',
   bueno: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6.5 9.5 17 4 11.5"/></svg>',
   info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M12 11v5.5M12 7.5v.5"/><circle cx="12" cy="12" r="9.2"/></svg>',
@@ -78,6 +79,31 @@ export function tarjetaHTML(item, opciones = {}) {
       ${mostrarOrganismo ? `<span class="tarjeta-organismo">${esc(item.organismo)}</span>` : ''}
       ${corto ? `<span class="tarjeta-dinero"><span class="importe cifra">${esc(corto)}</span>${escala ? `<span class="importe-nota">≈ ${esc(escala)}</span>` : ''}</span>` : ''}
       ${senalesHTML(item.senales)}
+    </button>`;
+}
+
+/** Tarjeta de una convocatoria de empleo público: manda el plazo. */
+export function tarjetaOposicionHTML(convocatoria) {
+  const dias = diasHasta(convocatoria.limite);
+  const cuenta = cuentaAtras(convocatoria.limite);
+  const tono = convocatoria.abierta ? (dias !== null && dias <= 5 ? 'aviso' : 'bueno') : 'neutro';
+  const detalles = [
+    convocatoria.sistema,
+    convocatoria.grupo ? `Subgrupo ${convocatoria.grupo}` : null,
+    ...(convocatoria.acceso || []),
+  ].filter(Boolean);
+
+  return `
+    <button class="tarjeta" type="button" data-oposicion="${esc(convocatoria.id)}">
+      <span class="tarjeta-cinta">
+        <span class="etiqueta etiqueta-personas"><span class="punto punto-personas"></span>Empleo público</span>
+        <time datetime="${esc(convocatoria.fecha)}">${esc(fechaCorta(convocatoria.fecha))}</time>
+      </span>
+      <span class="tarjeta-frase">${esc(convocatoria.frase || recortar(convocatoria.titulo, 150))}</span>
+      ${convocatoria.plazas ? `<span class="tarjeta-dinero"><span class="importe cifra">${convocatoria.plazas}</span><span class="importe-nota">${convocatoria.plazas === 1 ? 'plaza' : 'plazas'}</span></span>` : ''}
+      ${detalles.length ? `<span class="tarjeta-organismo">${esc(detalles.join(' · '))}</span>` : ''}
+      ${cuenta ? `<span class="senales"><span class="senal senal-${tono}">${tono === 'bueno' ? ICONOS.bueno : ICONOS.aviso}${esc(cuenta)}</span></span>`
+        : '<span class="senales"><span class="senal senal-neutro">' + ICONOS.info + 'Plazo no publicado en el texto</span></span>'}
     </button>`;
 }
 
@@ -170,6 +196,37 @@ export function abrirFicha(item) {
   `);
 }
 
+/** Ficha de una convocatoria: todo lo que hace falta para presentarse. */
+export function abrirFichaOposicion(c) {
+  const dias = diasHasta(c.limite);
+  const filas = [
+    fila('Plazas', c.plazas ? `<span class="cifra">${c.plazas}</span>` : null),
+    fila('Quién convoca', c.organismo ? esc(c.organismo) : null),
+    fila('Cómo se entra', c.sistema ? esc(c.sistema) : null),
+    fila('Turno', (c.acceso || []).length ? esc(c.acceso.join(' · ')) : null),
+    fila('Grupo', c.grupo ? `${esc(c.grupo)} <span class="importe-nota">(nivel del cuerpo)</span>` : null),
+    fila('Titulación', c.titulacion ? esc(c.titulacion) : null),
+    fila('Tasa', c.tasa ? `${esc(c.tasa)} €` : null),
+    fila('Plazo', c.plazo ? `${c.plazo.dias} días ${esc(c.plazo.tipo)} desde el día siguiente a su publicación` : null),
+    fila('Fecha tope', c.limite
+      ? `<strong>${esc(fechaLarga(c.limite))}</strong> <span class="importe-nota">(aprox.)</span>${dias !== null ? `<br><span class="importe-nota">${esc(cuentaAtras(c.limite))}</span>` : ''}`
+      : null),
+    fila('Publicado', esc(fechaLarga(c.fecha))),
+  ].join('');
+
+  abrirHoja('Convocatoria de empleo público', `
+    <p class="hoja-frase">${esc(c.frase || c.titulo)}</p>
+    ${c.comoApuntarse ? `<div class="explicacion" style="margin-top:14px"><strong>Cómo apuntarse.</strong> ${esc(c.comoApuntarse)}</div>` : ''}
+    <dl class="datos">${filas}</dl>
+    ${c.limite ? `<div class="explicacion"><strong>Sobre la fecha tope.</strong> La calculamos contando desde el día siguiente a la publicación,
+      sin contar sábados ni domingos. Los festivos cambian según dónde presentes la solicitud, así que puede bailar un día o dos:
+      confirma el plazo exacto en el texto oficial antes de dejarlo para el final.</div>` : ''}
+    <div class="explicacion"><strong>Texto oficial.</strong> ${esc(c.titulo)}</div>
+    ${c.url ? `<a class="boton" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Leer la convocatoria completa ${ICONOS.enlace}</a>` : ''}
+    ${c.urlPdf ? `<a class="boton boton-secundario" href="${esc(c.urlPdf)}" target="_blank" rel="noopener noreferrer">Abrir el PDF del BOE ${ICONOS.enlace}</a>` : ''}
+  `);
+}
+
 /** Ficha de un término del glosario. */
 export function abrirGlosario(clave) {
   const termino = glosarioDe(clave);
@@ -204,6 +261,10 @@ export function abrirAyuda() {
       <strong>Qué no hacemos.</strong> No inventamos ni estimamos cifras. Si una fuente oficial falla ese día, lo decimos
       en pantalla en vez de rellenar el hueco. Las señales (“sin concurso abierto”, “libre designación”) describen
       procedimientos legales y habituales: sirven para fijarse, no para acusar a nadie.
+    </div>
+    <div class="explicacion">
+      <strong>Las oposiciones.</strong> De cada convocatoria bajamos el texto completo para sacar las plazas, los requisitos y el plazo.
+      La fecha tope se calcula contando días hábiles sin festivos locales, así que es aproximada: confírmala en el BOE antes de dejarlo para el final.
     </div>
     <div class="explicacion">
       <strong>Los importes.</strong> En contratación se publican normalmente sin IVA, y son lo previsto o lo adjudicado,

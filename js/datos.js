@@ -11,6 +11,7 @@ export const estado = {
   dias: new Map(),      // fecha -> { items, omitidos, importeOmitido }
   glosario: {},
   senales: {},
+  oposiciones: null,
   error: null,
 };
 
@@ -39,6 +40,14 @@ export async function cargarDia(fecha) {
   const dia = await traer(`dias/${fecha}.json`);
   estado.dias.set(fecha, dia);
   return dia;
+}
+
+/** Convocatorias de empleo público, con su plazo. Se carga una sola vez. */
+export async function cargarOposiciones() {
+  if (estado.oposiciones) return estado.oposiciones;
+  const datos = await traer('oposiciones.json').catch(() => ({ convocatorias: [] }));
+  estado.oposiciones = datos.convocatorias || [];
+  return estado.oposiciones;
 }
 
 /** Fechas disponibles, de la más reciente a la más antigua. */

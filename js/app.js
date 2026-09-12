@@ -3,14 +3,15 @@
  * todo pintado desde los JSON que deja la ingesta diaria.
  */
 
-import { arrancar, estado, itemsCargados } from './datos.js';
-import { abrirFicha, abrirGlosario, abrirAyuda, cerrarHoja, ICONOS, esc } from './ui.js';
-import { vistaHoy, vistaContratos, vistaPersonas, vistaReparto, filtros } from './vistas.js';
+import { arrancar, estado, itemsCargados, cargarOposiciones } from './datos.js';
+import { abrirFicha, abrirFichaOposicion, abrirGlosario, abrirAyuda, cerrarHoja, ICONOS, esc } from './ui.js';
+import { vistaHoy, vistaContratos, vistaEmpleo, vistaPersonas, vistaReparto, filtros } from './vistas.js';
 
 const VISTAS = {
   hoy: { titulo: 'Hoy', icono: ICONOS.hoy, pintar: vistaHoy },
   contratos: { titulo: 'Contratos', icono: ICONOS.contratos, pintar: vistaContratos },
-  personas: { titulo: 'Personas', icono: ICONOS.personas, pintar: vistaPersonas },
+  empleo: { titulo: 'Empleo', icono: ICONOS.empleo, pintar: vistaEmpleo },
+  personas: { titulo: 'Cargos', icono: ICONOS.personas, pintar: vistaPersonas },
   reparto: { titulo: 'Reparto', icono: ICONOS.reparto, pintar: vistaReparto },
 };
 
@@ -90,6 +91,14 @@ function conectarEventos() {
       return;
     }
 
+    const oposicion = objetivo('[data-oposicion]');
+    if (oposicion) {
+      const convocatorias = await cargarOposiciones();
+      const encontrada = convocatorias.find((c) => c.id === oposicion.dataset.oposicion);
+      if (encontrada) abrirFichaOposicion(encontrada);
+      return;
+    }
+
     const tarjeta = objetivo('.tarjeta');
     if (tarjeta) {
       const item = itemPorId(tarjeta.dataset.id, tarjeta.dataset.fecha);
@@ -106,6 +115,12 @@ function conectarEventos() {
     const subtipo = objetivo('[data-subtipo]');
     if (subtipo) {
       filtros.subtipo = subtipo.dataset.subtipo;
+      return repintarConservandoBusqueda();
+    }
+
+    const empleo = objetivo('[data-empleo]');
+    if (empleo) {
+      filtros.empleo = empleo.dataset.empleo;
       return repintarConservandoBusqueda();
     }
 

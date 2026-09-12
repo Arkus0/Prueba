@@ -218,6 +218,7 @@ function itemNormalizado(bruto, contexto) {
     importe: dinero ? dinero.importe : null,
     url: `${BASE}/diario_boe/txt.php?id=${encodeURIComponent(id)}`,
     urlPdf: urlAbsoluta(bruto.url_pdf ?? bruto.urlPdf),
+    urlXml: urlAbsoluta(bruto.url_xml ?? bruto.urlXml) || `${BASE}/diario_boe/xml.php?id=${encodeURIComponent(id)}`,
     jerga: jergaEn(titulo),
   };
   item.frase = fraseLlana(titulo, clase.subtipo, contexto.organismo);

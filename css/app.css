@@ -45,7 +45,7 @@
   left: 0; right: 0; bottom: 0;
   z-index: 30;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   background: color-mix(in srgb, var(--superficie) 94%, transparent);
   backdrop-filter: saturate(180%) blur(14px);
   border-top: 1px solid var(--linea);
@@ -55,7 +55,7 @@
   min-height: var(--barra-alto);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 3px;
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--tinta-suave);
   padding: 6px 2px;
 }

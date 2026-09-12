@@ -65,6 +65,24 @@ export function fechaCorta(iso) {
   return `${f.getDate()} ${MESES[f.getMonth()].slice(0, 3)}`;
 }
 
+/** Días que faltan hasta una fecha: negativo si ya pasó. */
+export function diasHasta(iso) {
+  if (!iso) return null;
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  return Math.round((aFecha(iso) - hoy) / 86400000);
+}
+
+/** "quedan 12 días", "último día", "cerrado hace 3 días". */
+export function cuentaAtras(iso) {
+  const dias = diasHasta(iso);
+  if (dias === null) return null;
+  if (dias < 0) return `plazo cerrado hace ${Math.abs(dias)} ${Math.abs(dias) === 1 ? 'día' : 'días'}`;
+  if (dias === 0) return 'último día para apuntarse';
+  if (dias === 1) return 'queda 1 día';
+  return `quedan ${dias} días`;
+}
+
 /** "viernes, 12 de septiembre de 2026". */
 export function fechaLarga(iso) {
   if (!iso) return '';
