@@ -12,6 +12,12 @@ const entero = new Intl.NumberFormat(ES, { maximumFractionDigits: 0 });
 const unDecimal = new Intl.NumberFormat(ES, { maximumFractionDigits: 1 });
 const dosDecimales = new Intl.NumberFormat(ES, { maximumFractionDigits: 2 });
 
+/** Un entero con separador de miles: 10494 -> "10.494". */
+export function numero(n) {
+  if (n === null || n === undefined || Number.isNaN(Number(n))) return '0';
+  return entero.format(Math.round(Number(n)));
+}
+
 /** Importe corto y legible: 4,3 M€, 845.000 €, 12,4 mil M€. */
 export function euros(n) {
   if (n === null || n === undefined || Number.isNaN(Number(n))) return null;
