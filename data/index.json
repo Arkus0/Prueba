@@ -1,6 +1,6 @@
 {
  "version": 2,
- "generado": "2026-09-12T19:46:50.618Z",
+ "generado": "2026-09-13T07:31:26.585Z",
  "ventana": {
   "desde": "2026-09-06",
   "hasta": "2026-09-12",
@@ -85,13 +85,13 @@
   {
    "fecha": "2026-09-05",
    "contratos": 52,
-   "personas": 24,
+   "personas": 0,
    "importe": 2936642
   },
   {
    "fecha": "2026-09-04",
    "contratos": 430,
-   "personas": 34,
+   "personas": 0,
    "importe": 34398437
   },
   {
@@ -1212,17 +1212,249 @@
     "n": 101,
     "importe": 26705315
    }
+  ],
+  "porSector": [
+   {
+    "clave": "Basuras, agua y limpieza",
+    "n": 83,
+    "importe": 2564052525
+   },
+   {
+    "clave": "Obras y carreteras",
+    "n": 421,
+    "importe": 2535407660
+   },
+   {
+    "clave": "Sanidad y farmacia",
+    "n": 231,
+    "importe": 1847411355
+   },
+   {
+    "clave": "Transporte y vehículos",
+    "n": 81,
+    "importe": 1085293583
+   },
+   {
+    "clave": "Mantenimiento y reparaciones",
+    "n": 121,
+    "importe": 1045366935
+   },
+   {
+    "clave": "Informática y oficina",
+    "n": 192,
+    "importe": 952356424
+   },
+   {
+    "clave": "Gestión y asesoría",
+    "n": 118,
+    "importe": 409882482
+   },
+   {
+    "clave": "Energía y combustible",
+    "n": 37,
+    "importe": 277644574
+   },
+   {
+    "clave": "Materiales y suministros",
+    "n": 93,
+    "importe": 237614571
+   },
+   {
+    "clave": "Ingeniería y proyectos",
+    "n": 99,
+    "importe": 193027046
+   },
+   {
+    "clave": "Seguridad y defensa",
+    "n": 16,
+    "importe": 99600884
+   },
+   {
+    "clave": "Cultura y deporte",
+    "n": 33,
+    "importe": 52904263
+   },
+   {
+    "clave": "Comida y hostelería",
+    "n": 28,
+    "importe": 48885227
+   },
+   {
+    "clave": "Educación y formación",
+    "n": 28,
+    "importe": 45703360
+   },
+   {
+    "clave": "Agricultura y medio ambiente",
+    "n": 20,
+    "importe": 31487305
+   }
+  ],
+  "porCCAA": [
+   {
+    "clave": "13",
+    "nombre": "Madrid",
+    "poblacion": 7010000,
+    "n": 249,
+    "importe": 3658957684
+   },
+   {
+    "clave": "01",
+    "nombre": "Andalucía",
+    "poblacion": 8631000,
+    "n": 218,
+    "importe": 1436813891
+   },
+   {
+    "clave": "16",
+    "nombre": "País Vasco",
+    "poblacion": 2226000,
+    "n": 217,
+    "importe": 1368221141
+   },
+   {
+    "clave": "09",
+    "nombre": "Cataluña",
+    "poblacion": 8012000,
+    "n": 254,
+    "importe": 1124256818
+   },
+   {
+    "clave": "12",
+    "nombre": "Galicia",
+    "poblacion": 2705000,
+    "n": 53,
+    "importe": 280146921
+   },
+   {
+    "clave": "10",
+    "nombre": "C. Valenciana",
+    "poblacion": 5320000,
+    "n": 86,
+    "importe": 204795446
+   },
+   {
+    "clave": "08",
+    "nombre": "Castilla-La Mancha",
+    "poblacion": 2103000,
+    "n": 42,
+    "importe": 180157035
+   },
+   {
+    "clave": "14",
+    "nombre": "Murcia",
+    "poblacion": 1568000,
+    "n": 12,
+    "importe": 96659650
+   },
+   {
+    "clave": "04",
+    "nombre": "Illes Balears",
+    "poblacion": 1231000,
+    "n": 27,
+    "importe": 74524417
+   },
+   {
+    "clave": "05",
+    "nombre": "Canarias",
+    "poblacion": 2238000,
+    "n": 34,
+    "importe": 68432580
+   },
+   {
+    "clave": "15",
+    "nombre": "Navarra",
+    "poblacion": 678000,
+    "n": 28,
+    "importe": 58066560
+   },
+   {
+    "clave": "07",
+    "nombre": "Castilla y León",
+    "poblacion": 2394000,
+    "n": 35,
+    "importe": 51286419
+   },
+   {
+    "clave": "02",
+    "nombre": "Aragón",
+    "poblacion": 1351000,
+    "n": 34,
+    "importe": 47508134
+   },
+   {
+    "clave": "06",
+    "nombre": "Cantabria",
+    "poblacion": 590000,
+    "n": 10,
+    "importe": 43088292
+   },
+   {
+    "clave": "11",
+    "nombre": "Extremadura",
+    "poblacion": 1064000,
+    "n": 36,
+    "importe": 35227000
+   },
+   {
+    "clave": "19",
+    "nombre": "Melilla",
+    "poblacion": 85000,
+    "n": 5,
+    "importe": 27820109
+   },
+   {
+    "clave": "17",
+    "nombre": "La Rioja",
+    "poblacion": 325000,
+    "n": 10,
+    "importe": 13228525
+   },
+   {
+    "clave": "03",
+    "nombre": "Asturias",
+    "poblacion": 1006000,
+    "n": 11,
+    "importe": 7133984
+   }
   ]
+ },
+ "territorio": {
+  "localizados": 1361,
+  "estatales": 112,
+  "sinLocalizar": 130,
+  "poblacion": {
+   "10": 5320000,
+   "11": 1064000,
+   "12": 2705000,
+   "13": 7010000,
+   "14": 1568000,
+   "15": 678000,
+   "16": 2226000,
+   "17": 325000,
+   "18": 83000,
+   "19": 85000,
+   "01": 8631000,
+   "02": 1351000,
+   "03": 1006000,
+   "04": 1231000,
+   "05": 2238000,
+   "06": 590000,
+   "07": 2394000,
+   "08": 2103000,
+   "09": 8012000
+  },
+  "fuentePoblacion": "INE, Cifras de Población a 1 de enero de 2025"
  },
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 999,
-   "libresDesignaciones": 61,
-   "nombramientos": 61,
+   "documentos": 874,
+   "libresDesignaciones": 58,
+   "nombramientos": 56,
    "ceses": 4,
    "plazas": 0,
-   "subvenciones": 136,
+   "subvenciones": 110,
    "contratos": 8940,
    "importeContratos": 1735195078
   },

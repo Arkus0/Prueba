@@ -5,16 +5,19 @@
  */
 
 import {
-  estado, cargarUltimos, cargarDia, cargarOposiciones, fechasDisponibles,
-  itemsCargados, diasCargados, fuentesConProblema,
+  estado, cargarUltimos, cargarOposiciones, fechasDisponibles,
+  itemsCargados, diasCargados, fuentesConProblema, nombreDeCCAA,
 } from './datos.js';
 import {
-  euros, eurosExacto, porHabitante, tituloDeDia, paraBuscar, normalizarBusqueda,
+  euros, porHabitante, tituloDeDia, paraBuscar, normalizarBusqueda,
 } from './formato.js';
 import { esc, listaHTML, tarjetaOposicionHTML, ICONOS } from './ui.js';
+import { barras, mapa, anillo, barraApilada, serie, chispa } from './graficos.js';
 
 export const filtros = {
   empleo: 'abiertas',
+  ccaa: 'todo',
+  mapa: 'total',
   categoria: 'todo',
   subtipo: 'todo',
   orden: 'relevancia',
@@ -71,11 +74,70 @@ function filtrarPorCategoria(items) {
   return items.filter((i) => i.categoria === filtros.categoria);
 }
 
-/* ---------------------------------- Hoy ---------------------------------- */
+/* -------------------------------- Portada --------------------------------- */
 
-export async function vistaHoy(cont) {
+/** El bloque del mapa, con su interruptor. Lo usan la portada y Reparto. */
+function bloqueMapa(indice, opciones = {}) {
+  const reparto = indice.reparto || {};
+  const filas = reparto.porCCAA || [];
+  if (!filas.length) {
+    return `<div class="aviso-fuente neutro">${ICONOS.info}<span>Todavía no hay contratos
+      localizados por comunidad. Aparecerán en cuanto la ingesta traiga contratos nuevos.</span></div>`;
+  }
+  return `
+    <div class="conmutador" role="group" aria-label="Cómo se mide el mapa">
+      <button type="button" data-mapa="total" aria-pressed="${filtros.mapa === 'total'}">En total</button>
+      <button type="button" data-mapa="habitante" aria-pressed="${filtros.mapa === 'habitante'}">Por habitante</button>
+    </div>
+    ${mapa(filas, {
+      modo: filtros.mapa,
+      territorio: indice.territorio || {},
+      activa: opciones.activa,
+    })}`;
+}
+
+/** Las cifras de cabecera, con su chispa cuando hay serie que enseñar. */
+function cifras(indice) {
+  const t = indice.totales || {};
+  const dias = [...(indice.dias || [])].reverse().slice(-40);
+  const porcentajeSinConcurso = t.importeContratos
+    ? Math.round((t.importeSinCompetencia / (t.importeAdjudicado || t.importeContratos)) * 100)
+    : 0;
+
+  const ficha = (cifra, pie, valores) => `
+    <div class="panel destacado">
+      <span class="destacado-cifra cifra">${esc(cifra)}</span>
+      <span class="destacado-pie">${pie}</span>
+      ${valores ? chispa(valores) : ''}
+    </div>`;
+
+  return `<div class="rejilla-cifras">
+      ${ficha(String(t.contratos || 0), 'contratos publicados', dias.map((d) => d.contratos))}
+      ${ficha(`${porcentajeSinConcurso}%`, 'del dinero, sin concurso abierto')}
+      ${ficha(String(indice.oposiciones?.abiertas || 0), 'oposiciones con plazo abierto')}
+      ${ficha(String(t.libresDesignaciones || 0), 'puestos por libre designación', dias.map((d) => d.personas))}
+    </div>`;
+}
+
+export async function vistaPortada(cont) {
+  const indice = estado.indice;
+  if (!indice) { cont.innerHTML = '<div class="cargando"></div>'; return; }
+
   cont.innerHTML = `${avisoFuentes()}<div class="cargando"></div><div class="cargando"></div><div class="cargando"></div>`;
   await cargarUltimos(filtros.diasVisibles);
+
+  const t = indice.totales || {};
+  const reparto = indice.reparto || {};
+  const total = t.importeAdjudicado || t.importeContratos || 0;
+  const tuyo = porHabitante(total);
+  const dias = indice.ventana?.dias || 7;
+
+  // Lo más gordo de los días cargados: tres tarjetas, no la lista entera.
+  const cargados = itemsCargados();
+  const gordos = [...cargados]
+    .filter((i) => Number(i.importeAdjudicado ?? i.importe) > 0)
+    .sort((a, b) => (b.importeAdjudicado ?? b.importe) - (a.importeAdjudicado ?? a.importe))
+    .slice(0, 3);
 
   const fechas = fechasDisponibles().slice(0, filtros.diasVisibles);
   const hayMas = fechasDisponibles().length > filtros.diasVisibles;
@@ -84,10 +146,10 @@ export async function vistaHoy(cont) {
     const dia = estado.dias.get(fecha);
     if (!dia) return '';
     const items = filtrarPorCategoria(dia.items);
-    const gastado = dia.items.reduce((t, i) => t + (Number(i.importeAdjudicado ?? i.importe) || 0), 0);
+    const gastado = dia.items.reduce((acumulado, i) => acumulado + (Number(i.importeAdjudicado ?? i.importe) || 0), 0);
     return `
       <section class="seccion">
-        <h2 class="seccion-titulo">${esc(tituloDeDia(fecha))}</h2>
+        <h3 class="seccion-titulo">${esc(tituloDeDia(fecha))}</h3>
         ${gastado > 0 ? `<p class="seccion-intro">Se publicaron <strong>${esc(euros(gastado))}</strong> en contratos, ayudas y partidas.${
           dia.omitidos ? ` Y otros ${dia.omitidos} documentos pequeños que no listamos uno a uno.` : ''
         }</p>` : ''}
@@ -97,15 +159,67 @@ export async function vistaHoy(cont) {
 
   cont.innerHTML = `
     ${avisoFuentes()}
-    ${chipsHTML([
-      ['todo', 'Todo'],
-      ['contratos', 'Contratos', 'contratos'],
-      ['personas', 'Personas', 'personas'],
-      ['subvenciones', 'Ayudas', 'subvenciones'],
-      ['presupuesto', 'Presupuesto', 'presupuesto'],
-    ], filtros.categoria, 'categoria')}
-    ${bloques || '<p class="vacio">Todavía no hay datos descargados. La ingesta corre una vez al día.</p>'}
-    ${hayMas ? '<button class="mas" type="button" data-mas-dias>Ver días anteriores</button>' : ''}
+
+    <div class="titular">
+      <span class="titular-cifra cifra">${esc(euros(total) || '0 €')}</span>
+      <span class="titular-que">es lo que el Estado ha publicado en contratos en los últimos
+        ${esc(String(dias))} días. No es todo lo que gasta: es lo que se hace público cada día,
+        contrato a contrato.</span>
+      ${tuyo ? `<span class="titular-tuyo">De eso te tocan <strong>${esc(tuyo)}</strong></span>` : ''}
+    </div>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">Dónde</h2>
+      <p class="seccion-intro">Toca tu comunidad para ver sus contratos.</p>
+      ${bloqueMapa(indice)}
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">En números</h2>
+      ${cifras(indice)}
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">En qué se gasta</h2>
+      <p class="seccion-intro">Según el código europeo que lleva cada contrato, traducido.
+        Últimos ${esc(String(reparto.dias || 30))} días publicados.</p>
+      <div class="grafico">${barraApilada(reparto.porSector || [], { tope: 5 })}</div>
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">Cómo se decide</h2>
+      <div class="grafico">
+        ${anillo(t.importeSinCompetencia || 0, t.importeAdjudicado || t.importeContratos || 0, {
+          etiqueta: 'del dinero se adjudica sin un concurso abierto. Es legal y habitual —negociados, emergencias, contratos menores—, pero conviene saber cuánto es.',
+        })}
+      </div>
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">El pulso</h2>
+      <p class="seccion-intro">Lo que se ha publicado cada día, para ver si esto es un goteo
+        constante o van a rachas.</p>
+      <div class="grafico">${serie(indice.dias || [], { dias: 90 })}</div>
+    </section>
+
+    ${gordos.length ? `
+    <section class="seccion">
+      <h2 class="seccion-titulo">Lo más gordo estos días</h2>
+      ${listaHTML(gordos, '')}
+    </section>` : ''}
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">Día a día</h2>
+      ${chipsHTML([
+        ['todo', 'Todo'],
+        ['contratos', 'Contratos', 'contratos'],
+        ['personas', 'Personas', 'personas'],
+        ['subvenciones', 'Ayudas', 'subvenciones'],
+        ['presupuesto', 'Presupuesto', 'presupuesto'],
+      ], filtros.categoria, 'categoria')}
+      ${bloques || '<p class="vacio">Todavía no hay datos descargados. La ingesta corre una vez al día.</p>'}
+      ${hayMas ? '<button class="mas" type="button" data-mas-dias>Ver días anteriores</button>' : ''}
+    </section>
     ${pie()}`;
 }
 
@@ -118,6 +232,7 @@ export async function vistaContratos(cont) {
   const consulta = normalizarBusqueda(filtros.busqueda);
   let items = itemsCargados().filter((i) => i.tipo === 'contrato');
   if (filtros.nivel !== 'todo') items = items.filter((i) => i.nivel === filtros.nivel);
+  if (filtros.ccaa !== 'todo') items = items.filter((i) => i.ccaa === filtros.ccaa);
   if (consulta) items = items.filter((i) => paraBuscar(i).includes(consulta));
 
   if (filtros.orden === 'importe') {
@@ -141,12 +256,17 @@ export async function vistaContratos(cont) {
       ['sin-competencia', 'Sin concurso'],
     ], filtros.orden, 'orden')}
     ${chipsHTML([
-      ['todo', 'Toda España'],
+      ['todo', 'Todas las administraciones'],
       ['estado', 'Estado'],
       ['autonomica', 'Comunidades'],
       ['local', 'Ayuntamientos'],
     ], filtros.nivel, 'nivel')}
-    <p class="seccion-intro"><strong>${items.length}</strong> contratos${consulta ? ` con “${esc(filtros.busqueda)}”` : ''}
+    ${chipsHTML([
+      ['todo', 'Toda España'],
+      ...(estado.indice?.reparto?.porCCAA || []).map((c) => [c.clave, c.nombre]),
+    ], filtros.ccaa, 'ccaa')}
+    <p class="seccion-intro"><strong>${items.length}</strong> contratos${consulta ? ` con “${esc(filtros.busqueda)}”` : ''}${
+      filtros.ccaa !== 'todo' ? ` publicados en ${esc(nombreDeCCAA(filtros.ccaa) || '')}` : ''}
       en los últimos ${esc(String(diasCargados()))} días publicados · <strong>${esc(euros(total) || '0 €')}</strong></p>
     ${listaHTML(items.slice(0, 120), 'Ningún contrato encaja con esa búsqueda.')}
     ${items.length > 120 ? `<p class="vacio">Mostramos los 120 primeros de ${items.length}. Afina la búsqueda para ver el resto.</p>` : ''}
@@ -254,38 +374,6 @@ export async function vistaEmpleo(cont) {
 
 /* -------------------------------- Reparto -------------------------------- */
 
-/**
- * Una sola serie, un solo color, valores escritos al lado de cada barra.
- * `datos` son {clave, valor, nota}; el porcentaje se mide contra lo que enseña
- * este gráfico, nunca contra un total de otro sitio.
- */
-function barras(datos, opciones = {}) {
-  if (!datos?.length) return '<p class="vacio">Sin datos suficientes todavía.</p>';
-  const enEuros = opciones.formato !== 'numero';
-  const maximo = Math.max(...datos.map((d) => d.valor)) || 1;
-  const suma = datos.reduce((s, d) => s + d.valor, 0) || null;
-  const escribir = (v) => (enEuros ? euros(v) : new Intl.NumberFormat('es-ES').format(v));
-  const exacto = (v) => (enEuros ? eurosExacto(v) : String(v));
-
-  return `<div class="barras">${datos
-    .map((d) => {
-      const ancho = Math.max(1.5, (d.valor / maximo) * 100);
-      const parte = suma && !opciones.sinPorcentaje ? Math.round((d.valor / suma) * 100) : null;
-      const nota = [d.nota, parte !== null ? `${parte}% de lo mostrado` : null].filter(Boolean).join(' · ');
-      const eti = opciones.buscable ? 'button' : 'div';
-      const extra = opciones.buscable ? ` type="button" data-buscar="${esc(d.clave)}"` : '';
-      return `<${eti} class="barra-fila"${extra} aria-label="${esc(`${d.clave}: ${exacto(d.valor)}`)}">
-          <span class="barra-cabeza">
-            <span class="barra-nombre">${esc(d.clave)}</span>
-            <span class="barra-valor cifra">${esc(escribir(d.valor))}</span>
-          </span>
-          <span class="barra-pista"><span class="barra-relleno" style="width:${ancho.toFixed(1)}%"></span></span>
-          ${nota ? `<span class="barra-nota">${esc(nota)}</span>` : ''}
-        </${eti}>`;
-    })
-    .join('')}</div>`;
-}
-
 /** Los agregados del índice vienen como {clave, n, importe}. */
 const comoBarras = (filas = []) => filas.map((d) => ({
   clave: d.clave,
@@ -346,6 +434,24 @@ export async function vistaReparto(cont) {
       <p class="seccion-intro" style="margin-top:12px">Esto es lo que se ha <strong>publicado</strong> en este periodo,
         no el gasto total del Estado. Sirve para ver a dónde va el dinero que sí se hace público cada día.
         ${i.cobertura?.desde ? `Tenemos datos desde el ${esc(i.cobertura.desde)}.` : ''}</p>
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">Por comunidades</h2>
+      <p class="seccion-intro">El mismo mapa de la portada, pero aquí puedes compararlo por habitante,
+        que es la única forma de que Madrid y Cataluña no se lo coman todo solo por ser las más pobladas.</p>
+      ${bloqueMapa(i, { activa: filtros.ccaa !== 'todo' ? filtros.ccaa : null })}
+      ${barras((reparto.porCCAA || []).slice(0, 8).map((c) => ({
+        clave: c.nombre,
+        valor: c.importe,
+        nota: `${c.n} ${c.n === 1 ? 'contrato' : 'contratos'}`,
+      })))}
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion-titulo">En qué se gasta</h2>
+      <p class="seccion-intro">Traducido del código CPV que lleva cada contrato.</p>
+      ${barras(comoBarras((reparto.porSector || []).slice(0, 10)))}
     </section>
 
     <section class="seccion">

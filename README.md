@@ -12,11 +12,11 @@ normales y los enseña en el móvil.
 
 | Pestaña | Qué responde |
 |---|---|
-| **Hoy** | Qué se ha decidido hoy, día a día, con el importe y el enlace al documento |
+| **Hoy** | Cuánto se ha publicado, **dónde** (mapa por comunidades), en qué se gasta y cómo se decide. Debajo, el día a día con el importe y el enlace al documento |
 | **Contratos** | Quién adjudica, a qué empresa, por cuánto y con qué procedimiento |
 | **Empleo** | Qué oposiciones tienen el plazo abierto: plazas, requisitos, tasa y hasta cuándo puedes apuntarte |
 | **Cargos** | Quién entra y quién sale, y si el puesto se cubre por concurso o por libre designación |
-| **Reparto** | A dónde va el dinero publicado: qué organismos, qué empresas, con qué procedimientos |
+| **Reparto** | A dónde va el dinero publicado: qué comunidades, qué sectores, qué organismos, qué empresas, con qué procedimientos |
 
 ## Reglas de la casa
 
@@ -27,6 +27,10 @@ normales y los enseña en el móvil.
    son procedimientos legales y habituales: se marcan para que te fijes, y cada una
    explica qué significa y qué no.
 4. **Sin jerga suelta.** Los términos oficiales se tocan y se explican.
+5. **Lo que no se sabe, se dice.** El territorio de un contrato no viene en un
+   campo limpio: se deduce. Lo que no se puede deducir con certeza se queda
+   fuera del mapa y se cuenta aparte, en pantalla. Un hueco es mejor que una
+   comunidad mal pintada.
 
 ## Fuentes
 
@@ -40,6 +44,16 @@ normales y los enseña en el móvil.
 - **Presupuestos Generales del Estado** — mejor esfuerzo vía el catálogo de
   datos.gob.es. Hacienda no publica una API estable de partidas, así que si no se
   puede leer, la app lo dice y enlaza al portal oficial.
+- **Instituto Geográfico Nacional**, vía [es-atlas](https://github.com/martgnz/es-atlas)
+  (MIT) — la cartografía de las comunidades y las provincias, con los códigos del
+  **INE**, y el listado de los 8.213 municipios. De ahí salen las formas del mapa
+  y la tabla con la que se localiza cada contrato.
+- **INE, Cifras de Población a 1 de enero de 2025** — la población de cada
+  comunidad, solo para el «por habitante» del mapa. Redondeada al millar y
+  etiquetada como aproximada.
+- **CPV** (Reglamento CE 213/2008) — el vocabulario europeo de contratación, que
+  ya viene en cada contrato. Se traduce a doce sectores en cristiano para poder
+  decir «sanidad» u «obras» en vez de «Servicios».
 
 ## Cómo funciona
 
@@ -58,7 +72,10 @@ scripts/
   lib/xml.mjs          lector de XML por nombre local, sin dependencias
   lib/texto.mjs        números, jerga y frases en lenguaje llano
   lib/senales.mjs      las señales y su explicación
+  lib/territorio.mjs   de qué comunidad es cada contrato, y con qué certeza
+  lib/cpv.mjs          del código CPV al sector, en cristiano
   sources/oposiciones.mjs  baja el texto de cada convocatoria y saca plazo y plazas
+  mapa.mjs             genera el mapa y las tablas del INE (a mano, no en la ingesta)
 data/
   index.json           resumen, agregados y estado de cada fuente
   dias/AAAA-MM-DD.json lo publicado ese día
@@ -74,6 +91,43 @@ texto completo y se extrae. La fecha tope se calcula contando desde el día
 siguiente a la publicación y saltando sábados y domingos; los festivos cambian
 según dónde presentes la solicitud, así que se muestra como aproximada y
 siempre junto al enlace al texto oficial.
+
+### De dónde es cada contrato
+
+La Plataforma no publica un campo de territorio que se pueda usar tal cual, así
+que la comunidad se deduce, por este orden y parando en la primera pista que sea
+concluyente:
+
+1. La dirección del propio CODICE, si viene: código NUTS, código postal o municipio.
+2. El nombre de una provincia dentro del nombre del organismo.
+3. Un municipio del INE dentro del nombre («Ayuntamiento de Vinarós» → Castellón).
+   Los nombres que existen en dos provincias se descartan: mejor sin localizar
+   que mal localizado.
+4. Un ente autonómico conocido que no lleva el sitio en el nombre («Servicio
+   Andaluz de Salud», «Sergas», «Osakidetza»). Da comunidad, no provincia.
+5. El dominio de la plataforma autonómica en la que publica. `contrataciondelestado.es`
+   **no** cuenta: es la plataforma central y la usa media España.
+6. Organismo de ámbito estatal (Adif, Correos, un ministerio): no le corresponde
+   ninguna provincia, y decirlo es la respuesta correcta.
+
+Con los datos de hoy eso localiza el **85%** de los contratos; un 7% es de ámbito
+estatal y un 8% se queda sin localizar. Los tres números salen en pantalla, y
+`npm run check` avisa si la cobertura baja del 70%, que sería la señal de que la
+Plataforma ha cambiado algo.
+
+Importa el matiz: el mapa dice **quién publica** el contrato, no dónde acaba el
+dinero. Una comunidad puede licitar obras en cualquier punto de su territorio.
+
+Cada acierto guarda en `viaLocalizacion` cuál de las seis pistas lo resolvió, para
+poder auditarlo después sin volver a descargar nada.
+
+### El mapa
+
+`node scripts/mapa.mjs` baja el atlas del IGN, lo simplifica y escribe
+`js/mapa-espana.js` (las formas, 18 KB) y `scripts/lib/territorio-datos.mjs` (las
+tablas). Se ejecuta a mano cuando haga falta, no en la ingesta diaria, y lo que
+genera se sube al repositorio: el móvil no descarga cartografía ni ejecuta
+ninguna librería de mapas.
 
 ### Relleno del pasado
 
@@ -94,6 +148,12 @@ npm run demo             # genera data/ con datos de EJEMPLO, para ver la interf
 npm run ingest           # ingesta real (necesita salida a boe.es y a la Plataforma)
 npm run check            # valida data/
 npm run dev              # sirve la app en http://localhost:8080
+
+node scripts/build.mjs --reconstruir   # rehace data/index.json con lo que ya hay
+                                       # en disco, sin tocar la red. Es lo que pone
+                                       # al día los ficheros de días antiguos
+                                       # cuando cambia el formato.
+node scripts/mapa.mjs                  # regenera el mapa y las tablas del INE
 ```
 
 También hay un endpoint de comprobación, `/api/diagnostico`, que pregunta a las

@@ -4,7 +4,7 @@
  * pero no son nuestros y no se inyectan crudos.
  */
 
-import { estado, glosarioDe, senalDe } from './datos.js';
+import { estado, glosarioDe, senalDe, nombreDeCCAA } from './datos.js';
 import {
   euros, eurosExacto, porHabitante, fechaCorta, fechaLarga, recortar,
   diasHasta, cuentaAtras, NOMBRES_CATEGORIA, NOMBRES_SUBTIPO,
@@ -54,6 +54,19 @@ function importeDe(item) {
   return item.importeAdjudicado ?? item.importe ?? null;
 }
 
+/**
+ * De dónde es, dicho con el matiz que toca: no lo sacamos de un campo oficial,
+ * lo deducimos de quién lo publica. Si no lo sabemos, se dice.
+ */
+function territorioDe(item) {
+  const comunidad = item.ccaa ? nombreDeCCAA(item.ccaa) : null;
+  if (comunidad) {
+    return `${esc(comunidad)} <span class="importe-nota">(quien lo publica)</span>`;
+  }
+  if (item.estatal) return 'Toda España <span class="importe-nota">(organismo estatal)</span>';
+  return null;
+}
+
 /** Una tarjeta del feed. Es un botón: toda ella abre la ficha. */
 export function tarjetaHTML(item, opciones = {}) {
   const categoria = item.categoria || 'contratos';
@@ -69,6 +82,18 @@ export function tarjetaHTML(item, opciones = {}) {
   const frase = item.frase || recortar(item.titulo, 150) || 'Documento oficial';
   const mostrarOrganismo = item.organismo && !frase.includes(item.organismo);
 
+  // Una barra relativa al mayor de la lista, para que el chorro de tarjetas se
+  // lea de un vistazo y se vea cuál es gordo sin leer ni una cifra.
+  //
+  // La escala es la raíz cuadrada, no lineal: en contratación pública hay
+  // adjudicaciones mil veces mayores que la mediana, y en lineal todo lo demás
+  // se queda en una raya invisible. La raíz respeta el orden —lo más caro sigue
+  // siendo la barra más larga— y deja ver las diferencias entre los pequeños.
+  // La cifra exacta está justo encima, que es la que manda.
+  const medida = opciones.maximo && importe > 0
+    ? Math.max(2, Math.min(100, Math.sqrt(importe / opciones.maximo) * 100))
+    : null;
+
   return `
     <button class="tarjeta" type="button" data-id="${esc(item.id)}" data-fecha="${esc(item.fecha)}">
       <span class="tarjeta-cinta">
@@ -78,6 +103,7 @@ export function tarjetaHTML(item, opciones = {}) {
       <span class="tarjeta-frase">${esc(frase)}</span>
       ${mostrarOrganismo ? `<span class="tarjeta-organismo">${esc(item.organismo)}</span>` : ''}
       ${corto ? `<span class="tarjeta-dinero"><span class="importe cifra">${esc(corto)}</span>${escala ? `<span class="importe-nota">≈ ${esc(escala)}</span>` : ''}</span>` : ''}
+      ${medida !== null ? `<span class="tarjeta-medida"><i style="width:${medida.toFixed(1)}%"></i></span>` : ''}
       ${senalesHTML(item.senales)}
     </button>`;
 }
@@ -109,7 +135,10 @@ export function tarjetaOposicionHTML(convocatoria) {
 
 export function listaHTML(items, vacio = 'No hay nada aquí con ese filtro.', opciones = {}) {
   if (!items.length) return `<p class="vacio">${esc(vacio)}</p>`;
-  return items.map((item) => tarjetaHTML(item, opciones)).join('');
+  // El máximo se mide contra lo que enseña ESTA lista, no contra un total de
+  // otra pantalla: si no, la barra diría una cosa distinta en cada pestaña.
+  const maximo = Math.max(...items.map((i) => Number(importeDe(i)) || 0), 0) || null;
+  return items.map((item) => tarjetaHTML(item, { ...opciones, maximo })).join('');
 }
 
 /* ------------------------------ Hojas ------------------------------ */
@@ -159,6 +188,8 @@ export function abrirFicha(item) {
       ? fila('Presupuesto de salida', `<span class="cifra">${esc(eurosExacto(item.importe))}</span>`)
       : '',
     esContrato ? fila('Valor máximo', item.valorEstimado ? `<span class="cifra">${esc(eurosExacto(item.valorEstimado))}</span>` : null) : '',
+    esContrato ? fila('En qué', item.sector ? esc(item.sector) : null) : '',
+    esContrato ? fila('Dónde', territorioDe(item)) : '',
     esContrato ? fila('Cómo se decidió', item.procedimiento ? esc(item.procedimiento) : null) : '',
     esContrato ? fila('Ofertas recibidas', item.ofertas ? String(item.ofertas) : null) : '',
     esContrato ? fila('Situación', item.resultado || item.estado ? esc(item.resultado || item.estado) : null) : '',
@@ -265,6 +296,13 @@ export function abrirAyuda() {
     <div class="explicacion">
       <strong>Las oposiciones.</strong> De cada convocatoria bajamos el texto completo para sacar las plazas, los requisitos y el plazo.
       La fecha tope se calcula contando días hábiles sin festivos locales, así que es aproximada: confírmala en el BOE antes de dejarlo para el final.
+    </div>
+    <div class="explicacion">
+      <strong>El mapa.</strong> La Plataforma no publica un campo de territorio que se pueda usar tal cual,
+      así que la comunidad se deduce de quién firma el contrato: del nombre del organismo, de su municipio
+      según el INE, o de la plataforma autonómica en la que publica. Por eso el mapa dice <em>quién lo publica</em>
+      y no dónde acaba el dinero. Lo que no se puede deducir con certeza se queda fuera del mapa y se cuenta
+      aparte: preferimos un hueco a una comunidad mal pintada.
     </div>
     <div class="explicacion">
       <strong>Los importes.</strong> En contratación se publican normalmente sin IVA, y son lo previsto o lo adjudicado,

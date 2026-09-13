@@ -15,6 +15,8 @@ import { bajar, restarDias } from '../lib/red.mjs';
 import { parsearXML, buscar, buscarTodos, texto, textoDe, hijos } from '../lib/xml.mjs';
 import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, sujetoYVerbo, recortar } from '../lib/texto.mjs';
 import { senalesDeContrato } from '../lib/senales.mjs';
+import { localizar } from '../lib/territorio.mjs';
+import { sectorDeCPV } from '../lib/cpv.mjs';
 
 const BASE = 'https://contrataciondelsectorpublico.gob.es/sindicacion';
 
@@ -121,6 +123,27 @@ function primerNumero(nodo, ...nombres) {
   return null;
 }
 
+/**
+ * La direccion que trae el CODICE. Primero la del sitio donde se ejecuta
+ * (RealizedLocation) y si no, la del organo que contrata: lo que interesa es
+ * donde cae el dinero, no donde esta el despacho.
+ *
+ * Se busca por nombre local y a la defensiva. La Plataforma no siempre publica
+ * estos campos y cambia de un perfil a otro; si no estan, no pasa nada: el
+ * territorio se deduce despues por el nombre del organismo.
+ */
+export function direccionDeEntry(estado, parte) {
+  const lugar = buscar(estado, 'RealizedLocation');
+  const leer = (nodo) => {
+    if (!nodo) return null;
+    const nuts = textoDe(nodo, 'CountrySubentityCode') || null;
+    const postal = textoDe(nodo, 'PostalZone') || null;
+    const ciudad = textoDe(nodo, 'CityName') || textoDe(nodo, 'CountrySubentity') || null;
+    return nuts || postal || ciudad ? { nuts, postal, ciudad } : null;
+  };
+  return leer(lugar) || leer(parte);
+}
+
 /** Convierte una <entry> del Atom en un contrato normalizado. */
 export function contratoDesdeEntry(entry, opciones = {}) {
   const estado = buscar(entry, 'ContractFolderStatus') || entry;
@@ -186,6 +209,19 @@ export function contratoDesdeEntry(entry, opciones = {}) {
     nivel: nivelAdministracion(parte),
     url: enlaceDeEntry(entry),
   };
+
+  // De donde es y en que se gasta. Lo que no se sepa se queda en null: la
+  // pantalla cuenta aparte lo que no ha podido localizar.
+  const donde = localizar({
+    organismo: contrato.organismo,
+    url: contrato.url,
+    direccion: direccionDeEntry(estado, parte),
+  });
+  contrato.ccaa = donde?.ccaa || null;
+  contrato.provincia = donde?.provincia || null;
+  contrato.viaLocalizacion = donde?.via || null;
+  contrato.estatal = Boolean(donde?.estatal);
+  contrato.sector = sectorDeCPV(contrato.cpv);
 
   contrato.senales = senalesDeContrato(contrato);
   contrato.jerga = jergaEn(`${contrato.objeto || ''} ${contrato.procedimiento || ''}`);

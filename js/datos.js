@@ -4,7 +4,15 @@
  * se cachea y funciona sin cobertura una vez visitada la página.
  */
 
+import { REGIONES } from './mapa-espana.js';
+
 const RUTA = 'data';
+
+/** Código de comunidad -> nombre. Sale del mismo sitio que el mapa, para que
+ *  no puedan decir cosas distintas. */
+const NOMBRES_CCAA = new Map(REGIONES.map((r) => [r.codigo, r.nombre]));
+
+export const nombreDeCCAA = (codigo) => NOMBRES_CCAA.get(codigo) || null;
 
 export const estado = {
   indice: null,

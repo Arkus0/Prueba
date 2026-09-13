@@ -19,6 +19,14 @@
   --c-ayudas: #b25e00;
   --c-presupuesto: #8a3a94;
 
+  /* Rampa secuencial: magnitud, nunca identidad. Un solo tono, de claro a
+     oscuro. Validada sobre el fondo: el paso más claro llega a 2:1. */
+  --serie-1: #70bea6;
+  --serie-2: #3ba68d;
+  --serie-3: #008d74;
+  --serie-4: #006b58;
+  --serie-5: #00493c;
+
   /* Estado: reservados para señales, nunca para categorías */
   --aviso: #a5321f;
   --aviso-fondo: #fbeeeb;
@@ -30,6 +38,12 @@
   --sombra: 0 1px 2px rgba(20, 24, 30, .06), 0 6px 16px -10px rgba(20, 24, 30, .18);
   --radio: 14px;
   --radio-s: 9px;
+
+  /* Escala de las cifras. Una sola fuente de la verdad para los tamaños. */
+  --cifra-titular: 40px;
+  --cifra-grande: 34px;
+  --cifra-media: 24px;
+  --cifra-tarjeta: 23px;
 
   --texto: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --cabecera-alto: 58px;
@@ -51,6 +65,14 @@
     --c-personas: #6e7fe4;
     --c-ayudas: #c67b2e;
     --c-presupuesto: #b06cbd;
+
+    /* La rampa no se invierte sola: en oscuro son otros pasos, elegidos y
+       validados contra el fondo oscuro. El extremo tenue sigue viéndose. */
+    --serie-1: #2e5f51;
+    --serie-2: #197a64;
+    --serie-3: #009779;
+    --serie-4: #43b79c;
+    --serie-5: #7dd6bd;
 
     --aviso: #e8836f;
     --aviso-fondo: #2a1c19;
