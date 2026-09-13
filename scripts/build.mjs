@@ -30,6 +30,7 @@ import { leerPresupuesto } from './sources/pge.mjs';
 import { leerOposiciones, marcarAbiertas } from './sources/oposiciones.mjs';
 import { parsearXML, buscarTodos } from './lib/xml.mjs';
 import { localizar, COMUNIDADES } from './lib/territorio.mjs';
+import { guardar as guardarEnAlmacen } from './lib/almacen.mjs';
 import { sectorDeCPV } from './lib/cpv.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -47,6 +48,8 @@ const TOPE_OPOSICIONES = 400;
 /** Ventanas de los resumenes del indice. */
 const VENTANA_PORTADA = 7;
 const VENTANA_REPARTO = 30;
+/** Contratos por tanda al sembrar el almacen desde los ficheros de disco. */
+const TANDA_SIEMBRA = 2000;
 /** Cuantos sumarios del BOE pedimos a la vez en un relleno largo. */
 const EN_PARALELO = 4;
 
@@ -349,6 +352,15 @@ async function main() {
           mensaje: resultado.errores.length ? resultado.errores.join(' · ') : null,
           url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
         });
+        // Al almacén va TODO lo que se ha leído, también los contratos
+        // pequeños que no caben en los ficheros del repositorio. Son la mayoría
+        // y son los que hacen falta para ver si un gasto grande se ha troceado.
+        // Que esto falle no puede tumbar la publicación del día.
+        try {
+          await guardarEnAlmacen(contratos, { detalleDesde: MINIMO_DETALLE });
+        } catch (error) {
+          console.warn(`  ⚠ Almacén: ${error.message || error}`);
+        }
       } catch (error) {
         fuentes.push({
           clave: 'placsp',
@@ -445,6 +457,21 @@ async function main() {
 
   // --- Indice: se reconstruye a partir de lo que hay en disco -------------
   const fechas = await diasEnDisco(salida);
+
+  /** Contratos ya guardados en disco que aún no han pasado por el almacén. */
+  const porSembrar = [];
+  let sembrados = 0;
+  const sembrar = async (ultimo = false) => {
+    if (!porSembrar.length) return;
+    try {
+      const resultado = await guardarEnAlmacen(porSembrar, { detalleDesde: MINIMO_DETALLE, fuente: 'siembra', registro: { log() {}, warn() {} } });
+      if (resultado) sembrados += resultado.filas;
+    } catch (error) {
+      console.warn(`  ⚠ Almacén: ${error.message || error}`);
+    }
+    porSembrar.length = 0;
+    if (ultimo && sembrados) console.log(`  Almacén: ${sembrados} contratos ya bajados enviados al histórico`);
+  };
   const resumenes = new Map();
   for (const fecha of fechas) {
     const dia = await leerDia(salida, fecha);
@@ -463,7 +490,18 @@ async function main() {
       await writeFile(path.join(salida, 'dias', `${fecha}.json`), JSON.stringify(dia));
     }
     resumenes.set(fecha, dia.resumen);
+
+    // Al reconstruir se aprovecha el paseo por los ficheros para sembrar el
+    // almacén con los contratos que ya están bajados. Si no, el histórico
+    // empezaría en blanco y habría que esperar a la siguiente ingesta para
+    // guardar algo que ya teníamos. Se manda por tandas para no cargar en
+    // memoria medio año de contratos de golpe.
+    if (reconstruir) {
+      porSembrar.push(...(dia.items || []).filter((i) => i.tipo === 'contrato'));
+      if (porSembrar.length >= TANDA_SIEMBRA) await sembrar();
+    }
   }
+  if (reconstruir) await sembrar(true);
 
   const ultimas = (n) => fechas.slice(0, n).map((f) => resumenes.get(f));
   const portada = acumular(ultimas(VENTANA_PORTADA));

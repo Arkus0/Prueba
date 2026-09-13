@@ -57,10 +57,15 @@ normales y los enseña en el móvil.
 
 ## Cómo funciona
 
-No hay servidor ni base de datos. Una tarea programada lee las fuentes una vez al
-día y deja el resultado como JSON estático en `data/`; el frontend es HTML, CSS y
-JavaScript sin dependencias ni build. Eso hace que abra al instante en el móvil,
-gaste pocos datos y siga funcionando aunque el BOE se caiga.
+La app no tiene servidor ni base de datos, y eso no ha cambiado. Una tarea
+programada lee las fuentes una vez al día y deja el resultado como JSON estático
+en `data/`; el frontend es HTML, CSS y JavaScript sin dependencias ni build. Eso
+hace que abra al instante en el móvil, gaste pocos datos y siga funcionando
+aunque el BOE se caiga.
+
+Detrás sí hay una base de datos, pero el móvil nunca habla con ella: es la
+trastienda donde la ingesta acumula el histórico completo de contratación, que no
+cabe en ficheros dentro del repositorio. Ver [El almacén](#el-almacén).
 
 ```
 scripts/
@@ -74,6 +79,7 @@ scripts/
   lib/senales.mjs      las señales y su explicación
   lib/territorio.mjs   de qué comunidad es cada contrato, y con qué certeza
   lib/cpv.mjs          del código CPV al sector, en cristiano
+  lib/almacen.mjs      guarda el histórico completo en la base de datos
   sources/oposiciones.mjs  baja el texto de cada convocatoria y saca plazo y plazas
   mapa.mjs             genera el mapa y las tablas del INE (a mano, no en la ingesta)
 data/
@@ -129,6 +135,54 @@ tablas). Se ejecuta a mano cuando haga falta, no en la ingesta diaria, y lo que
 genera se sube al repositorio: el móvil no descarga cartografía ni ejecuta
 ninguna librería de mapas.
 
+### El almacén
+
+En los ficheros del repositorio solo caben los últimos meses y solo los contratos
+de 50.000 € para arriba: la Plataforma publica del orden de **mil cien contratos
+al día** de toda España, que son unos 400.000 al año. Pero sin histórico no se
+pueden calcular los indicadores que de verdad valen —concentración de
+adjudicaciones en una misma empresa, troceo de un gasto grande en muchos
+contratos pequeños, desviación entre presupuesto y precio final— ni saber si un
+importe es raro, porque «raro» solo significa algo comparado con los contratos
+parecidos de los meses anteriores.
+
+Así que la ingesta, además de escribir los JSON, guarda **todo** lo que lee en una
+base de datos Postgres (Supabase). Se guarda en dos niveles para que un año entero
+quepa sin pagar servidor:
+
+- **Fila completa** para los contratos de 50.000 € o más, con título, enlace y
+  expediente. Unos 70.000 al año.
+- **Fila mínima** para el resto: sin los textos largos, que son el 40% del peso,
+  pero conservando fecha, organismo, importe, CPV y adjudicatario. Son la mayoría
+  y son justo donde se ve el troceo, así que tirarlos sería tirar lo interesante.
+
+Un año así ocupa unos 150 MB. El cliente (`scripts/lib/almacen.mjs`) habla con
+PostgREST por `fetch`, sin dependencias, en lotes de 500 contratos por llamada.
+
+Para no empezar en blanco, `node scripts/build.mjs --reconstruir` aprovecha el
+paseo por los ficheros de `data/dias/` para mandar al almacén los contratos que ya
+están bajados.
+
+Se configura con dos variables de entorno, que en producción son secretos de
+GitHub Actions y **nunca** están en el repositorio:
+
+```bash
+SUPABASE_URL=https://<ref>.supabase.co
+SUPABASE_SERVICE_KEY=<la clave de servicio>
+
+npm run almacen:probar   # comprueba la conexión sin escribir nada
+```
+
+Si no están configuradas, la ingesta lo dice en el log y sigue su curso. Publicar
+los datos del día es lo que no puede fallar; guardar el histórico es un extra que
+no puede tumbar lo primero. Por el mismo motivo, si un lote no se puede guardar se
+anota y se continúa con los demás.
+
+En la base, la lectura es pública —son datos que publica el Estado— y escribir
+requiere la clave de servicio: las políticas RLS solo permiten `select`, y ni el
+permiso de escritura directa ni el de ejecutar la función de guardado están
+concedidos a nadie más.
+
 ### Relleno del pasado
 
 `node scripts/build.mjs --desde=2025-07-01 --solo=boe` lee el sumario día a día
@@ -148,11 +202,14 @@ npm run demo             # genera data/ con datos de EJEMPLO, para ver la interf
 npm run ingest           # ingesta real (necesita salida a boe.es y a la Plataforma)
 npm run check            # valida data/
 npm run dev              # sirve la app en http://localhost:8080
+npm run almacen:probar   # comprueba la conexión con la base de datos histórica
 
 node scripts/build.mjs --reconstruir   # rehace data/index.json con lo que ya hay
-                                       # en disco, sin tocar la red. Es lo que pone
-                                       # al día los ficheros de días antiguos
-                                       # cuando cambia el formato.
+                                       # en disco, sin pedirle nada a las fuentes.
+                                       # Pone al día los ficheros de días antiguos
+                                       # cuando cambia el formato y, si el almacén
+                                       # está configurado, le manda de paso los
+                                       # contratos ya bajados.
 node scripts/mapa.mjs                  # regenera el mapa y las tablas del INE
 ```
 
@@ -172,5 +229,17 @@ La capa de señales (`scripts/lib/senales.mjs`) está pensada para crecer hacia
 indicadores de riesgo calculados sobre el histórico: concentración de adjudicaciones
 en una misma empresa, desviación entre presupuesto y precio final, troceo de un
 gasto en contratos menores, plazos anormalmente cortos. Todo eso necesita meses de
-datos acumulados, así que primero toca acumularlos. El listón se mantiene:
-describir hechos verificables con su enlace, nunca insinuar.
+datos acumulados, y acumularlos es justo lo que hace ya [el almacén](#el-almacén):
+el cimiento que faltaba está puesto, queda esperar a que se llene.
+
+Se nota lo que falta en la señal «Importe que no cuadra». Hoy es una red de
+seguridad con topes fijos por nivel de administración, que es lo único defendible
+con ocho días de datos. Con un año, la pregunta correcta deja de ser «¿supera este
+tope?» y pasa a ser «¿cuánto se sale este contrato de lo que cuestan los contratos
+parecidos?», que es más justo y no necesita que nadie elija un número a ojo.
+
+Queda pendiente el relleno del año hacia atrás. La sindicación Atom es rodante, así
+que hay que tirar de los ficheros históricos que publica la Plataforma, y está por
+comprobar que quepan en el tiempo y el disco de una GitHub Action.
+
+El listón se mantiene: describir hechos verificables con su enlace, nunca insinuar.

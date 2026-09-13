@@ -11,7 +11,7 @@ on:
         required: false
         default: '7'
   push:
-    branches: [claude/public-spending-app-5qq14n, main]
+    branches: [claude/visual-redesign-graphics-wl88nx, main]
     paths-ignore:
       - 'data/**'
       - '**.md'
@@ -39,6 +39,11 @@ jobs:
 
       - name: Leer BOE y Plataforma de Contratación
         run: node scripts/build.mjs --dias=${{ github.event.inputs.dias || 7 }}
+        env:
+          # El almacén histórico. Si los secretos no están puestos, la ingesta
+          # lo dice y sigue: publicar los JSON del día es lo que no puede fallar.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
       - name: Revisar lo generado
         run: node scripts/check.mjs
