@@ -1,6 +1,6 @@
 {
  "version": 2,
- "generado": "2026-09-13T07:31:26.585Z",
+ "generado": "2026-09-13T07:51:08.275Z",
  "ventana": {
   "desde": "2026-09-06",
   "hasta": "2026-09-12",
@@ -26,7 +26,7 @@
  ],
  "totales": {
   "contratos": 8458,
-  "importeContratos": 13183444177,
+  "importeContratos": 11508018193,
   "importeAdjudicado": 1697860000,
   "sinCompetencia": 2263,
   "importeSinCompetencia": 386447171,
@@ -765,11 +765,6 @@
   "dias": 30,
   "porOrganismo": [
    {
-    "clave": "Junta de Gobierno Local del Ayuntamiento de Alpedrete",
-    "n": 1,
-    "importe": 1675425984
-   },
-   {
     "clave": "Consejería de Vivienda, Transportes e Infraestructuras",
     "n": 11,
     "importe": 763549063
@@ -963,6 +958,11 @@
     "clave": "Axencia para a Modernización Tecnolóxica de Galicia (Amtega)",
     "n": 7,
     "importe": 40999909
+   },
+   {
+    "clave": "Junta de Gobierno del Ayuntamiento de Fuengirola",
+    "n": 6,
+    "importe": 40900909
    }
   ],
   "empresas": [
@@ -1121,7 +1121,7 @@
    {
     "clave": "Servicios",
     "n": 4427,
-    "importe": 7523550255
+    "importe": 5848124271
    },
    {
     "clave": "Obras",
@@ -1143,7 +1143,7 @@
    {
     "clave": "Concurso abierto",
     "n": 3905,
-    "importe": 10488595405
+    "importe": 8813169421
    },
    {
     "clave": "Restringido",
@@ -1193,14 +1193,14 @@
   ],
   "porNivel": [
    {
-    "clave": "Ayuntamientos y diputaciones",
-    "n": 2796,
-    "importe": 3359749686
-   },
-   {
     "clave": "Estado",
     "n": 1333,
     "importe": 2238732300
+   },
+   {
+    "clave": "Ayuntamientos y diputaciones",
+    "n": 2796,
+    "importe": 1684323702
    },
    {
     "clave": "Comunidades autónomas",
@@ -1214,11 +1214,6 @@
    }
   ],
   "porSector": [
-   {
-    "clave": "Basuras, agua y limpieza",
-    "n": 83,
-    "importe": 2564052525
-   },
    {
     "clave": "Obras y carreteras",
     "n": 421,
@@ -1243,6 +1238,11 @@
     "clave": "Informática y oficina",
     "n": 192,
     "importe": 952356424
+   },
+   {
+    "clave": "Basuras, agua y limpieza",
+    "n": 83,
+    "importe": 888626541
    },
    {
     "clave": "Gestión y asesoría",
@@ -1296,7 +1296,7 @@
     "nombre": "Madrid",
     "poblacion": 7010000,
     "n": 249,
-    "importe": 3658957684
+    "importe": 1983531700
    },
    {
     "clave": "01",

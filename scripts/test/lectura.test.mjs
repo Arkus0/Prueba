@@ -9,7 +9,7 @@ import { parsearXML, buscarTodos, textoDe } from '../lib/xml.mjs';
 import { importeEnTexto, numeroES, numeroCodice, jergaEn, conArticuloOrganismo, nombrePropio } from '../lib/texto.mjs';
 import { senalesDeContrato, senalesDeBOE } from '../lib/senales.mjs';
 import { recorrerSumario, fraseLlana } from '../sources/boe.mjs';
-import { contratoDesdeEntry, leerResumen } from '../sources/placsp.mjs';
+import { contratoDesdeEntry, leerResumen, importeCreible } from '../sources/placsp.mjs';
 import { partidasDesdeCSV, partirCSV } from '../sources/pge.mjs';
 import { localizar, provinciaDeCodigoPostal, provinciaDeNUTS } from '../lib/territorio.mjs';
 import { sectorDeCPV } from '../lib/cpv.mjs';
@@ -240,4 +240,20 @@ test('el CPV se traduce a algo que se entienda, y si no, a nada', () => {
   assert.equal(sectorDeCPV([]), null);
   assert.equal(sectorDeCPV(['99999999']), null);
   assert.equal(sectorDeCPV(null), null);
+});
+
+test('un importe imposible para quien lo firma no se da por bueno', () => {
+  // El caso real: Alpedrete, 14.600 habitantes, 1.675 millones en basuras.
+  assert.equal(importeCreible(1_675_425_984, 'local'), false);
+  // Pero las concesiones municipales grandes de verdad siguen pasando.
+  assert.equal(importeCreible(153_390_000, 'local'), true);
+  assert.equal(importeCreible(151_300_000, 'local'), true);
+  // Y lo que sí puede permitirse el Estado, también.
+  assert.equal(importeCreible(690_000_000, 'estado'), true);
+  assert.equal(importeCreible(727_700_000, 'autonomica'), true);
+  // Sin nivel conocido se usa el tope más holgado, no el más estricto.
+  assert.equal(importeCreible(690_000_000, null), true);
+  assert.equal(importeCreible(9_000_000_000, null), false);
+  // Sin importe no hay nada que descreer.
+  assert.equal(importeCreible(null, 'local'), true);
 });

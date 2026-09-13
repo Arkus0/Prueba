@@ -184,6 +184,13 @@ export function abrirFicha(item) {
     fila('Cuánto', importe !== null
       ? `<span class="cifra">${esc(eurosExacto(importe))}</span>${porHabitante(importe) ? `<br><span class="importe-nota">≈ ${esc(porHabitante(importe))}</span>` : ''}`
       : null),
+    // La cifra que publicó la Plataforma, tal cual, para que se pueda cotejar
+    // con el original. Se enseña, pero no se da por buena ni se suma a nada.
+    item.importeNoVerificado
+      ? fila('Cuánto', `<span class="cifra">${esc(eurosExacto(item.importeNoVerificado))}</span>
+          <br><span class="importe-nota">es lo que publica la Plataforma, y no nos cuadra:
+          no lo damos por bueno ni lo sumamos a los totales. Compruébalo en el documento oficial.</span>`)
+      : '',
     esContrato && item.importe !== null && item.importeAdjudicado !== null && item.importe !== item.importeAdjudicado
       ? fila('Presupuesto de salida', `<span class="cifra">${esc(eurosExacto(item.importe))}</span>`)
       : '',

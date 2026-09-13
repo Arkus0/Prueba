@@ -25,7 +25,7 @@ import { ultimosDias, comoISO, restarDias } from './lib/red.mjs';
 import { GLOSARIO } from './lib/texto.mjs';
 import { SENALES, IMPORTE_ALTO } from './lib/senales.mjs';
 import { sumarioDelDia, recorrerSumario } from './sources/boe.mjs';
-import { leerContratos, contratoDesdeEntry } from './sources/placsp.mjs';
+import { leerContratos, contratoDesdeEntry, importeCreible } from './sources/placsp.mjs';
 import { leerPresupuesto } from './sources/pge.mjs';
 import { leerOposiciones, marcarAbiertas } from './sources/oposiciones.mjs';
 import { parsearXML, buscarTodos } from './lib/xml.mjs';
@@ -99,6 +99,7 @@ function comoItemContrato(c) {
     plazoOfertas: c.plazoOfertas,
     cpv: c.cpv,
     esMenor: c.esMenor,
+    importeNoVerificado: c.importeNoVerificado ?? null,
     ccaa: c.ccaa ?? null,
     provincia: c.provincia ?? null,
     viaLocalizacion: c.viaLocalizacion ?? null,
@@ -118,6 +119,20 @@ function comoItemContrato(c) {
 function enriquecer(item) {
   if (item.tipo !== 'contrato') return item;
   if (item.sector === undefined) item.sector = sectorDeCPV(item.cpv);
+
+  // La misma red de seguridad, aplicada a lo que ya estaba guardado: un
+  // importe que no es creible para quien firma deja de afirmarse, aunque se
+  // bajara antes de que existiera la comprobacion.
+  if (item.importeNoVerificado === undefined) {
+    item.importeNoVerificado = null;
+    if (!importeCreible(item.importe, item.nivel) || !importeCreible(item.importeAdjudicado, item.nivel)) {
+      item.importeNoVerificado = item.importeAdjudicado ?? item.importe ?? null;
+      item.importe = null;
+      item.importeAdjudicado = null;
+      item.valorEstimado = null;
+      item.senales = [...(item.senales || []).filter((s) => s !== 'sin-importe' && s !== 'importe-alto'), 'importe-no-verificado'];
+    }
+  }
   if (item.ccaa === undefined) {
     const donde = localizar({ organismo: item.organismo, url: item.url });
     item.ccaa = donde?.ccaa || null;
@@ -437,8 +452,12 @@ async function main() {
     // dejan al dia, para no tener que recalcularlo en cada ingesta. El
     // territorio y el sector salen de lo que ya hay guardado en el propio
     // fichero, asi que un fichero viejo se pone al dia sin volver a la red.
-    const sinTerritorio = (dia.items || []).some((i) => i.tipo === 'contrato' && i.ccaa === undefined);
-    if (!dia.resumen || !dia.resumen.porCCAA || sinTerritorio) {
+    // Un contrato al que le falte cualquiera de los campos que calculamos aquí
+    // es de una versión anterior: se pone al día. Al añadir un campo nuevo
+    // basta con sumarlo a esta lista.
+    const CALCULADOS = ['ccaa', 'sector', 'importeNoVerificado'];
+    const aviejados = (dia.items || []).some((i) => i.tipo === 'contrato' && CALCULADOS.some((c) => i[c] === undefined));
+    if (!dia.resumen || !dia.resumen.porCCAA || aviejados) {
       for (const item of dia.items || []) enriquecer(item);
       dia.resumen = acumular([resumenDeDia(dia.items || []), dia.resumenFuera || resumenDeDia([])]);
       await writeFile(path.join(salida, 'dias', `${fecha}.json`), JSON.stringify(dia));

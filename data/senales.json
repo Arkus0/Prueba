@@ -19,6 +19,11 @@
   "tono": "info",
   "explica": "Supera el millón de euros. Lo marcamos solo para que no pase desapercibido entre contratos pequeños."
  },
+ "importe-no-verificado": {
+  "etiqueta": "Importe que no cuadra",
+  "tono": "aviso",
+  "explica": "La cifra publicada es desproporcionada para el organismo que firma el contrato: un ayuntamiento pequeño no adjudica mil millones de euros. Puede ser un error al teclearla en la Plataforma o un problema al leerla. No la corregimos ni la inventamos: no la damos por buena, no la sumamos a los totales y te dejamos el documento original para que la compruebes tú."
+ },
  "desierto": {
   "etiqueta": "Quedó desierto",
   "tono": "info",
