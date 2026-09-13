@@ -3,7 +3,7 @@
  * cuando hay red. Así la app abre al instante y sigue leyéndose en el metro.
  */
 
-const VERSION = 'dinero-publico-v1';
+const VERSION = 'dinero-publico-v2';
 const ARMAZON = [
   './',
   './index.html',
@@ -12,6 +12,8 @@ const ARMAZON = [
   './js/app.js',
   './js/datos.js',
   './js/formato.js',
+  './js/graficos.js',
+  './js/mapa-espana.js',
   './js/ui.js',
   './js/vistas.js',
   './manifest.webmanifest',

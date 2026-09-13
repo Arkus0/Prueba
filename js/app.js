@@ -5,10 +5,10 @@
 
 import { arrancar, estado, itemsCargados, cargarOposiciones } from './datos.js';
 import { abrirFicha, abrirFichaOposicion, abrirGlosario, abrirAyuda, cerrarHoja, ICONOS, esc } from './ui.js';
-import { vistaHoy, vistaContratos, vistaEmpleo, vistaPersonas, vistaReparto, filtros } from './vistas.js';
+import { vistaPortada, vistaContratos, vistaEmpleo, vistaPersonas, vistaReparto, filtros } from './vistas.js';
 
 const VISTAS = {
-  hoy: { titulo: 'Hoy', icono: ICONOS.hoy, pintar: vistaHoy },
+  portada: { titulo: 'Hoy', icono: ICONOS.hoy, pintar: vistaPortada },
   contratos: { titulo: 'Contratos', icono: ICONOS.contratos, pintar: vistaContratos },
   empleo: { titulo: 'Empleo', icono: ICONOS.empleo, pintar: vistaEmpleo },
   personas: { titulo: 'Cargos', icono: ICONOS.personas, pintar: vistaPersonas },
@@ -18,9 +18,12 @@ const VISTAS = {
 const principal = () => document.getElementById('principal');
 let vistaActual = 'hoy';
 
+/** Rutas de versiones anteriores que se mantienen vivas por los enlaces guardados. */
+const ALIAS = { hoy: 'portada' };
+
 function rutaActual() {
   const clave = (location.hash || '').replace(/^#\/?/, '');
-  return VISTAS[clave] ? clave : 'hoy';
+  return VISTAS[clave] ? clave : (VISTAS[ALIAS[clave]] ? ALIAS[clave] : 'portada');
 }
 
 function pintarBarra() {
@@ -79,6 +82,7 @@ function conectarEventos() {
     const vista = objetivo('[data-vista]');
     if (vista) {
       filtros.busqueda = '';
+      filtros.ccaa = 'todo';
       location.hash = `#/${vista.dataset.vista}`;
       return;
     }
@@ -136,6 +140,26 @@ function conectarEventos() {
       return repintarConservandoBusqueda();
     }
 
+    // Tocar una comunidad en el mapa lleva a sus contratos. Volver a tocar la
+    // que ya está elegida quita el filtro, que es lo que espera el dedo.
+    const region = objetivo('[data-ccaa]');
+    if (region) {
+      const elegida = region.dataset.ccaa;
+      filtros.ccaa = filtros.ccaa === elegida ? 'todo' : elegida;
+      if (vistaActual === 'portada' && filtros.ccaa !== 'todo') {
+        filtros.busqueda = '';
+        location.hash = '#/contratos';
+        return;
+      }
+      return repintarConservandoBusqueda();
+    }
+
+    const medida = objetivo('[data-mapa]');
+    if (medida) {
+      filtros.mapa = medida.dataset.mapa;
+      return repintarConservandoBusqueda();
+    }
+
     if (objetivo('[data-mas-dias]')) {
       filtros.diasVisibles += 3;
       return repintarConservandoBusqueda();
@@ -157,6 +181,12 @@ function conectarEventos() {
 
   document.addEventListener('keydown', (evento) => {
     if (evento.key === 'Escape' && !document.getElementById('capa').hidden) cerrarHoja();
+    // Las comunidades del mapa son <path>, no <button>: el teclado hay que
+    // atenderlo a mano para que se puedan usar sin ratón.
+    if ((evento.key === 'Enter' || evento.key === ' ') && evento.target.dataset?.ccaa) {
+      evento.preventDefault();
+      evento.target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
   });
 
   window.addEventListener('hashchange', pintar);

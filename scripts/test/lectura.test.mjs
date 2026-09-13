@@ -9,8 +9,10 @@ import { parsearXML, buscarTodos, textoDe } from '../lib/xml.mjs';
 import { importeEnTexto, numeroES, numeroCodice, jergaEn, conArticuloOrganismo, nombrePropio } from '../lib/texto.mjs';
 import { senalesDeContrato, senalesDeBOE } from '../lib/senales.mjs';
 import { recorrerSumario, fraseLlana } from '../sources/boe.mjs';
-import { contratoDesdeEntry, leerResumen } from '../sources/placsp.mjs';
+import { contratoDesdeEntry, leerResumen, importeCreible } from '../sources/placsp.mjs';
 import { partidasDesdeCSV, partirCSV } from '../sources/pge.mjs';
+import { localizar, provinciaDeCodigoPostal, provinciaDeNUTS } from '../lib/territorio.mjs';
+import { sectorDeCPV } from '../lib/cpv.mjs';
 
 const AQUI = path.dirname(new URL(import.meta.url).pathname);
 const fixture = (nombre) => readFile(path.join(AQUI, '..', 'fixtures', nombre), 'utf8');
@@ -184,4 +186,74 @@ test('de una convocatoria sacamos plazas, plazo y requisitos', async () => {
   assert.equal(pareceConvocatoria({ subtipo: 'empleo', titulo: 'Resolución por la que se publica la relación de personas aprobadas' }), false);
   assert.equal(pareceConvocatoria({ subtipo: 'nombramiento', titulo: 'Se convoca algo' }), false);
   assert.equal(plazoEn('sin plazo aquí'), null);
+});
+
+test('de dónde es cada contrato: primero el dato oficial, luego las pistas', () => {
+  // El municipio del INE dentro del nombre del organismo.
+  assert.deepEqual(localizar({ organismo: 'Ayuntamiento de Vinarós' }), { provincia: '12', ccaa: '10', via: 'municipio' });
+  assert.equal(localizar({ organismo: 'Ayuntamiento de Vitoria-Gasteiz-Junta de Gobierno Local' }).provincia, '01');
+
+  // El nombre de la provincia, dicho con todas las letras.
+  assert.equal(localizar({ organismo: 'Diputación Provincial de Soria' }).provincia, '42');
+  assert.equal(localizar({ organismo: 'Cabildo Insular de Tenerife' }).ccaa, '05');
+
+  // Entes autonómicos que no llevan el sitio en el nombre: comunidad sí, provincia no.
+  assert.deepEqual(localizar({ organismo: 'Servicio Andaluz de Salud' }), { provincia: null, ccaa: '01', via: 'ente' });
+  assert.equal(localizar({ organismo: 'Consellería de Sanidade- Sergas' }).ccaa, '12');
+
+  // La plataforma en la que publica, cuando el nombre no dice nada.
+  assert.deepEqual(
+    localizar({ organismo: 'Consejería de Familia, Juventud y Asuntos Sociales', url: 'https://contratos-publicos.comunidad.madrid/x' }),
+    { provincia: null, ccaa: '13', via: 'dominio' },
+  );
+  // La plataforma central NO es una pista territorial: la usa toda España.
+  assert.equal(localizar({ organismo: 'Junta de Contratación', url: 'https://contrataciondelestado.es/x' }), null);
+
+  // Ámbito estatal: no le toca ninguna provincia, y eso es la respuesta correcta.
+  assert.equal(localizar({ organismo: 'Adif - Presidencia' }).estatal, true);
+  assert.equal(localizar({ organismo: 'Adif - Presidencia' }).ccaa, null);
+
+  // Lo que no se sabe se queda sin localizar. No se reparte a dedo.
+  assert.equal(localizar({ organismo: 'Junta de Gobierno del Ayuntamiento las Rozas' }), null);
+  assert.equal(localizar({ organismo: 'Gerencia Asistencial de Atención Primaria' }), null);
+  assert.equal(localizar({}), null);
+
+  // La dirección del CODICE manda sobre cualquier deducción por el nombre.
+  assert.deepEqual(
+    localizar({ organismo: 'Servicio Andaluz de Salud', direccion: { nuts: 'ES300' } }),
+    { provincia: '28', ccaa: '13', via: 'codice-nuts' },
+  );
+  assert.equal(localizar({ organismo: 'Adif', direccion: { postal: '08015' } }).provincia, '08');
+
+  assert.equal(provinciaDeCodigoPostal('46021'), '46');
+  assert.equal(provinciaDeCodigoPostal('99999'), null);
+  assert.equal(provinciaDeNUTS('ES618'), '41');
+  assert.equal(provinciaDeNUTS('ES'), null);
+});
+
+test('el CPV se traduce a algo que se entienda, y si no, a nada', () => {
+  assert.equal(sectorDeCPV(['45233142']), 'Obras y carreteras');
+  assert.equal(sectorDeCPV(['85111500']), 'Sanidad y farmacia');
+  assert.equal(sectorDeCPV(['72000000']), 'Informática y oficina');
+  // Se usa el primero que sepamos traducir, no el primero a secas.
+  assert.equal(sectorDeCPV(['99999999', '90911200']), 'Basuras, agua y limpieza');
+  assert.equal(sectorDeCPV([]), null);
+  assert.equal(sectorDeCPV(['99999999']), null);
+  assert.equal(sectorDeCPV(null), null);
+});
+
+test('un importe imposible para quien lo firma no se da por bueno', () => {
+  // El caso real: Alpedrete, 14.600 habitantes, 1.675 millones en basuras.
+  assert.equal(importeCreible(1_675_425_984, 'local'), false);
+  // Pero las concesiones municipales grandes de verdad siguen pasando.
+  assert.equal(importeCreible(153_390_000, 'local'), true);
+  assert.equal(importeCreible(151_300_000, 'local'), true);
+  // Y lo que sí puede permitirse el Estado, también.
+  assert.equal(importeCreible(690_000_000, 'estado'), true);
+  assert.equal(importeCreible(727_700_000, 'autonomica'), true);
+  // Sin nivel conocido se usa el tope más holgado, no el más estricto.
+  assert.equal(importeCreible(690_000_000, null), true);
+  assert.equal(importeCreible(9_000_000_000, null), false);
+  // Sin importe no hay nada que descreer.
+  assert.equal(importeCreible(null, 'local'), true);
 });

@@ -15,6 +15,8 @@ import { bajar, restarDias } from '../lib/red.mjs';
 import { parsearXML, buscar, buscarTodos, texto, textoDe, hijos } from '../lib/xml.mjs';
 import { numeroCodice, nombrePropio, limpiarTitulo, jergaEn, sujetoYVerbo, recortar } from '../lib/texto.mjs';
 import { senalesDeContrato } from '../lib/senales.mjs';
+import { localizar } from '../lib/territorio.mjs';
+import { sectorDeCPV } from '../lib/cpv.mjs';
 
 const BASE = 'https://contrataciondelsectorpublico.gob.es/sindicacion';
 
@@ -110,6 +112,40 @@ export function leerResumen(resumen) {
  */
 const TECHO_RAZONABLE = 10_000_000_000;
 
+/**
+ * El mismo criterio, pero mirando quien firma. Un techo unico de diez mil
+ * millones deja pasar cosas como un ayuntamiento de catorce mil habitantes
+ * adjudicando 1.675 millones en la recogida de basuras, que es lo que publico
+ * la Plataforma el 7 de septiembre de 2026: o alguien tecleo mal el importe, o
+ * se leyo mal en algun punto de la cadena. En cualquier caso no es una cifra
+ * que podamos dar por buena.
+ *
+ * Los topes son deliberadamente holgados, para no tumbar contratos grandes
+ * pero reales: el presupuesto ANUAL COMPLETO del Ayuntamiento de Madrid, el
+ * mayor de Espana con diferencia, ronda los 6.000 millones, y el de Barcelona
+ * los 3.500. Un unico contrato municipal por encima de 300 millones ya es
+ * excepcional; una concesion larga de basuras de una ciudad grande se queda
+ * muy por debajo (Torremolinos, 153 millones; Granada, 151).
+ *
+ * Esto es una red de seguridad, no un diagnostico. Lo que de verdad detecta un
+ * importe raro es compararlo con el historico de contratos parecidos, y para
+ * eso hacen falta meses de datos acumulados.
+ */
+const TECHO_POR_NIVEL = {
+  local: 300_000_000,
+  universidad: 300_000_000,
+  justicia: 1_000_000_000,
+  autonomica: 2_000_000_000,
+  estado: 5_000_000_000,
+};
+const TECHO_SIN_NIVEL = 5_000_000_000;
+
+/** Por encima de su techo, el importe no se corrige: se deja de afirmar. */
+export function importeCreible(importe, nivel) {
+  if (typeof importe !== 'number') return true;
+  return importe <= (TECHO_POR_NIVEL[nivel] ?? TECHO_SIN_NIVEL);
+}
+
 function primerNumero(nodo, ...nombres) {
   for (const nombre of nombres) {
     const valor = textoDe(nodo, nombre);
@@ -119,6 +155,27 @@ function primerNumero(nodo, ...nombres) {
     return numero;
   }
   return null;
+}
+
+/**
+ * La direccion que trae el CODICE. Primero la del sitio donde se ejecuta
+ * (RealizedLocation) y si no, la del organo que contrata: lo que interesa es
+ * donde cae el dinero, no donde esta el despacho.
+ *
+ * Se busca por nombre local y a la defensiva. La Plataforma no siempre publica
+ * estos campos y cambia de un perfil a otro; si no estan, no pasa nada: el
+ * territorio se deduce despues por el nombre del organismo.
+ */
+export function direccionDeEntry(estado, parte) {
+  const lugar = buscar(estado, 'RealizedLocation');
+  const leer = (nodo) => {
+    if (!nodo) return null;
+    const nuts = textoDe(nodo, 'CountrySubentityCode') || null;
+    const postal = textoDe(nodo, 'PostalZone') || null;
+    const ciudad = textoDe(nodo, 'CityName') || textoDe(nodo, 'CountrySubentity') || null;
+    return nuts || postal || ciudad ? { nuts, postal, ciudad } : null;
+  };
+  return leer(lugar) || leer(parte);
 }
 
 /** Convierte una <entry> del Atom en un contrato normalizado. */
@@ -187,7 +244,38 @@ export function contratoDesdeEntry(entry, opciones = {}) {
     url: enlaceDeEntry(entry),
   };
 
+  // Si la cifra no es creible para quien firma, se retira y se dice por que.
+  // Se retiran las tres a la vez: si una esta mal, las demas salen del mismo
+  // sitio y no hay razon para fiarse de ellas.
+  if (!importeCreible(contrato.importe, contrato.nivel)
+    || !importeCreible(contrato.importeAdjudicado, contrato.nivel)) {
+    contrato.importeNoVerificado = contrato.importeAdjudicado ?? contrato.importe ?? null;
+    contrato.importe = null;
+    contrato.importeAdjudicado = null;
+    contrato.importeConIva = null;
+    contrato.valorEstimado = null;
+  }
+
+  // De donde es y en que se gasta. Lo que no se sepa se queda en null: la
+  // pantalla cuenta aparte lo que no ha podido localizar.
+  const donde = localizar({
+    organismo: contrato.organismo,
+    url: contrato.url,
+    direccion: direccionDeEntry(estado, parte),
+  });
+  contrato.ccaa = donde?.ccaa || null;
+  contrato.provincia = donde?.provincia || null;
+  contrato.viaLocalizacion = donde?.via || null;
+  contrato.estatal = Boolean(donde?.estatal);
+  contrato.sector = sectorDeCPV(contrato.cpv);
+
   contrato.senales = senalesDeContrato(contrato);
+  if (contrato.importeNoVerificado) {
+    // "Sin importe" sobra aqui: no es que no lo hayan publicado, es que lo
+    // publicado no se sostiene, y eso ya lo cuenta la otra senal.
+    contrato.senales = contrato.senales.filter((s) => s !== 'sin-importe');
+    contrato.senales.push('importe-no-verificado');
+  }
   contrato.jerga = jergaEn(`${contrato.objeto || ''} ${contrato.procedimiento || ''}`);
   contrato.frase = fraseDeContrato(contrato);
   return contrato;

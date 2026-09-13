@@ -1,15 +1,15 @@
 {
  "version": 2,
- "generado": "2026-09-12T19:46:50.618Z",
+ "generado": "2026-09-13T11:06:06.184Z",
  "ventana": {
-  "desde": "2026-09-06",
-  "hasta": "2026-09-12",
+  "desde": "2026-09-07",
+  "hasta": "2026-09-13",
   "dias": 7
  },
  "cobertura": {
   "desde": "2025-07-01",
-  "hasta": "2026-09-12",
-  "dias": 378
+  "hasta": "2026-09-13",
+  "dias": 379
  },
  "demo": false,
  "avisos": [],
@@ -18,19 +18,35 @@
    "clave": "boe",
    "nombre": "Boletín Oficial del Estado",
    "estado": "ok",
-   "registros": 42007,
-   "dias": 439,
+   "registros": 559,
+   "dias": 7,
    "mensaje": null,
    "url": "https://www.boe.es/datosabiertos/"
+  },
+  {
+   "clave": "placsp",
+   "nombre": "Plataforma de Contratación del Sector Público",
+   "estado": "ok",
+   "registros": 10881,
+   "mensaje": null,
+   "url": "https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos"
+  },
+  {
+   "clave": "pge",
+   "nombre": "Presupuestos Generales del Estado",
+   "estado": "no-disponible",
+   "registros": 0,
+   "mensaje": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
+   "url": "https://www.sepg.pap.hacienda.gob.es/sitios/sepg/es-ES/Presupuestos/Paginas/Presupuestos.aspx"
   }
  ],
  "totales": {
-  "contratos": 8458,
-  "importeContratos": 13183444177,
-  "importeAdjudicado": 1697860000,
-  "sinCompetencia": 2263,
-  "importeSinCompetencia": 386447171,
-  "menores": 1659,
+  "contratos": 10494,
+  "importeContratos": 12405734493,
+  "importeAdjudicado": 1810791450,
+  "sinCompetencia": 2289,
+  "importeSinCompetencia": 394777720,
+  "menores": 3386,
   "documentosBOE": 559,
   "subvenciones": 75,
   "importeSubvenciones": 0,
@@ -41,57 +57,63 @@
  },
  "dias": [
   {
+   "fecha": "2026-09-13",
+   "contratos": 311,
+   "personas": 0,
+   "importe": 994464
+  },
+  {
    "fecha": "2026-09-12",
-   "contratos": 0,
+   "contratos": 276,
    "personas": 46,
-   "importe": 0
+   "importe": 7963670
   },
   {
    "fecha": "2026-09-11",
-   "contratos": 49,
+   "contratos": 1865,
    "personas": 36,
-   "importe": 63401
+   "importe": 121802911
   },
   {
    "fecha": "2026-09-10",
-   "contratos": 2253,
+   "contratos": 2190,
    "personas": 46,
-   "importe": 212288419
+   "importe": 211332804
   },
   {
    "fecha": "2026-09-09",
-   "contratos": 1041,
+   "contratos": 1010,
    "personas": 35,
-   "importe": 224475747
+   "importe": 224054791
   },
   {
    "fecha": "2026-09-08",
-   "contratos": 2548,
+   "contratos": 2529,
    "personas": 46,
-   "importe": 587724165
+   "importe": 587642963
   },
   {
    "fecha": "2026-09-07",
-   "contratos": 2527,
+   "contratos": 2313,
    "personas": 37,
-   "importe": 667221482
+   "importe": 656999847
   },
   {
    "fecha": "2026-09-06",
-   "contratos": 40,
+   "contratos": 36,
    "personas": 0,
-   "importe": 6086785
+   "importe": 6073571
   },
   {
    "fecha": "2026-09-05",
-   "contratos": 52,
-   "personas": 24,
-   "importe": 2936642
+   "contratos": 48,
+   "personas": 0,
+   "importe": 2879042
   },
   {
    "fecha": "2026-09-04",
    "contratos": 430,
-   "personas": 34,
+   "personas": 0,
    "importe": 34398437
   },
   {
@@ -753,36 +775,25 @@
    "contratos": 0,
    "personas": 58,
    "importe": 0
-  },
-  {
-   "fecha": "2026-04-28",
-   "contratos": 0,
-   "personas": 63,
-   "importe": 0
   }
  ],
  "reparto": {
   "dias": 30,
   "porOrganismo": [
    {
-    "clave": "Junta de Gobierno Local del Ayuntamiento de Alpedrete",
-    "n": 1,
-    "importe": 1675425984
+    "clave": "Servicio Andaluz de Salud",
+    "n": 173,
+    "importe": 883497194
    },
    {
     "clave": "Consejería de Vivienda, Transportes e Infraestructuras",
-    "n": 11,
-    "importe": 763549063
+    "n": 13,
+    "importe": 768381754
    },
    {
     "clave": "Consejo de Administración-Comité de Inversiones de la Sociedad Estatal Correos y Telégrafos SA",
     "n": 20,
     "importe": 736099326
-   },
-   {
-    "clave": "Servicio Andaluz de Salud",
-    "n": 164,
-    "importe": 710418853
    },
    {
     "clave": "Gobierno Vasco-Viceconsejería de Administración y Financiación Sanitarias",
@@ -796,13 +807,18 @@
    },
    {
     "clave": "Canal de Isabel Ii, SA",
-    "n": 47,
-    "importe": 381376205
+    "n": 51,
+    "importe": 432725075
    },
    {
     "clave": "Centre de Telecomunicacions I Tecnologies de la Informació de la Generalitat de Catalunya (Ctti)",
-    "n": 7,
-    "importe": 333460775
+    "n": 6,
+    "importe": 333337903
+   },
+   {
+    "clave": "Planifica Madrid, Proyectos y Obras, SA",
+    "n": 11,
+    "importe": 182199314
    },
    {
     "clave": "Consejo de Administración de la Empresa Provincial de Residuos y Medio Ambiente, SA",
@@ -810,9 +826,9 @@
     "importe": 179695444
    },
    {
-    "clave": "Planifica Madrid, Proyectos y Obras, SA",
-    "n": 9,
-    "importe": 179528850
+    "clave": "Visesa - Vivienda y Suelo de Euskadi, S.a.-Consejo de Administración de Visesa",
+    "n": 5,
+    "importe": 165119089
    },
    {
     "clave": "Junta de Gobierno del Ayuntamiento de Granada",
@@ -825,14 +841,14 @@
     "importe": 153394463
    },
    {
+    "clave": "Departament de Territori, Habitatge I Transició Ecològica",
+    "n": 11,
+    "importe": 142428962
+   },
+   {
     "clave": "Presidencia del Consorcio As Mariñas",
     "n": 1,
     "importe": 141646862
-   },
-   {
-    "clave": "Departament de Territori, Habitatge I Transició Ecològica",
-    "n": 10,
-    "importe": 140538826
    },
    {
     "clave": "Xunta de Goberno Do Concello de Santiago de Compostela",
@@ -841,13 +857,13 @@
    },
    {
     "clave": "Secretaría General de la Consejería de Hacienda, Administraciones Públicas y Transformación Digital de la Junta de Comunidades de Castilla-la Mancha",
-    "n": 10,
-    "importe": 133927129
+    "n": 12,
+    "importe": 133934605
    },
    {
     "clave": "Euskal Trenbide Sarea-Comisión Delegada en Materia de Contratación de Ets",
-    "n": 15,
-    "importe": 119752757
+    "n": 21,
+    "importe": 131002824
    },
    {
     "clave": "Jefatura de Asuntos Económicos del Mando de Apoyo Logístico",
@@ -858,11 +874,6 @@
     "clave": "Transports de Barcelona, SA",
     "n": 22,
     "importe": 85833166
-   },
-   {
-    "clave": "Visesa - Vivienda y Suelo de Euskadi, S.a.-Consejo de Administración de Visesa",
-    "n": 3,
-    "importe": 83739018
    },
    {
     "clave": "Dirección de Adquisiciones del Mando de Apoyo Logístico del Ejército del Aire y del Espacio",
@@ -880,14 +891,24 @@
     "importe": 77334782
    },
    {
+    "clave": "Consejería de Familia, Juventud y Asuntos Sociales",
+    "n": 32,
+    "importe": 74443817
+   },
+   {
     "clave": "Infraestructures de la Generalitat de Catalunya, SAU",
-    "n": 57,
-    "importe": 66588631
+    "n": 58,
+    "importe": 68260839
+   },
+   {
+    "clave": "Agencia para la Administración Digital de la Comunidad de Madrid",
+    "n": 11,
+    "importe": 67876415
    },
    {
     "clave": "Organismo Autónomo Agencia de Vivienda Social de la Comunidad de Madrid",
-    "n": 8,
-    "importe": 65798176
+    "n": 9,
+    "importe": 66600049
    },
    {
     "clave": "Adif Alta Velocidad - Consejo de Administración",
@@ -900,6 +921,21 @@
     "importe": 64768436
    },
    {
+    "clave": "Osakidetza - Servicio Vasco de Salud -Director General",
+    "n": 36,
+    "importe": 60738919
+   },
+   {
+    "clave": "Consejería de Educación, Ciencia y Universidades",
+    "n": 29,
+    "importe": 60524098
+   },
+   {
+    "clave": "Agencia Pública Andaluza de Educación",
+    "n": 66,
+    "importe": 58767723
+   },
+   {
     "clave": "Pleno del Ayuntamiento de Fortuna",
     "n": 1,
     "importe": 57457949
@@ -910,24 +946,9 @@
     "importe": 57277525
    },
    {
-    "clave": "Agencia para la Administración Digital de la Comunidad de Madrid",
-    "n": 9,
-    "importe": 56749221
-   },
-   {
     "clave": "Dirección General de Gestión Económica, Contratación e Infraestructuras de la Conselleria de Sanidad",
     "n": 8,
     "importe": 53710436
-   },
-   {
-    "clave": "Consejería de Educación, Ciencia y Universidades",
-    "n": 20,
-    "importe": 53352999
-   },
-   {
-    "clave": "Consejería de Familia, Juventud y Asuntos Sociales",
-    "n": 23,
-    "importe": 52289775
    },
    {
     "clave": "Organismo Autónomo Informática del Ayuntamiento de Madrid",
@@ -940,14 +961,14 @@
     "importe": 47500000
    },
    {
-    "clave": "Osakidetza - Servicio Vasco de Salud -Director General",
-    "n": 26,
-    "importe": 47088073
+    "clave": "Agencia de Seguridad y Emergencias Madrid 112",
+    "n": 8,
+    "importe": 47480187
    },
    {
-    "clave": "Agencia de Seguridad y Emergencias Madrid 112",
-    "n": 7,
-    "importe": 46407880
+    "clave": "Axencia para a Modernización Tecnolóxica de Galicia (Amtega)",
+    "n": 16,
+    "importe": 46830439
    },
    {
     "clave": "Instituto Foral de Bienestar Social-Consejo de Administración",
@@ -958,11 +979,6 @@
     "clave": "Área de Gobierno de Urbanismo, Medio Ambiente y Movilidad del Ayuntamiento de Madrid",
     "n": 12,
     "importe": 43079923
-   },
-   {
-    "clave": "Axencia para a Modernización Tecnolóxica de Galicia (Amtega)",
-    "n": 7,
-    "importe": 40999909
    }
   ],
   "empresas": [
@@ -1038,8 +1054,8 @@
    },
    {
     "clave": "Serveo Servicios SA",
-    "n": 1,
-    "importe": 21079163
+    "n": 2,
+    "importe": 21289986
    },
    {
     "clave": "Endesa Energia SAU",
@@ -1055,6 +1071,11 @@
     "clave": "Constructora San Jose, SA",
     "n": 1,
     "importe": 18636974
+   },
+   {
+    "clave": "Viuda de Sainz, SL",
+    "n": 2,
+    "importe": 17788112
    },
    {
     "clave": "Construcciones Sarrion SL",
@@ -1082,9 +1103,19 @@
     "importe": 11811259
    },
    {
+    "clave": "UTE Xg847 Barbanza 2026",
+    "n": 1,
+    "importe": 11273392
+   },
+   {
     "clave": "Terumo Bct España SL",
     "n": 1,
     "importe": 9600000
+   },
+   {
+    "clave": "Novartis Farmaceutica, SA",
+    "n": 5,
+    "importe": 9037052
    },
    {
     "clave": "Bycam Servicios Edificios e Infraestructuras SA",
@@ -1100,38 +1131,23 @@
     "clave": "Seranco SAU",
     "n": 2,
     "importe": 7859916
-   },
-   {
-    "clave": "UTE Inetum Norte - Accenture Bilbaotik 202605073ib",
-    "n": 1,
-    "importe": 7489168
-   },
-   {
-    "clave": "Bbva",
-    "n": 1,
-    "importe": 7371570
-   },
-   {
-    "clave": "Antonio Gomila, SA",
-    "n": 2,
-    "importe": 7081560
    }
   ],
   "porTipo": [
    {
     "clave": "Servicios",
-    "n": 4427,
-    "importe": 7523550255
+    "n": 5542,
+    "importe": 6289535059
    },
    {
     "clave": "Obras",
-    "n": 1459,
-    "importe": 2742267193
+    "n": 1647,
+    "importe": 2908358633
    },
    {
     "clave": "Suministros",
-    "n": 2720,
-    "importe": 1644230452
+    "n": 3436,
+    "importe": 1764371787
    },
    {
     "clave": "Gestión de servicios públicos",
@@ -1142,28 +1158,28 @@
   "porProcedimiento": [
    {
     "clave": "Concurso abierto",
-    "n": 3905,
-    "importe": 10488595405
+    "n": 4169,
+    "importe": 9518346214
    },
    {
     "clave": "Restringido",
-    "n": 153,
-    "importe": 853468751
+    "n": 158,
+    "importe": 859979495
    },
    {
     "clave": "Normas internas",
-    "n": 2390,
-    "importe": 268433521
+    "n": 2424,
+    "importe": 277147301
    },
    {
     "clave": "Negociado con publicidad",
-    "n": 324,
-    "importe": 179320891
+    "n": 338,
+    "importe": 189839734
    },
    {
     "clave": "Sistema dinámico de adquisición",
-    "n": 21,
-    "importe": 91378223
+    "n": 28,
+    "importe": 92660429
    },
    {
     "clave": "Negociado sin publicidad",
@@ -1172,8 +1188,8 @@
    },
    {
     "clave": "Contrato menor",
-    "n": 1660,
-    "importe": 10491339
+    "n": 3386,
+    "importe": 18519560
    },
    {
     "clave": "Derivado de acuerdo marco",
@@ -1182,8 +1198,8 @@
    },
    {
     "clave": "Concurso de proyectos",
-    "n": 9,
-    "importe": 1584759
+    "n": 10,
+    "importe": 1654759
    },
    {
     "clave": "Abierto simplificado",
@@ -1193,38 +1209,277 @@
   ],
   "porNivel": [
    {
-    "clave": "Ayuntamientos y diputaciones",
-    "n": 2796,
-    "importe": 3359749686
-   },
-   {
     "clave": "Estado",
-    "n": 1333,
-    "importe": 2238732300
+    "n": 1451,
+    "importe": 2240155134
    },
    {
     "clave": "Comunidades autónomas",
-    "n": 1409,
-    "importe": 1659903395
+    "n": 1764,
+    "importe": 1927215485
+   },
+   {
+    "clave": "Ayuntamientos y diputaciones",
+    "n": 4065,
+    "importe": 1689531198
    },
    {
     "clave": "Universidades",
-    "n": 101,
-    "importe": 26705315
+    "n": 102,
+    "importe": 26710583
+   }
+  ],
+  "porSector": [
+   {
+    "clave": "Obras y carreteras",
+    "n": 1565,
+    "importe": 2874120597
+   },
+   {
+    "clave": "Sanidad y farmacia",
+    "n": 923,
+    "importe": 2045843857
+   },
+   {
+    "clave": "Transporte y vehículos",
+    "n": 706,
+    "importe": 1141049506
+   },
+   {
+    "clave": "Mantenimiento y reparaciones",
+    "n": 680,
+    "importe": 1113512646
+   },
+   {
+    "clave": "Informática y oficina",
+    "n": 946,
+    "importe": 1078368017
+   },
+   {
+    "clave": "Basuras, agua y limpieza",
+    "n": 319,
+    "importe": 966015963
+   },
+   {
+    "clave": "Gestión y asesoría",
+    "n": 1168,
+    "importe": 644909060
+   },
+   {
+    "clave": "Materiales y suministros",
+    "n": 1178,
+    "importe": 306191802
+   },
+   {
+    "clave": "Energía y combustible",
+    "n": 263,
+    "importe": 297400674
+   },
+   {
+    "clave": "Ingeniería y proyectos",
+    "n": 783,
+    "importe": 281764615
+   },
+   {
+    "clave": "Seguridad y defensa",
+    "n": 99,
+    "importe": 106679181
+   },
+   {
+    "clave": "Educación y formación",
+    "n": 230,
+    "importe": 90563889
+   },
+   {
+    "clave": "Cultura y deporte",
+    "n": 530,
+    "importe": 75112181
+   },
+   {
+    "clave": "Comida y hostelería",
+    "n": 315,
+    "importe": 65157161
+   },
+   {
+    "clave": "Agricultura y medio ambiente",
+    "n": 98,
+    "importe": 45399793
+   }
+  ],
+  "porCCAA": [
+   {
+    "clave": "13",
+    "nombre": "Madrid",
+    "poblacion": 7010000,
+    "n": 1629,
+    "importe": 3440352146
+   },
+   {
+    "clave": "01",
+    "nombre": "Andalucía",
+    "poblacion": 8631000,
+    "n": 1689,
+    "importe": 2093102961
+   },
+   {
+    "clave": "16",
+    "nombre": "País Vasco",
+    "poblacion": 2226000,
+    "n": 1008,
+    "importe": 1693615480
+   },
+   {
+    "clave": "09",
+    "nombre": "Cataluña",
+    "poblacion": 8012000,
+    "n": 1471,
+    "importe": 1303124535
+   },
+   {
+    "clave": "12",
+    "nombre": "Galicia",
+    "poblacion": 2705000,
+    "n": 466,
+    "importe": 528764614
+   },
+   {
+    "clave": "10",
+    "nombre": "C. Valenciana",
+    "poblacion": 5320000,
+    "n": 1119,
+    "importe": 371935612
+   },
+   {
+    "clave": "08",
+    "nombre": "Castilla-La Mancha",
+    "poblacion": 2103000,
+    "n": 814,
+    "importe": 203120280
+   },
+   {
+    "clave": "14",
+    "nombre": "Murcia",
+    "poblacion": 1568000,
+    "n": 207,
+    "importe": 193674465
+   },
+   {
+    "clave": "05",
+    "nombre": "Canarias",
+    "poblacion": 2238000,
+    "n": 545,
+    "importe": 109472731
+   },
+   {
+    "clave": "04",
+    "nombre": "Illes Balears",
+    "poblacion": 1231000,
+    "n": 242,
+    "importe": 104519060
+   },
+   {
+    "clave": "07",
+    "nombre": "Castilla y León",
+    "poblacion": 2394000,
+    "n": 660,
+    "importe": 103851285
+   },
+   {
+    "clave": "02",
+    "nombre": "Aragón",
+    "poblacion": 1351000,
+    "n": 256,
+    "importe": 92878106
+   },
+   {
+    "clave": "15",
+    "nombre": "Navarra",
+    "poblacion": 678000,
+    "n": 125,
+    "importe": 70518000
+   },
+   {
+    "clave": "11",
+    "nombre": "Extremadura",
+    "poblacion": 1064000,
+    "n": 189,
+    "importe": 69571428
+   },
+   {
+    "clave": "06",
+    "nombre": "Cantabria",
+    "poblacion": 590000,
+    "n": 102,
+    "importe": 51978678
+   },
+   {
+    "clave": "19",
+    "nombre": "Melilla",
+    "poblacion": 85000,
+    "n": 22,
+    "importe": 28482731
+   },
+   {
+    "clave": "17",
+    "nombre": "La Rioja",
+    "poblacion": 325000,
+    "n": 67,
+    "importe": 19079610
+   },
+   {
+    "clave": "03",
+    "nombre": "Asturias",
+    "poblacion": 1006000,
+    "n": 122,
+    "importe": 12734949
+   },
+   {
+    "clave": "18",
+    "nombre": "Ceuta",
+    "poblacion": 83000,
+    "n": 27,
+    "importe": 1582800
    }
   ]
+ },
+ "territorio": {
+  "localizados": 10760,
+  "estatales": 104,
+  "sinLocalizar": 144,
+  "poblacion": {
+   "10": 5320000,
+   "11": 1064000,
+   "12": 2705000,
+   "13": 7010000,
+   "14": 1568000,
+   "15": 678000,
+   "16": 2226000,
+   "17": 325000,
+   "18": 83000,
+   "19": 85000,
+   "01": 8631000,
+   "02": 1351000,
+   "03": 1006000,
+   "04": 1231000,
+   "05": 2238000,
+   "06": 590000,
+   "07": 2394000,
+   "08": 2103000,
+   "09": 8012000
+  },
+  "fuentePoblacion": "INE, Cifras de Población a 1 de enero de 2025"
  },
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 999,
-   "libresDesignaciones": 61,
-   "nombramientos": 61,
+   "documentos": 874,
+   "libresDesignaciones": 58,
+   "nombramientos": 56,
    "ceses": 4,
    "plazas": 0,
-   "subvenciones": 136,
-   "contratos": 8940,
-   "importeContratos": 1735195078
+   "subvenciones": 110,
+   "contratos": 11008,
+   "importeContratos": 1854142500
   },
   {
    "mes": "2026-08",
@@ -1383,7 +1638,8 @@
  ],
  "presupuesto": {
   "disponible": false,
-  "motivo": "No se ha consultado en esta ingesta."
+  "motivo": "No hemos podido leer automáticamente el presupuesto por partidas. Hacienda lo publica en hojas de cálculo y PDF, no en una API estable.",
+  "intentos": []
  },
  "umbrales": {
   "importeAlto": 1000000,

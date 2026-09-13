@@ -6,6 +6,8 @@
  *   node scripts/build.mjs --dias=30              ultimos 30 dias
  *   node scripts/build.mjs --desde=2025-07-01 --solo=boe   relleno historico
  *   node scripts/build.mjs --demo                 datos de ejemplo, para la interfaz
+ *   node scripts/build.mjs --reconstruir          rehace data/index.json con lo que
+ *                                                 ya hay en disco, sin tocar la red
  *
  * Reglas de la casa:
  *  - Ningun dato se inventa. Si una fuente falla, se anota en data/index.json
@@ -23,10 +25,13 @@ import { ultimosDias, comoISO, restarDias } from './lib/red.mjs';
 import { GLOSARIO } from './lib/texto.mjs';
 import { SENALES, IMPORTE_ALTO } from './lib/senales.mjs';
 import { sumarioDelDia, recorrerSumario } from './sources/boe.mjs';
-import { leerContratos, contratoDesdeEntry } from './sources/placsp.mjs';
+import { leerContratos, contratoDesdeEntry, importeCreible } from './sources/placsp.mjs';
 import { leerPresupuesto } from './sources/pge.mjs';
 import { leerOposiciones, marcarAbiertas } from './sources/oposiciones.mjs';
 import { parsearXML, buscarTodos } from './lib/xml.mjs';
+import { localizar, COMUNIDADES } from './lib/territorio.mjs';
+import { guardar as guardarEnAlmacen } from './lib/almacen.mjs';
+import { sectorDeCPV } from './lib/cpv.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 
@@ -43,6 +48,8 @@ const TOPE_OPOSICIONES = 400;
 /** Ventanas de los resumenes del indice. */
 const VENTANA_PORTADA = 7;
 const VENTANA_REPARTO = 30;
+/** Contratos por tanda al sembrar el almacen desde los ficheros de disco. */
+const TANDA_SIEMBRA = 2000;
 /** Cuantos sumarios del BOE pedimos a la vez en un relleno largo. */
 const EN_PARALELO = 4;
 
@@ -95,10 +102,48 @@ function comoItemContrato(c) {
     plazoOfertas: c.plazoOfertas,
     cpv: c.cpv,
     esMenor: c.esMenor,
+    importeNoVerificado: c.importeNoVerificado ?? null,
+    ccaa: c.ccaa ?? null,
+    provincia: c.provincia ?? null,
+    viaLocalizacion: c.viaLocalizacion ?? null,
+    estatal: Boolean(c.estatal),
+    sector: c.sector ?? null,
     senales: c.senales,
     jerga: c.jerga,
     url: c.url,
   };
+}
+
+/**
+ * Rellena el territorio y el sector de un contrato que se guardo antes de que
+ * existieran esos campos. Solo mira lo que ya esta en el fichero (organismo,
+ * url y cpv): no se vuelve a descargar nada ni se inventa nada.
+ */
+function enriquecer(item) {
+  if (item.tipo !== 'contrato') return item;
+  if (item.sector === undefined) item.sector = sectorDeCPV(item.cpv);
+
+  // La misma red de seguridad, aplicada a lo que ya estaba guardado: un
+  // importe que no es creible para quien firma deja de afirmarse, aunque se
+  // bajara antes de que existiera la comprobacion.
+  if (item.importeNoVerificado === undefined) {
+    item.importeNoVerificado = null;
+    if (!importeCreible(item.importe, item.nivel) || !importeCreible(item.importeAdjudicado, item.nivel)) {
+      item.importeNoVerificado = item.importeAdjudicado ?? item.importe ?? null;
+      item.importe = null;
+      item.importeAdjudicado = null;
+      item.valorEstimado = null;
+      item.senales = [...(item.senales || []).filter((s) => s !== 'sin-importe' && s !== 'importe-alto'), 'importe-no-verificado'];
+    }
+  }
+  if (item.ccaa === undefined) {
+    const donde = localizar({ organismo: item.organismo, url: item.url });
+    item.ccaa = donde?.ccaa || null;
+    item.provincia = donde?.provincia || null;
+    item.viaLocalizacion = donde?.via || null;
+    item.estatal = Boolean(donde?.estatal);
+  }
+  return item;
 }
 
 function comoItemBOE(b) {
@@ -145,7 +190,9 @@ function resumenDeDia(items) {
     sinCompetencia: 0, importeSinCompetencia: 0, menores: 0,
     documentos: 0, subvenciones: 0, importeSubvenciones: 0,
     nombramientos: 0, ceses: 0, libresDesignaciones: 0, empleo: 0, plazas: 0,
+    estatales: 0, sinLocalizar: 0,
     porOrganismo: {}, porEmpresa: {}, porTipo: {}, porProcedimiento: {}, porNivel: {},
+    porCCAA: {}, porSector: {},
   };
 
   for (const i of items) {
@@ -165,6 +212,11 @@ function resumenDeDia(items) {
       sumaEn(r.porTipo, i.tipoContrato, importe);
       sumaEn(r.porProcedimiento, i.procedimiento, importe);
       sumaEn(r.porNivel, NIVELES[i.nivel] || null, importe);
+      sumaEn(r.porSector, i.sector, importe);
+      // De donde es. Lo que no se sabe se cuenta, no se reparte.
+      if (i.ccaa) sumaEn(r.porCCAA, i.ccaa, importe);
+      else if (i.estatal) r.estatales += 1;
+      else r.sinLocalizar += 1;
       continue;
     }
 
@@ -242,6 +294,10 @@ async function main() {
   const solo = argumento('solo', null);
   const salida = path.resolve(RAIZ, argumento('salida', 'data'));
   const demo = hayBandera('demo');
+  // Rehacer el indice con lo que ya hay bajado. Sirve para poner al dia los
+  // ficheros antiguos cuando cambia el formato, sin volver a pedirle nada a
+  // nadie ni arriesgarse a publicar un dia a medias.
+  const reconstruir = hayBandera('reconstruir');
   const generado = new Date().toISOString();
 
   const fechasBOE = desde ? rangoDeFechas(desde) : ultimosDias(dias);
@@ -255,7 +311,16 @@ async function main() {
   let contratos = [];
   let presupuesto = null;
 
-  if (demo) {
+  if (reconstruir) {
+    // Las fuentes se copian del indice anterior: no las hemos consultado, asi
+    // que no podemos decir nada nuevo sobre ellas.
+    const anterior = existsSync(path.join(salida, 'index.json'))
+      ? JSON.parse(await readFile(path.join(salida, 'index.json'), 'utf8'))
+      : {};
+    fuentes.push(...(anterior.fuentes || []));
+    presupuesto = anterior.presupuesto || null;
+    console.log('  Reconstruyendo desde disco: no se consulta ninguna fuente.');
+  } else if (demo) {
     const d = await fuentesDemo();
     itemsBOE = d.boe;
     contratos = d.contratos;
@@ -287,6 +352,15 @@ async function main() {
           mensaje: resultado.errores.length ? resultado.errores.join(' · ') : null,
           url: 'https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos',
         });
+        // Al almacén va TODO lo que se ha leído, también los contratos
+        // pequeños que no caben en los ficheros del repositorio. Son la mayoría
+        // y son los que hacen falta para ver si un gasto grande se ha troceado.
+        // Que esto falle no puede tumbar la publicación del día.
+        try {
+          await guardarEnAlmacen(contratos, { detalleDesde: MINIMO_DETALLE });
+        } catch (error) {
+          console.warn(`  ⚠ Almacén: ${error.message || error}`);
+        }
       } catch (error) {
         fuentes.push({
           clave: 'placsp',
@@ -315,7 +389,7 @@ async function main() {
     }
   }
 
-  if (!demo && fuentes.length && fuentes.every((f) => f.estado === 'error')) {
+  if (!demo && !reconstruir && fuentes.length && fuentes.every((f) => f.estado === 'error')) {
     console.error('\nNinguna fuente respondió. No se toca data/.');
     process.exit(1);
   }
@@ -383,17 +457,51 @@ async function main() {
 
   // --- Indice: se reconstruye a partir de lo que hay en disco -------------
   const fechas = await diasEnDisco(salida);
+
+  /** Contratos ya guardados en disco que aún no han pasado por el almacén. */
+  const porSembrar = [];
+  let sembrados = 0;
+  const sembrar = async (ultimo = false) => {
+    if (!porSembrar.length) return;
+    try {
+      const resultado = await guardarEnAlmacen(porSembrar, { detalleDesde: MINIMO_DETALLE, fuente: 'siembra', registro: { log() {}, warn() {} } });
+      if (resultado) sembrados += resultado.filas;
+    } catch (error) {
+      console.warn(`  ⚠ Almacén: ${error.message || error}`);
+    }
+    porSembrar.length = 0;
+    if (ultimo && sembrados) console.log(`  Almacén: ${sembrados} contratos ya bajados enviados al histórico`);
+  };
   const resumenes = new Map();
   for (const fecha of fechas) {
     const dia = await leerDia(salida, fecha);
-    if (!dia.resumen) {
-      // Fichero de una version anterior: le calculamos el resumen y lo dejamos
-      // al dia, para no tener que recalcularlo en cada ingesta.
-      dia.resumen = resumenDeDia(dia.items || []);
+    // Ficheros de una version anterior: se les calcula lo que les falta y se
+    // dejan al dia, para no tener que recalcularlo en cada ingesta. El
+    // territorio y el sector salen de lo que ya hay guardado en el propio
+    // fichero, asi que un fichero viejo se pone al dia sin volver a la red.
+    // Un contrato al que le falte cualquiera de los campos que calculamos aquí
+    // es de una versión anterior: se pone al día. Al añadir un campo nuevo
+    // basta con sumarlo a esta lista.
+    const CALCULADOS = ['ccaa', 'sector', 'importeNoVerificado'];
+    const aviejados = (dia.items || []).some((i) => i.tipo === 'contrato' && CALCULADOS.some((c) => i[c] === undefined));
+    if (!dia.resumen || !dia.resumen.porCCAA || aviejados) {
+      for (const item of dia.items || []) enriquecer(item);
+      dia.resumen = acumular([resumenDeDia(dia.items || []), dia.resumenFuera || resumenDeDia([])]);
       await writeFile(path.join(salida, 'dias', `${fecha}.json`), JSON.stringify(dia));
     }
     resumenes.set(fecha, dia.resumen);
+
+    // Al reconstruir se aprovecha el paseo por los ficheros para sembrar el
+    // almacén con los contratos que ya están bajados. Si no, el histórico
+    // empezaría en blanco y habría que esperar a la siguiente ingesta para
+    // guardar algo que ya teníamos. Se manda por tandas para no cargar en
+    // memoria medio año de contratos de golpe.
+    if (reconstruir) {
+      porSembrar.push(...(dia.items || []).filter((i) => i.tipo === 'contrato'));
+      if (porSembrar.length >= TANDA_SIEMBRA) await sembrar();
+    }
   }
+  if (reconstruir) await sembrar(true);
 
   const ultimas = (n) => fechas.slice(0, n).map((f) => resumenes.get(f));
   const portada = acumular(ultimas(VENTANA_PORTADA));
@@ -453,6 +561,25 @@ async function main() {
       porTipo: ordenar(reparto.porTipo, 10),
       porProcedimiento: ordenar(reparto.porProcedimiento, 12),
       porNivel: ordenar(reparto.porNivel, 6),
+      porSector: ordenar(reparto.porSector, 15),
+      porCCAA: Object.entries(reparto.porCCAA || {})
+        .map(([codigo, v]) => ({
+          clave: codigo,
+          nombre: COMUNIDADES[codigo]?.nombre || codigo,
+          poblacion: COMUNIDADES[codigo]?.poblacion || null,
+          n: v.n,
+          importe: Math.round(v.importe),
+        }))
+        .sort((a, b) => b.importe - a.importe || b.n - a.n),
+    },
+    // Cuanto de lo publicado se ha podido situar en el mapa. La pantalla lo
+    // dice tal cual: lo que no se sabe no se reparte, se cuenta aparte.
+    territorio: {
+      localizados: Object.values(reparto.porCCAA || {}).reduce((t, v) => t + v.n, 0),
+      estatales: reparto.estatales,
+      sinLocalizar: reparto.sinLocalizar,
+      poblacion: Object.fromEntries(Object.entries(COMUNIDADES).map(([c, v]) => [c, v.poblacion])),
+      fuentePoblacion: 'INE, Cifras de Población a 1 de enero de 2025',
     },
     historico: Object.values(porMes).sort((a, b) => (a.mes < b.mes ? 1 : -1)),
     presupuesto: presupuesto || { disponible: false, motivo: 'No se ha consultado en esta ingesta.' },
@@ -460,7 +587,7 @@ async function main() {
   };
 
   // --- Oposiciones: lo que hay dentro del documento, no solo el titular ---
-  const oposiciones = await actualizarOposiciones(salida, itemsBOE, demo, fechas[0]);
+  const oposiciones = await actualizarOposiciones(salida, itemsBOE, demo || reconstruir, fechas[0]);
   indice.oposiciones = {
     abiertas: oposiciones.filter((o) => o.abierta).length,
     plazasAbiertas: oposiciones.filter((o) => o.abierta).reduce((t, o) => t + (o.plazas || 0), 0),

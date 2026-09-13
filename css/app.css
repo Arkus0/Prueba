@@ -404,3 +404,220 @@
   .capa { align-items: center; justify-content: center; padding: 24px; }
   .hoja { max-width: 640px; border-radius: 18px; max-height: 86vh; }
 }
+
+/* ---------- Gráficos ---------- */
+/* Tramos de la rampa. Son magnitud, no identidad: más oscuro es más dinero. */
+.serie-1 { background: var(--serie-1); }
+.serie-2 { background: var(--serie-2); }
+.serie-3 { background: var(--serie-3); }
+.serie-4 { background: var(--serie-4); }
+.serie-5 { background: var(--serie-5); }
+
+.grafico {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 16px 14px;
+  box-shadow: var(--sombra);
+}
+
+/* ---------- Mapa ---------- */
+.mapa-caja { margin-top: 2px; }
+.mapa {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Sin esto el SVG se estira a lo alto en pantallas anchas y España engorda. */
+  max-height: 62vh;
+  overflow: visible;
+}
+.mapa-region {
+  stroke: var(--fondo);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: opacity .12s ease;
+}
+.mapa-region:hover { opacity: .82; }
+.mapa-region:focus-visible { outline: none; stroke: var(--tinta); stroke-width: 2.4; }
+.mapa-t1 { fill: var(--serie-1); }
+.mapa-t2 { fill: var(--serie-2); }
+.mapa-t3 { fill: var(--serie-3); }
+.mapa-t4 { fill: var(--serie-4); }
+.mapa-t5 { fill: var(--serie-5); }
+/* Sin datos no es "cero": es gris, y la nota de abajo explica por qué. */
+.mapa-sin { fill: var(--superficie-2); }
+.mapa-activa { stroke: var(--tinta); stroke-width: 2.4; }
+.mapa-recuadro {
+  fill: none;
+  stroke: var(--linea-fuerte);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+}
+
+.leyenda {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--tinta-suave);
+}
+.leyenda-caja { width: 26px; height: 9px; border-radius: 2px; }
+.leyenda-punta { margin: 0 3px; }
+.leyenda-corte { flex-basis: 100%; margin-top: 3px; }
+.mapa-nota {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+}
+.mapa-nota strong { color: var(--tinta-media); }
+
+/* ---------- Anillo ---------- */
+.anillo-caja { display: flex; align-items: center; gap: 16px; }
+.anillo { width: 108px; height: 108px; flex: 0 0 auto; }
+.anillo-pista { fill: none; stroke: var(--superficie-2); stroke-width: 13; }
+.anillo-arco {
+  fill: none;
+  stroke: var(--serie-4);
+  stroke-width: 13;
+  stroke-linecap: butt;
+}
+.anillo-cifra {
+  fill: var(--tinta);
+  font-size: 30px;
+  font-weight: 750;
+  letter-spacing: -.03em;
+}
+.anillo-pie { font-size: 14px; line-height: 1.45; color: var(--tinta-media); }
+
+/* ---------- Barra apilada ---------- */
+.apilada-barra {
+  display: flex;
+  height: 30px;
+  border-radius: 6px;
+  overflow: hidden;
+  /* El hueco entre tramos los separa sin meter una línea de color. */
+  gap: 2px;
+  background: var(--linea);
+}
+.apilada-tramo { display: block; min-width: 2px; }
+.apilada-claves { margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
+.apilada-clave { display: flex; align-items: baseline; gap: 8px; font-size: 13.5px; }
+.apilada-punto {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex: 0 0 auto;
+  transform: translateY(1px);
+}
+.apilada-nombre { color: var(--tinta); overflow-wrap: anywhere; }
+.apilada-valor { margin-left: auto; color: var(--tinta-suave); white-space: nowrap; }
+
+/* ---------- Serie diaria ---------- */
+.serie { display: block; width: 100%; height: 120px; }
+.serie-columna { fill: var(--serie-3); }
+.serie-pie {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--tinta-suave);
+}
+.serie-pico { color: var(--tinta-media); }
+
+/* ---------- Chispa ---------- */
+.chispa {
+  display: block;
+  width: 100%;
+  height: 18px;
+  margin-top: 8px;
+  overflow: visible;
+}
+.chispa polyline {
+  fill: none;
+  stroke: var(--serie-3);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- Portada ---------- */
+.titular {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 20px 18px;
+  box-shadow: var(--sombra);
+  margin-bottom: 16px;
+}
+.titular-cifra {
+  display: block;
+  font-size: var(--cifra-titular);
+  font-weight: 780;
+  letter-spacing: -.035em;
+  line-height: 1.02;
+}
+.titular-que {
+  display: block;
+  margin-top: 10px;
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--tinta-media);
+}
+.titular-tuyo {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--neutro-fondo);
+  border: 1px solid var(--linea);
+  font-size: 13.5px;
+  color: var(--tinta-media);
+}
+.titular-tuyo strong { color: var(--tinta); }
+
+/* Interruptor del mapa: total o por habitante. */
+.conmutador { display: flex; gap: 6px; margin: 12px 0 4px; }
+.conmutador button {
+  flex: 1;
+  min-height: 36px;
+  border-radius: 9px;
+  border: 1px solid var(--linea);
+  background: var(--superficie);
+  font-size: 13.5px;
+  color: var(--tinta-media);
+}
+.conmutador button[aria-pressed="true"] {
+  background: var(--tinta);
+  border-color: var(--tinta);
+  color: var(--fondo);
+  font-weight: 650;
+}
+
+/* ---------- Barra de importe dentro de la tarjeta ---------- */
+/* Para que la lista se lea de un vistazo: cuál es gordo se ve sin leer. */
+.tarjeta-medida {
+  display: block;
+  height: 4px;
+  margin-top: 9px;
+  border-radius: 3px;
+  background: var(--superficie-2);
+  overflow: hidden;
+}
+.tarjeta-medida i {
+  display: block;
+  height: 100%;
+  background: var(--serie-3);
+  border-radius: 3px;
+  min-width: 3px;
+}
+
+/* ---------- Pantallas anchas ---------- */
+@media (min-width: 700px) {
+  .titular-cifra { font-size: 52px; }
+  .anillo { width: 130px; height: 130px; }
+}

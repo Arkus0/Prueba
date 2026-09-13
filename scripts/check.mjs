@@ -30,6 +30,27 @@ if (indice) {
   exigir(Array.isArray(indice.fuentes) && indice.fuentes.length > 0, 'index.json sin lista de fuentes');
   exigir(Array.isArray(indice.dias), 'index.json sin días');
 
+  // El mapa: que los agregados existan y que los códigos sean comunidades de
+  // verdad. Si la cobertura se hunde es que la Plataforma ha cambiado algo y
+  // hay que mirarlo, pero no es motivo para no publicar lo demás.
+  const porCCAA = indice.reparto?.porCCAA;
+  exigir(Array.isArray(porCCAA), 'index.json sin reparto.porCCAA: el mapa se quedaría vacío');
+  for (const fila of porCCAA || []) {
+    exigir(/^(0[1-9]|1[0-9])$/.test(fila.clave), `comunidad desconocida en reparto.porCCAA: ${fila.clave}`);
+    exigir(typeof fila.nombre === 'string' && fila.nombre.length > 0, `comunidad sin nombre: ${fila.clave}`);
+  }
+
+  const territorio = indice.territorio;
+  if (territorio) {
+    const total = territorio.localizados + territorio.estatales + territorio.sinLocalizar;
+    const cobertura = total ? territorio.localizados / total : 1;
+    if (total > 0 && cobertura < 0.7) {
+      avisos.push(`solo se localiza el ${Math.round(cobertura * 100)}% de los contratos (antes rondaba el 85%): revisar scripts/lib/territorio.mjs`);
+    }
+  } else {
+    avisos.push('index.json sin resumen de territorio');
+  }
+
   const vivas = (indice.fuentes || []).filter((f) => f.estado === 'ok');
   exigir(vivas.length > 0, 'Ninguna fuente oficial respondió: no publicamos nada');
 
