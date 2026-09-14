@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-13T12:16:13.979Z",
+ "generado": "2026-09-14T13:19:10.667Z",
  "convocatorias": [
   {
    "id": "BOE-A-2026-18352",
@@ -647,6 +647,30 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19133",
+   "tipo": "oposicion",
+   "fecha": "2026-09-14",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Resolución de 8 de septiembre de 2026, de la Dirección General de Seguridad Jurídica y Fe Pública, por la que se convoca concurso ordinario n.º 325, para proveer Registros de la Propiedad, Mercantiles y de Bienes Muebles.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19133",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19133.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-18838",
    "tipo": "oposicion",
    "fecha": "2026-09-09",
@@ -799,6 +823,32 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19034",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19034.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19136",
+   "tipo": "oposicion",
+   "fecha": "2026-09-14",
+   "organismo": "Ministerio de Industria y Turismo",
+   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo en la Oficina Española de Patentes y Marcas, O.A.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": "Estar en posesión de titulación universitaria acreditada en ingeniería o arquitectura (máx: 5,00 pts.).",
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-05",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19136",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19136.pdf",
+   "frase": "El Ministerio de Industria y Turismo abre un proceso selectivo por oposición.",
    "abierta": true
   },
   {
