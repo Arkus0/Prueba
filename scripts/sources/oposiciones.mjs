@@ -14,19 +14,46 @@ import { bajar } from '../lib/red.mjs';
 import { parsearXML, buscar, texto as textoDe2 } from '../lib/xml.mjs';
 import { sujetoYVerbo, recortar, numeroES } from '../lib/texto.mjs';
 
+/**
+ * Se incrementa cuando cambia la lógica de extracción. Las convocatorias
+ * guardadas con una versión anterior se vuelven a leer una vez: así un bug
+ * corregido no queda congelado durante meses en oposiciones.json.
+ */
+export const VERSION_EXTRACTOR_OPOSICIONES = 2;
+
 /** Solo pedimos el texto completo de lo que parece una convocatoria de plazas. */
 const PARECE_CONVOCATORIA =
   /se convoca|convocatoria de|pruebas selectivas|proceso selectivo|oferta de empleo/i;
 const NO_ES_CONVOCATORIA =
-  /lista[s]? (provisional|definitiva)|relación de (personas )?aprobad|tribunal|corrección de errores|se eleva a definitiva|nombramiento de funcionarios|modificación de la composición/i;
+  /lista[s]? (provisional|definitiva)|relaci[oó]n(?:\s+(?:provisional|definitiva))?\s+de\s+(personas\s+)?(?:admitid|excluid|aprobad)|tribunal|correcci[oó]n de errores|se corrig(?:e|en)\s+(?:el|los|la|las)?\s*errores|se eleva a definitiva|nombramiento de funcionarios|modificaci[oó]n de la composici[oó]n|se ampl[ií]a el plazo para aprobar la relaci[oó]n/i;
 
 const NUMEROS = {
-  un: 1, una: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8,
-  nueve: 9, diez: 10, once: 11, doce: 12, trece: 13, catorce: 14, quince: 15,
-  veinte: 20, treinta: 30,
+  un: 1, uno: 1, una: 1,
+  dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8, nueve: 9,
+  diez: 10, once: 11, doce: 12, trece: 13, catorce: 14, quince: 15,
+  dieciseis: 16, 'dieciséis': 16, diecisiete: 17, dieciocho: 18, diecinueve: 19,
+  veinte: 20, veintiuno: 21, veintiuna: 21, veintidos: 22, 'veintidós': 22,
+  veintitres: 23, 'veintitrés': 23, veinticuatro: 24, veinticinco: 25,
+  veintiseis: 26, 'veintiséis': 26, veintisiete: 27, veintiocho: 28, veintinueve: 29,
+  treinta: 30,
 };
 
-const aNumero = (palabra) => NUMEROS[String(palabra).toLowerCase()] ?? Number(palabra) ?? null;
+const aNumero = (palabra) => {
+  const crudo = String(palabra ?? '').trim().toLowerCase();
+  if (Object.hasOwn(NUMEROS, crudo)) return NUMEROS[crudo];
+  return numeroES(crudo);
+};
+
+const PALABRAS_NUMERO = Object.keys(NUMEROS)
+  .sort((a, b) => b.length - a.length)
+  .map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  .join('|');
+const VALOR_PLAZAS = `(?:\\d{1,3}(?:\\.\\d{3})*|\\d{1,5}|${PALABRAS_NUMERO})`;
+
+const plazaValida = (valor) => {
+  const n = aNumero(valor);
+  return Number.isInteger(n) && n > 0 && n < 100000 ? n : null;
+};
 
 /** ¿Merece la pena bajar el documento entero? */
 export function pareceConvocatoria(item) {
@@ -37,24 +64,56 @@ export function pareceConvocatoria(item) {
 }
 
 /**
- * Plazas convocadas. Se prueban varias formas, de la más fiable a la más
- * general, y se aceptan cifras con separador de millar ("1.115 plazas").
+ * Plazas convocadas.
+ *
+ * Hay anuncios universitarios cuyo anexo repite bloques como:
+ *   "Número de plazas: Una. Plaza número: 22825."
+ * El identificador 22825 NO son 22.825 plazas. Por eso el valor etiquetado se
+ * captura de forma estricta (sin saltar al campo siguiente) y, cuando hay
+ * varios bloques, se suman. Si existe un total explícito, manda ese total.
  */
 export function plazasEn(texto) {
+  const t = String(texto || '').replace(/\s+/g, ' ');
+
+  const patronesTotal = [
+    new RegExp(`n[úu]mero\\s+total\\s+de\\s+plazas\\s*[:\\-]?\\s*(${VALOR_PLAZAS})\\b`, 'i'),
+    new RegExp(`(?:un\\s+)?total\\s+de\\s+(${VALOR_PLAZAS})\\s+plazas\\b`, 'i'),
+    new RegExp(`total\\s+plazas\\s*[:\\-]?\\s*(${VALOR_PLAZAS})\\b`, 'i'),
+  ];
+  for (const patron of patronesTotal) {
+    const m = t.match(patron);
+    const n = m ? plazaValida(m[1]) : null;
+    if (n) return n;
+  }
+
+  // En anexos con una ficha por plaza puede aparecer muchas veces. Sumamos
+  // SOLO el valor inmediatamente posterior a la etiqueta "Número de plazas".
+  const etiqueta = new RegExp(
+    `n[úu]mero\\s+de\\s+plazas(?:\\s+convocadas?)?\\s*[:\\-]?\\s*(${VALOR_PLAZAS})\\b`,
+    'gi',
+  );
+  const etiquetadas = [...t.matchAll(etiqueta)]
+    .map((m) => plazaValida(m[1]))
+    .filter((n) => n !== null);
+  if (etiquetadas.length) {
+    const suma = etiquetadas.reduce((a, b) => a + b, 0);
+    if (suma > 0 && suma < 100000) return suma;
+  }
+
+  // Formas narrativas habituales. Estas expresiones exigen que la cifra esté
+  // pegada semánticamente a "plazas"; nunca atraviesan "Plaza número".
   const patrones = [
-    /(?:un\s+)?total\s+de\s+([\d.]{1,9})\s+plazas/i,
-    /n[úu]mero\s+(?:total\s+)?de\s+plazas[^\d]{0,25}([\d.]{1,9})/i,
-    /se\s+convocan?[^.]{0,150}?\b([\d.]{1,9})\s+plazas/i,
-    /(?:cubrir|proveer|ofertar?|provisi[óo]n de)[^.]{0,80}?\b([\d.]{1,9})\s+plazas/i,
-    /\b([\d.]{1,9})\s+plazas\b/i,
+    new RegExp(`se\\s+convocan?[^.]{0,150}?\\b(${VALOR_PLAZAS})\\s+plazas\\b`, 'i'),
+    new RegExp(`(?:cubrir|proveer|ofertar?|provisi[óo]n de)[^.]{0,80}?\\b(${VALOR_PLAZAS})\\s+plazas\\b`, 'i'),
+    new RegExp(`\\b(${VALOR_PLAZAS})\\s+plazas\\b`, 'i'),
   ];
   for (const patron of patrones) {
-    const m = texto.match(patron);
-    if (!m) continue;
-    const n = numeroES(m[1]);
-    if (n && n > 0 && n < 100000 && Number.isInteger(n)) return n;
+    const m = t.match(patron);
+    const n = m ? plazaValida(m[1]) : null;
+    if (n) return n;
   }
-  return /\b(?:una|1)\s+plaza\b/i.test(texto) ? 1 : null;
+
+  return /\b(?:una|un|uno|1)\s+plaza\b/i.test(t) ? 1 : null;
 }
 
 /** "plazo de veinte días hábiles" -> { dias: 20, tipo: 'hábiles' }. */
@@ -140,18 +199,49 @@ function fraseDeOposicion(c) {
   return frase ? `${frase}.` : `Se convocan plazas de empleo público${c.plazas ? `: ${c.plazas}` : ''}.`;
 }
 
+const itemDesdeConvocatoriaGuardada = (c) => ({
+  id: c.id,
+  tipo: 'boe',
+  subtipo: 'empleo',
+  fecha: c.fecha,
+  organismo: c.organismo,
+  titulo: c.titulo,
+  url: c.url || `https://www.boe.es/diario_boe/txt.php?id=${encodeURIComponent(c.id)}`,
+  urlPdf: c.urlPdf || null,
+  urlXml: `https://www.boe.es/diario_boe/xml.php?id=${encodeURIComponent(c.id)}`,
+});
+
 /**
  * Enriquece los items de empleo del BOE con lo que hay dentro del documento.
- * Solo baja los que no conocemos ya: el histórico no se vuelve a pedir.
+ * Las convocatorias extraídas con la versión actual no se vuelven a pedir.
+ * Si cambia el extractor, las antiguas se revalidan una sola vez para evitar
+ * que un error histórico siga publicado después de haber arreglado el parser.
  */
 export async function leerOposiciones(items, yaConocidas = [], registro = console) {
-  const conocidas = new Map(yaConocidas.map((c) => [c.id, c]));
-  const candidatas = items.filter(pareceConvocatoria);
+  const conocidasVigentes = new Map(
+    yaConocidas
+      .filter((c) => c.extractorVersion === VERSION_EXTRACTOR_OPOSICIONES)
+      .map((c) => [c.id, c]),
+  );
+
+  const porId = new Map();
+  for (const item of items.filter(pareceConvocatoria)) porId.set(item.id, item);
+
+  // Migración automática: versiones antiguas vuelven a pasar por el parser.
+  // Los falsos positivos que ya no son convocatoria no se descargan; se
+  // eliminan después en marcarAbiertas().
+  for (const vieja of yaConocidas) {
+    if (vieja.extractorVersion === VERSION_EXTRACTOR_OPOSICIONES) continue;
+    const item = itemDesdeConvocatoriaGuardada(vieja);
+    if (pareceConvocatoria(item) && !porId.has(item.id)) porId.set(item.id, item);
+  }
+
+  const candidatas = [...porId.values()];
   const nuevas = [];
   let errores = 0;
 
   for (const item of candidatas) {
-    if (conocidas.has(item.id)) continue;
+    if (conocidasVigentes.has(item.id)) continue;
     try {
       const xml = await bajar(item.urlXml, { intentos: 2, tiempoLimiteMs: 30000 });
       const documento = parsearXML(xml);
@@ -167,6 +257,7 @@ export async function leerOposiciones(items, yaConocidas = [], registro = consol
         organismo: item.organismo,
         titulo: item.titulo,
         ...detalles,
+        extractorVersion: VERSION_EXTRACTOR_OPOSICIONES,
         limite: fechaLimite(item.fecha, detalles.plazo),
         url: item.url,
         urlPdf: item.urlPdf,
@@ -179,11 +270,13 @@ export async function leerOposiciones(items, yaConocidas = [], registro = consol
     }
   }
 
-  registro.log?.(`  Oposiciones: ${nuevas.length} convocatorias nuevas de ${candidatas.length} candidatas${errores ? `, ${errores} con error` : ''}`);
+  registro.log?.(`  Oposiciones: ${nuevas.length} convocatorias nuevas o revalidadas de ${candidatas.length} candidatas${errores ? `, ${errores} con error` : ''}`);
   return { nuevas, errores, candidatas: candidatas.length };
 }
 
-/** Marca cuáles siguen abiertas hoy. */
+/** Marca cuáles siguen abiertas hoy y descarta falsos positivos conocidos. */
 export function marcarAbiertas(convocatorias, hoy = new Date().toISOString().slice(0, 10)) {
-  return convocatorias.map((c) => ({ ...c, abierta: Boolean(c.limite) && c.limite >= hoy }));
+  return convocatorias
+    .filter((c) => pareceConvocatoria({ subtipo: 'empleo', titulo: c.titulo || '' }))
+    .map((c) => ({ ...c, abierta: Boolean(c.limite) && c.limite >= hoy }));
 }

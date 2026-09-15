@@ -218,7 +218,12 @@ async function inicio() {
   await pintar();
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    // Sin el update() explícito, una pestaña abierta desde antes podía tardar
+    // en enterarse de que hay una versión nueva de la app (por ejemplo, de
+    // Empleo) hasta el siguiente ciclo natural de comprobación del navegador.
+    navigator.serviceWorker.register('sw.js')
+      .then((registro) => registro.update())
+      .catch(() => {});
   }
 }
 
