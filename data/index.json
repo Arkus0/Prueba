@@ -1,15 +1,15 @@
 {
  "version": 2,
- "generado": "2026-09-14T13:11:55.726Z",
+ "generado": "2026-09-15T11:59:44.982Z",
  "ventana": {
-  "desde": "2026-09-08",
-  "hasta": "2026-09-14",
+  "desde": "2026-09-09",
+  "hasta": "2026-09-15",
   "dias": 7
  },
  "cobertura": {
   "desde": "2025-07-01",
-  "hasta": "2026-09-14",
-  "dias": 380
+  "hasta": "2026-09-15",
+  "dias": 381
  },
  "demo": false,
  "avisos": [],
@@ -18,7 +18,7 @@
    "clave": "boe",
    "nombre": "Boletín Oficial del Estado",
    "estado": "ok",
-   "registros": 564,
+   "registros": 560,
    "dias": 7,
    "mensaje": null,
    "url": "https://www.boe.es/datosabiertos/"
@@ -26,9 +26,9 @@
   {
    "clave": "placsp",
    "nombre": "Plataforma de Contratación del Sector Público",
-   "estado": "ok",
-   "registros": 10742,
-   "mensaje": null,
+   "estado": "error",
+   "registros": 0,
+   "mensaje": "PLACSP/licitaciones: The operation was aborted due to timeout",
    "url": "https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos"
   },
   {
@@ -41,21 +41,27 @@
   }
  ],
  "totales": {
-  "contratos": 8612,
-  "importeContratos": 8636817034,
-  "importeAdjudicado": 1155273494,
-  "sinCompetencia": 1439,
-  "importeSinCompetencia": 273308791,
-  "menores": 3703,
-  "documentosBOE": 564,
-  "subvenciones": 69,
+  "contratos": 6083,
+  "importeContratos": 4293297278,
+  "importeAdjudicado": 567630469,
+  "sinCompetencia": 547,
+  "importeSinCompetencia": 82805062,
+  "menores": 3596,
+  "documentosBOE": 560,
+  "subvenciones": 67,
   "importeSubvenciones": 0,
-  "nombramientos": 27,
+  "nombramientos": 32,
   "ceses": 2,
-  "libresDesignaciones": 39,
+  "libresDesignaciones": 46,
   "plazas": 0
  },
  "dias": [
+  {
+   "fecha": "2026-09-15",
+   "contratos": 0,
+   "personas": 43,
+   "importe": 0
+  },
   {
    "fecha": "2026-09-14",
    "contratos": 4,
@@ -769,12 +775,6 @@
    "contratos": 0,
    "personas": 56,
    "importe": 0
-  },
-  {
-   "fecha": "2026-04-30",
-   "contratos": 0,
-   "personas": 60,
-   "importe": 0
   }
  ],
  "reparto": {
@@ -1472,12 +1472,12 @@
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 984,
-   "libresDesignaciones": 64,
-   "nombramientos": 63,
+   "documentos": 1080,
+   "libresDesignaciones": 77,
+   "nombramientos": 69,
    "ceses": 5,
    "plazas": 0,
-   "subvenciones": 129,
+   "subvenciones": 133,
    "contratos": 10930,
    "importeContratos": 1832365562
   },
@@ -1646,8 +1646,8 @@
   "minimoDetalle": 50000
  },
  "oposiciones": {
-  "abiertas": 35,
-  "plazasAbiertas": 46190,
-  "total": 50
+  "abiertas": 36,
+  "plazasAbiertas": 46191,
+  "total": 51
  }
 }
