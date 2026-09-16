@@ -1,84 +1,6 @@
 {
- "generado": "2026-09-15T12:03:37.105Z",
+ "generado": "2026-09-16T12:00:30.608Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18352",
-   "tipo": "oposicion",
-   "fecha": "2026-08-31",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 25 de agosto de 2026, de la Universidad de León, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 102,
-   "plazo": {
-    "dias": 15,
-    "tipo": "naturales"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "nacionalidad, el cónyuge de ciudadano español y el de nacionales otros Estados miembros de la Unión Europea, siempre que no estén separados de derecho y sus descendientes y los de su cónyuge siempre…",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-15",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18352",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/08/31/pdfs/BOE-A-2026-18352.pdf",
-   "frase": "Las Universidades convocan 102 plazas.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18132",
-   "tipo": "oposicion",
-   "fecha": "2026-08-25",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": null,
-   "requisitos": "Nacionalidad.",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-15",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18132",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18132.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18133",
-   "tipo": "oposicion",
-   "fecha": "2026-08-25",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": "Nacionalidad.",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-15",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18133",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18133.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18494",
    "tipo": "oposicion",
@@ -265,6 +187,30 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19274",
+   "tipo": "oposicion",
+   "fecha": "2026-09-16",
+   "organismo": "Ministerio de Asuntos Exteriores, Unión Europea y Cooperación",
+   "titulo": "Resolución de 7 de abril de 2026, del Consorcio Casa de América, por la que se convoca la provisión de plaza de Técnico/a Documentalista.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-21",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19274",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19274.pdf",
+   "frase": "El Ministerio de Asuntos Exteriores, Unión Europea y Cooperación convoca 1 plaza.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-18376",
    "tipo": "oposicion",
    "fecha": "2026-09-01",
@@ -393,6 +339,30 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19035",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19035.pdf",
    "frase": "Las Universidades convocan 102 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19275",
+   "tipo": "oposicion",
+   "fecha": "2026-09-16",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Orden PJC/962/2026, de 11 de septiembre, por la que se convoca concurso de traslados para la cobertura de plazas en el Ministerio Fiscal.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 10,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-26",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19275",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19275.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes convoca 1 plaza.",
    "abierta": true
   },
   {
@@ -900,6 +870,54 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19280",
+   "tipo": "oposicion",
+   "fecha": "2026-09-16",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 2078/2026, de 30 de junio, de la Dirección Gerencia de la Organización Sanitaria Integrada Ezkerraldea-Enkarterri-Cruces, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Servicio Sanitario de Cardiología.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-07",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19280",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19280.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19281",
+   "tipo": "oposicion",
+   "fecha": "2026-09-16",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 1237/2026, de 21 de julio, de la Dirección Gerencia de la Organización Sanitaria Integrada Bidasoa, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Servicio Sanitario del Área Quirúrgica.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-07",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19281",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19281.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19013",
    "tipo": "oposicion",
    "fecha": "2026-09-11",
@@ -923,6 +941,34 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19013",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19013.pdf",
    "frase": "La Comunidad Autónoma de Galicia convoca 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19302",
+   "tipo": "oposicion",
+   "fecha": "2026-09-16",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 3 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo I, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-14",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19302",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19302.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
   {
@@ -1079,6 +1125,84 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18375",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18375.pdf",
    "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes convoca 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18352",
+   "tipo": "oposicion",
+   "fecha": "2026-08-31",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 25 de agosto de 2026, de la Universidad de León, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 102,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "nacionalidad, el cónyuge de ciudadano español y el de nacionales otros Estados miembros de la Unión Europea, siempre que no estén separados de derecho y sus descendientes y los de su cónyuge siempre…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18352",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/31/pdfs/BOE-A-2026-18352.pdf",
+   "frase": "Las Universidades convocan 102 plazas.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18132",
+   "tipo": "oposicion",
+   "fecha": "2026-08-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18132",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18132.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18133",
+   "tipo": "oposicion",
+   "fecha": "2026-08-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 30 de julio de 2026, de la Universidad Complutense de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18133",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18133.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
    "abierta": false
   },
   {
