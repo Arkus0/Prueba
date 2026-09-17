@@ -1,32 +1,6 @@
 {
- "generado": "2026-09-16T12:00:30.608Z",
+ "generado": "2026-09-17T12:03:25.604Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18494",
-   "tipo": "oposicion",
-   "fecha": "2026-09-02",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 29 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la Escala de Técnico Diplomado de Laboratorio y Talleres.",
-   "plazas": null,
-   "plazo": {
-    "dias": 10,
-    "tipo": "hábiles"
-   },
-   "grupo": "A2",
-   "sistema": "Concurso-oposición",
-   "acceso": [
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
-   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea, los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-16",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18494",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18494.pdf",
-   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18554",
    "tipo": "oposicion",
@@ -918,6 +892,82 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19350",
+   "tipo": "oposicion",
+   "fecha": "2026-09-17",
+   "organismo": "Ministerio de Transportes y Movilidad Sostenible",
+   "titulo": "Resolución de 3 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-08",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19350",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19350.pdf",
+   "frase": "El Ministerio de Transportes y Movilidad Sostenible abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19357",
+   "tipo": "oposicion",
+   "fecha": "2026-09-17",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 1352/2026, de 15 de mayo, de la Dirección Gerencia de la Red de Salud Mental de Bizkaia, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Unidad de Salud Mental de los Centros de Salud Mental de Adultos de Basauri y de Galdakao.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-08",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19357",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19357.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19384",
+   "tipo": "oposicion",
+   "fecha": "2026-09-17",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 9 de septiembre de 2026, de la Universidad de Santiago de Compostela, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de doctor/a.",
+   "requisitos": "nacionalidad española o la de algún Estado miembro de la Unión Europea o país extranjero que, de acuerdo con lo dispuesto en el artículo 57 del Real Decreto Legislativo 5/2015, de 30 de octubre, por…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-08",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19384",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19384.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19013",
    "tipo": "oposicion",
    "fecha": "2026-09-11",
@@ -968,6 +1018,56 @@
    "limite": "2026-10-14",
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19302",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/16/pdfs/BOE-A-2026-19302.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19358",
+   "tipo": "oposicion",
+   "fecha": "2026-09-17",
+   "organismo": "Comunidad Autónoma de Extremadura",
+   "titulo": "Resolución de 10 de septiembre de 2026, de la Secretaría General de la Vicepresidencia y Consejería de Presidencia, Coordinación de la Acción de Gobierno, Interior y Emergencias, por la que se publica la convocatoria del proceso de selección, por el sistema de oposición libre, para la provisión de plazas de Agente de la Policía Local en ayuntamientos de la Comunidad Autónoma de Extremadura.",
+   "plazas": 35,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19358",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19358.pdf",
+   "frase": "La Comunidad Autónoma de Extremadura convoca 35 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19385",
+   "tipo": "oposicion",
+   "fecha": "2026-09-17",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 10 de septiembre de 2026, de la Universitat Politècnica de València, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de doctor o doctora.",
+   "requisitos": "nacionalidad española.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19385",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19385.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
@@ -1203,6 +1303,32 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18133",
    "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18133.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18494",
+   "tipo": "oposicion",
+   "fecha": "2026-09-02",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 29 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la Escala de Técnico Diplomado de Laboratorio y Talleres.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "A2",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea, los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18494",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18494.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
    "abierta": false
   },
   {
