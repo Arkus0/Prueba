@@ -1,32 +1,6 @@
 {
- "generado": "2026-09-17T12:03:25.604Z",
+ "generado": "2026-09-18T11:44:52.456Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18554",
-   "tipo": "oposicion",
-   "fecha": "2026-09-03",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 13 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la categoría de Técnico Auxiliar de Laboratorios y Talleres.",
-   "plazas": null,
-   "plazo": {
-    "dias": 10,
-    "tipo": "hábiles"
-   },
-   "grupo": "C1",
-   "sistema": "Concurso-oposición",
-   "acceso": [
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
-   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea; los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-17",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18554",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/03/pdfs/BOE-A-2026-18554.pdf",
-   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18736",
    "tipo": "oposicion",
@@ -968,6 +942,30 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19463",
+   "tipo": "oposicion",
+   "fecha": "2026-09-18",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 7 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convoca concurso de acceso a plaza de Profesorado Permanente Laboral.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": "Estar en posesión del título académico de Doctor/a.",
+   "requisitos": "Tener cumplidos los dieciséis años de edad y no exceder, en su caso, de la edad máxima de jubilación forzosa.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-08",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19463",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19463.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19013",
    "tipo": "oposicion",
    "fecha": "2026-09-11",
@@ -1069,6 +1067,107 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19385",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/17/pdfs/BOE-A-2026-19385.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19459",
+   "tipo": "oposicion",
+   "fecha": "2026-09-18",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 7 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19459",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19459.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19460",
+   "tipo": "oposicion",
+   "fecha": "2026-09-18",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 7 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convoca concurso para la provisión de plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19460",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19460.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19461",
+   "tipo": "oposicion",
+   "fecha": "2026-09-18",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 10 de septiembre de 2026, de la Universidad de Barcelona, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "72,05",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19461",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19461.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19462",
+   "tipo": "oposicion",
+   "fecha": "2026-09-18",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 10 de septiembre de 2026, de la Universidad de Valladolid, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 6,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del Título de Doctor.",
+   "requisitos": "nacionalidad española o de un Estado miembro de la Unión Europea o ser nacional de aquellos Estados, a los que, en virtud de Tratados Internacionales celebrados por la Unión Europea y ratificados por…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19462",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19462.pdf",
+   "frase": "Las Universidades convocan 6 plazas.",
    "abierta": true
   },
   {
@@ -1328,6 +1427,32 @@
    "limite": "2026-09-16",
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18494",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/02/pdfs/BOE-A-2026-18494.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18554",
+   "tipo": "oposicion",
+   "fecha": "2026-09-03",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 13 de julio de 2026, de la Universitat Politècnica de València, por la que se convocan pruebas selectivas de acceso, por el sistema general de acceso libre, a la categoría de Técnico Auxiliar de Laboratorios y Talleres.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "C1",
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título exigido en el anexo I, o cumplidas las condiciones para obtenerlo en la fecha en que termine el plazo de presentación de instancias.",
+   "requisitos": "nacionalidad española, o ser nacional de los estados miembros de la Unión Europea; los cónyuges de los españoles y de los nacionales de otros estados miembros de la Unión Europea, cualquiera que sea…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-17",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18554",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/03/pdfs/BOE-A-2026-18554.pdf",
    "frase": "Las Universidades abren un proceso selectivo por concurso-oposición.",
    "abierta": false
   },
