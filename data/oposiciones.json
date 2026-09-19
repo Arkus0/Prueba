@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-18T11:44:52.456Z",
+ "generado": "2026-09-19T11:26:03.635Z",
  "convocatorias": [
   {
    "id": "BOE-A-2026-18736",
@@ -765,6 +765,30 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19034",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19034.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19495",
+   "tipo": "oposicion",
+   "fecha": "2026-09-19",
+   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
+   "titulo": "Orden TMD/979/2026, de 16 de septiembre, por la que se convoca el proceso selectivo para la designación de vocales del Consejo Superior de Fundaciones, en representación de las fundaciones.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-02",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19495",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/19/pdfs/BOE-A-2026-19495.pdf",
+   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo.",
    "abierta": true
   },
   {

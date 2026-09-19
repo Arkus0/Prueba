@@ -1,15 +1,15 @@
 {
  "version": 2,
- "generado": "2026-09-18T11:39:18.680Z",
+ "generado": "2026-09-19T11:22:03.327Z",
  "ventana": {
-  "desde": "2026-09-12",
-  "hasta": "2026-09-18",
+  "desde": "2026-09-13",
+  "hasta": "2026-09-19",
   "dias": 7
  },
  "cobertura": {
   "desde": "2025-07-01",
-  "hasta": "2026-09-18",
-  "dias": 384
+  "hasta": "2026-09-19",
+  "dias": 385
  },
  "demo": false,
  "avisos": [],
@@ -18,7 +18,7 @@
    "clave": "boe",
    "nombre": "Boletín Oficial del Estado",
    "estado": "ok",
-   "registros": 542,
+   "registros": 514,
    "dias": 7,
    "mensaje": null,
    "url": "https://www.boe.es/datosabiertos/"
@@ -41,21 +41,27 @@
   }
  ],
  "totales": {
-  "contratos": 11976,
-  "importeContratos": 10301403088,
-  "importeAdjudicado": 5031850678,
-  "sinCompetencia": 2561,
-  "importeSinCompetencia": 360425242,
+  "contratos": 11947,
+  "importeContratos": 10271279075,
+  "importeAdjudicado": 5024868802,
+  "sinCompetencia": 2554,
+  "importeSinCompetencia": 359360926,
   "menores": 4262,
-  "documentosBOE": 542,
-  "subvenciones": 54,
+  "documentosBOE": 514,
+  "subvenciones": 56,
   "importeSubvenciones": 0,
-  "nombramientos": 54,
+  "nombramientos": 51,
   "ceses": 3,
-  "libresDesignaciones": 43,
+  "libresDesignaciones": 36,
   "plazas": 0
  },
  "dias": [
+  {
+   "fecha": "2026-09-19",
+   "contratos": 0,
+   "personas": 17,
+   "importe": 0
+  },
   {
    "fecha": "2026-09-18",
    "contratos": 21,
@@ -769,12 +775,6 @@
    "contratos": 0,
    "personas": 57,
    "importe": 0
-  },
-  {
-   "fecha": "2026-05-05",
-   "contratos": 0,
-   "personas": 76,
-   "importe": 0
   }
  ],
  "reparto": {
@@ -1477,12 +1477,12 @@
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 1365,
+   "documentos": 1388,
    "libresDesignaciones": 94,
-   "nombramientos": 101,
+   "nombramientos": 107,
    "ceses": 7,
    "plazas": 0,
-   "subvenciones": 160,
+   "subvenciones": 166,
    "contratos": 21893,
    "importeContratos": 6853800429
   },
@@ -1651,8 +1651,8 @@
   "minimoDetalle": 50000
  },
  "oposiciones": {
-  "abiertas": 46,
+  "abiertas": 47,
   "plazasAbiertas": 46135,
-  "total": 66
+  "total": 67
  }
 }
