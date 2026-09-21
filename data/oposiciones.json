@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-20T11:48:25.808Z",
+ "generado": "2026-09-21T13:15:55.394Z",
  "convocatorias": [
   {
    "id": "BOE-A-2026-18736",
@@ -818,6 +818,32 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19585",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 11 de septiembre de 2026, conjunta de la Universidad de La Laguna y el Servicio Canario de la Salud, por la que se convoca concurso de acceso a plaza vinculada de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor o Doctora.",
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-05",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19585",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19585.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-18819",
    "tipo": "oposicion",
    "fecha": "2026-09-08",
@@ -1016,6 +1042,32 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19587",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 26 de agosto de 2026, de la Universidad Pública de Navarra, por la que se convocan pruebas selectivas para la provisión de plaza de Técnica/o de Mantenimiento.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Grado, Licenciatura, Ingeniería Superior, Arquitectura o título declarado equivalente, o del resguardo de haber satisfecho los derechos para su expedición, en la fecha en que termine el…",
+   "requisitos": "nacionalidad española, la nacionalidad de un Estado miembro de la Unión Europea o la nacionalidad de un Estado incluido en el ámbito de aplicación de los tratados internacionales celebrados por la…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-11",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19587",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19587.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19302",
    "tipo": "oposicion",
    "fecha": "2026-09-16",
@@ -1192,6 +1244,86 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19462",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19462.pdf",
    "frase": "Las Universidades convocan 6 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19586",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 15 de septiembre de 2026, de la Universitat de València, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": "Poseer el título de doctor o doctora.",
+   "requisitos": "nacionalidad española o de un estado miembro de la Unión Europea o de aquellos estados a los que, en virtud de los tratados internacionales celebrados por la Unión Europea y ratificados por España…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-19",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19586",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19586.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19588",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 11 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo III, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-19",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19588",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19588.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19589",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 11 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo III, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-19",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19589",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19589.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
   {
@@ -1667,6 +1799,29 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18114",
    "urlPdf": "https://www.boe.es/boe/dias/2026/08/25/pdfs/BOE-A-2026-18114.pdf",
    "frase": "La Comunidad Autónoma de Canarias convoca 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19584",
+   "tipo": "oposicion",
+   "fecha": "2026-09-21",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 11 de septiembre de 2026, de la Universidad de las Illes Balears, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser nacional de un Estado miembro de la Unión Europea o nacional de aquellos Estados a los que, en virtud de tratados internacionales celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19584",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19584.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
    "abierta": false
   }
  ]
