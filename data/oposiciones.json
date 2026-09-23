@@ -1,58 +1,6 @@
 {
- "generado": "2026-09-22T12:02:52.561Z",
+ "generado": "2026-09-23T12:02:47.121Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18376",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
-   "titulo": "Resolución de 24 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-22",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18376",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18376.pdf",
-   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18383",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Ministerio del Interior",
-   "titulo": "Resolución de 21 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en la Dirección General de la Guardia Civil.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-22",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18383",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18383.pdf",
-   "frase": "El Ministerio del Interior abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18219",
    "tipo": "oposicion",
@@ -1665,6 +1613,58 @@
    "abierta": false
   },
   {
+   "id": "BOE-A-2026-18376",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18376",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18376.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18383",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio del Interior",
+   "titulo": "Resolución de 21 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en la Dirección General de la Guardia Civil.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18383",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18383.pdf",
+   "frase": "El Ministerio del Interior abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
    "id": "BOE-A-2026-18780",
    "tipo": "oposicion",
    "fecha": "2026-09-08",
@@ -1916,6 +1916,69 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19651",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/22/pdfs/BOE-A-2026-19651.pdf",
    "frase": "La Comunidad Autónoma de Andalucía convoca 1500 plazas.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19710",
+   "tipo": "oposicion",
+   "fecha": "2026-09-23",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Orden PJC/986/2026, de 10 de septiembre, por la que se publica la relación de plazas correspondientes al ámbito del Ministerio de la Presidencia, Justicia y Relaciones con las Cortes, que se ofrecen a las personas aprobadas en el proceso selectivo para ingreso, por el sistema general de acceso libre, en el Cuerpo de Auxilio Judicial de la Administración de Justicia, convocada por Orden JUS/1327/2022, de 28 de diciembre.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19710",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/23/pdfs/BOE-A-2026-19710.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19718",
+   "tipo": "oposicion",
+   "fecha": "2026-09-23",
+   "organismo": "Comunidad Autónoma de Canarias",
+   "titulo": "Resolución de 10 de septiembre de 2026, de la Dirección General de Relaciones con la Administración de Justicia, de la Consejería de Administraciones Públicas, Justicia y Seguridad, por la que se publica la relación de plazas correspondientes al ámbito de la Comunidad Autónoma de Canarias, que se ofrecen a las personas aprobadas en el proceso selectivo extraordinario para acceso, por el sistema de concurso-oposición, turno libre, al Cuerpo de Auxilio Judicial de la Administración de Justicia, convocado por Orden JUS/1327/2022, de 28 de diciembre.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19718",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/23/pdfs/BOE-A-2026-19718.pdf",
+   "frase": "La Comunidad Autónoma de Canarias abre un proceso selectivo.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19719",
+   "tipo": "oposicion",
+   "fecha": "2026-09-23",
+   "organismo": "Comunidad Foral de Navarra",
+   "titulo": "Resolución 447/2026, de 10 de septiembre, de la Dirección General de Justicia, del Departamento de Interior, Función Pública y Justicia, por la que se publica la relación de plazas correspondientes al ámbito la Comunidad Foral de Navarra, que se ofrecen a las personas aprobadas en el proceso selectivo extraordinario para acceso, por el sistema de concurso-oposición, turno libre, al Cuerpo de Auxilio Judicial de la Administración de Justicia, convocado por Orden JUS/1327/2022, de 28 de diciembre.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19719",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/23/pdfs/BOE-A-2026-19719.pdf",
+   "frase": "La Comunidad Foral de Navarra abre un proceso selectivo.",
    "abierta": false
   }
  ]
