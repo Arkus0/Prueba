@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-23T12:02:47.121Z",
+ "generado": "2026-09-24T12:08:36.604Z",
  "convocatorias": [
   {
    "id": "BOE-A-2026-18219",
@@ -989,6 +989,32 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19783",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Ministerio de Industria y Turismo",
+   "titulo": "Resolución de 21 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en el Instituto de Turismo de España.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19783",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19783.pdf",
+   "frase": "El Ministerio de Industria y Turismo abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19459",
    "tipo": "oposicion",
    "fecha": "2026-09-18",
@@ -1166,6 +1192,159 @@
    "limite": "2026-10-19",
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19589",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19589.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19816",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 17 de septiembre de 2026, de la Universidad Autónoma de Barcelona, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19816",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19816.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19817",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 17 de septiembre de 2026, de la Universidad Autónoma de Barcelona, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19817",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19817.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19818",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 17 de septiembre de 2026, de la Universidad Autónoma de Barcelona, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19818",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19818.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19819",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 17 de septiembre de 2026, de la Universidad Autónoma de Barcelona, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19819",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19819.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19821",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para ingreso, por el sistema de promoción interna, en la Escala de Facultativos de Archivos, Bibliotecas y Museos.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": "A1",
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "15,55",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19821",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19821.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19822",
+   "tipo": "oposicion",
+   "fecha": "2026-09-24",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo III, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19822",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19822.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
