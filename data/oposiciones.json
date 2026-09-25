@@ -1,33 +1,6 @@
 {
- "generado": "2026-09-24T12:08:36.604Z",
+ "generado": "2026-09-25T12:08:43.125Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18219",
-   "tipo": "oposicion",
-   "fecha": "2026-08-27",
-   "organismo": "Ministerio de Transportes y Movilidad Sostenible",
-   "titulo": "Resolución de 29 de julio de 2026, de la Subsecretaría, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, en el Cuerpo de Técnicos Especialistas en Reproducción Cartográfica.",
-   "plazas": 31,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [
-    "Acceso libre",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": null,
-   "requisitos": "Nacionalidad: Las personas aspirantes deberán tener la nacionalidad española.",
-   "tasa": "15,57",
-   "comoApuntarse": "Solicitud por internet (modelo 790), en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-24",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18219",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/08/27/pdfs/BOE-A-2026-18219.pdf",
-   "frase": "El Ministerio de Transportes y Movilidad Sostenible convoca 31 plazas.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-19071",
    "tipo": "oposicion",
@@ -1015,6 +988,58 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19902",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad de Santiago de Compostela, por la que se publica la convocatoria de pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral fijo de la categoría de Especialista de Oficios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19902",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19902.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19903",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad de Santiago de Compostela, por la que se publica la convocatoria de pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral fijo de la categoría de Delineante.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-15",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19903",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19903.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19459",
    "tipo": "oposicion",
    "fecha": "2026-09-18",
@@ -1113,6 +1138,82 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19462",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/18/pdfs/BOE-A-2026-19462.pdf",
    "frase": "Las Universidades convocan 6 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19898",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Murcia, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "48,61",
+   "comoApuntarse": null,
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19898",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19898.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19899",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Murcia, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "48,61",
+   "comoApuntarse": null,
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19899",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19899.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19900",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Murcia, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "48,61",
+   "comoApuntarse": null,
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19900",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19900.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
   {
@@ -1346,6 +1447,32 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19822",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19822.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19901",
+   "tipo": "oposicion",
+   "fecha": "2026-09-25",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Burgos, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 12,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "Nacionalidad: Ser español o nacional de un estado miembro de la Unión Europea o nacional de aquellos estados, a los que, en virtud de Tratados Internacionales celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-23",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19901",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19901.pdf",
+   "frase": "Las Universidades convocan 12 plazas.",
    "abierta": true
   },
   {
@@ -1841,6 +1968,33 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18383",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18383.pdf",
    "frase": "El Ministerio del Interior abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18219",
+   "tipo": "oposicion",
+   "fecha": "2026-08-27",
+   "organismo": "Ministerio de Transportes y Movilidad Sostenible",
+   "titulo": "Resolución de 29 de julio de 2026, de la Subsecretaría, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, en el Cuerpo de Técnicos Especialistas en Reproducción Cartográfica.",
+   "plazas": 31,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad: Las personas aspirantes deberán tener la nacionalidad española.",
+   "tasa": "15,57",
+   "comoApuntarse": "Solicitud por internet (modelo 790), en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-24",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18219",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/08/27/pdfs/BOE-A-2026-18219.pdf",
+   "frase": "El Ministerio de Transportes y Movilidad Sostenible convoca 31 plazas.",
    "abierta": false
   },
   {
