@@ -1,58 +1,6 @@
 {
- "generado": "2026-09-25T12:08:43.125Z",
+ "generado": "2026-09-26T11:44:32.084Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-19071",
-   "tipo": "oposicion",
-   "fecha": "2026-09-12",
-   "organismo": "Ministerio de Inclusión, Seguridad Social y Migraciones",
-   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se corrigen errores en la de 13 de julio de 2026, por la que se aprueba la relación provisional de personas admitidas y excluidas del proceso selectivo para ingreso, como personal laboral fijo, de los buques «Esperanza del Mar» y «Juan de la Cosa», del Instituto Social de la Marina, convocado por Resolución de 4 de mayo de 2026.",
-   "plazas": null,
-   "plazo": {
-    "dias": 10,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Proceso selectivo",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-25",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19071",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/12/pdfs/BOE-A-2026-19071.pdf",
-   "frase": "El Ministerio de Inclusión, Seguridad Social y Migraciones abre un proceso selectivo.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-19647",
-   "tipo": "oposicion",
-   "fecha": "2026-09-22",
-   "organismo": "Consejo General del Poder Judicial",
-   "titulo": "Acuerdo de 15 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en la Escuela Judicial.",
-   "plazas": null,
-   "plazo": {
-    "dias": 3,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-25",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19647",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/22/pdfs/BOE-A-2026-19647.pdf",
-   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-19035",
    "tipo": "oposicion",
@@ -832,6 +780,32 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19983",
+   "tipo": "oposicion",
+   "fecha": "2026-09-26",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad Jaume I, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, en la Escala Técnica Básica de Laboratorios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": "C1",
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": "estar en posesión del título de Bachiller o Técnico o Técnica de Formación Profesional o equivalente, o cumplir los requisitos para su obtención en la fecha de finalización del plazo de presentación de solicitudes y…",
+   "requisitos": "Nacionalidad: 2.1.1 Tener la nacionalidad española.",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-09",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19983",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/26/pdfs/BOE-A-2026-19983.pdf",
+   "frase": "Las Universidades convocan 1 plaza del subgrupo C1.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19587",
    "tipo": "oposicion",
    "fecha": "2026-09-21",
@@ -1476,6 +1450,59 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-19981",
+   "tipo": "oposicion",
+   "fecha": "2026-09-26",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 21 de septiembre de 2026, de la Universidad Autónoma de Madrid, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad extranjera no comunitaria cuando, en el Estado de su nacionalidad, a los españoles se les reconozca aptitud legal para ocupar en la docencia universitaria posiciones análogas a las de…",
+   "tasa": "77,10",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-23",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19981",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/26/pdfs/BOE-A-2026-19981.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-19982",
+   "tipo": "oposicion",
+   "fecha": "2026-09-26",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 9 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para ingreso, por el sistema de promoción interna, en la Escala Técnica Superior de Administración.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": "A1",
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "15,55",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-23",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19982",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/26/pdfs/BOE-A-2026-19982.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-18018",
    "tipo": "oposicion",
    "fecha": "2026-08-22",
@@ -1995,6 +2022,58 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18219",
    "urlPdf": "https://www.boe.es/boe/dias/2026/08/27/pdfs/BOE-A-2026-18219.pdf",
    "frase": "El Ministerio de Transportes y Movilidad Sostenible convoca 31 plazas.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19071",
+   "tipo": "oposicion",
+   "fecha": "2026-09-12",
+   "organismo": "Ministerio de Inclusión, Seguridad Social y Migraciones",
+   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se corrigen errores en la de 13 de julio de 2026, por la que se aprueba la relación provisional de personas admitidas y excluidas del proceso selectivo para ingreso, como personal laboral fijo, de los buques «Esperanza del Mar» y «Juan de la Cosa», del Instituto Social de la Marina, convocado por Resolución de 4 de mayo de 2026.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-25",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19071",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/12/pdfs/BOE-A-2026-19071.pdf",
+   "frase": "El Ministerio de Inclusión, Seguridad Social y Migraciones abre un proceso selectivo.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19647",
+   "tipo": "oposicion",
+   "fecha": "2026-09-22",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 15 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de puesto de trabajo en la Escuela Judicial.",
+   "plazas": null,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-25",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19647",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/22/pdfs/BOE-A-2026-19647.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
    "abierta": false
   },
   {
