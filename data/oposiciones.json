@@ -1,281 +1,6 @@
 {
- "generado": "2026-09-28T14:34:06.259Z",
+ "generado": "2026-09-30T12:58:10.172Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18723",
-   "tipo": "oposicion",
-   "fecha": "2026-09-07",
-   "organismo": "Ministerio de Hacienda",
-   "titulo": "Resolución de 1 de septiembre de 2026, del Consorcio de la Ciudad de Santiago de Compostela, por la que se convoca concurso específico para la provisión de puesto de trabajo de Administrativo/a.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": "C1",
-   "sistema": "Oposición",
-   "acceso": [],
-   "titulacion": "poseer una titulación académica oficial superior a la exigida para el acceso al subgrupo C1 o grupo profesional equivalente en el caso de personal laboral: 1 punto por titulación, hasta un máximo de 3 puntos.",
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-28",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18723",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18723.pdf",
-   "frase": "El Ministerio de Hacienda abre un proceso selectivo por oposición.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18738",
-   "tipo": "oposicion",
-   "fecha": "2026-09-07",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-28",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18738",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18738.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18739",
-   "tipo": "oposicion",
-   "fecha": "2026-09-07",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-28",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18739",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18739.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18740",
-   "tipo": "oposicion",
-   "fecha": "2026-09-07",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-28",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18740",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18740.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18384",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Ministerio de Educación, Formación Profesional y Deportes",
-   "titulo": "Resolución de 18 de agosto de 2026, de la Dirección de la Agencia Estatal Comisión Española para la Lucha Antidopaje en el Deporte, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, como personal laboral fijo, fuera de convenio.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Proceso selectivo",
-   "acceso": [
-    "Acceso libre"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18384",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18384.pdf",
-   "frase": "El Ministerio de Educación, Formación Profesional y Deportes convoca 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18387",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Comunidad Autónoma del Principado de Asturias",
-   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en el Instituto de Medicina Legal y Ciencias Forenses.",
-   "plazas": null,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18387",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18387.pdf",
-   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18388",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Comunidad Autónoma del Principado de Asturias",
-   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en los partidos judiciales de Oviedo, Gijón y Avilés.",
-   "plazas": null,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18388",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18388.pdf",
-   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18403",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": "nacionalidad española o ser nacional de un Estado miembro de la Unión Europea o nacional de aquellos Estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18403",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18403.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18404",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 22825,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": "nacionalidad española o ser de un estado miembro de la Unión Europea o nacional de aquellos estados a los cuales, en virtud de tratados internacionales firmados por la Unión Europea y ratificados por…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18404",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18404.pdf",
-   "frase": "Las Universidades convocan 22.825 plazas.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18405",
-   "tipo": "oposicion",
-   "fecha": "2026-09-01",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 22899,
-   "plazo": {
-    "dias": 20,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": "nacionalidad española o ser nacional de un estado miembro de la Unión Europea o nacional de aquellos estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18405",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18405.pdf",
-   "frase": "Las Universidades convocan 22.899 plazas.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-19133",
-   "tipo": "oposicion",
-   "fecha": "2026-09-14",
-   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
-   "titulo": "Resolución de 8 de septiembre de 2026, de la Dirección General de Seguridad Jurídica y Fe Pública, por la que se convoca concurso ordinario n.º 325, para proveer Registros de la Propiedad, Mercantiles y de Bienes Muebles.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "naturales"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-29",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19133",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19133.pdf",
-   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18838",
    "tipo": "oposicion",
@@ -480,6 +205,32 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-20164",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 22 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para proveer puesto de trabajo en la Secretaría General.",
+   "plazas": null,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-02",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20164",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20164.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19136",
    "tipo": "oposicion",
    "fecha": "2026-09-14",
@@ -529,6 +280,33 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19585",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/21/pdfs/BOE-A-2026-19585.pdf",
    "frase": "Las Universidades abren un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20354",
+   "tipo": "oposicion",
+   "fecha": "2026-09-30",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 23 de septiembre de 2026, de la Universidad de Girona, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 2,
+   "plazo": {
+    "dias": 5,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad: Tener la nacionalidad española, sin perjuicio de lo dispuesto en el artículo 57 del citado real decreto.",
+   "tasa": "72,05",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-05",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20354",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/30/pdfs/BOE-A-2026-20354.pdf",
+   "frase": "Las Universidades convocan 2 plazas.",
    "abierta": true
   },
   {
@@ -805,6 +583,84 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19648",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/22/pdfs/BOE-A-2026-19648.pdf",
    "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20194",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 15 de septiembre de 2026, de la Universidad de Málaga, por la que se convoca concurso de acceso a plaza vinculada de cuerpos docentes universitarios.",
+   "plazas": 113,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título que para cada plaza se especifica en el anexo I de esta convocatoria.",
+   "requisitos": "nacionalidad española, sin perjuicio de lo dispuesto en el artículo 57 del Estatuto Básico del Empleado Público.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-13",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20194",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20194.pdf",
+   "frase": "Las Universidades convocan 113 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20195",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 15 de septiembre de 2026, de la Universidad de Málaga, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 113,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad española, sin perjuicio de lo dispuesto en el artículo 57 del Estatuto Básico del Empleado Público.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-13",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20195",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20195.pdf",
+   "frase": "Las Universidades convocan 113 plazas.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20196",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 15 de septiembre de 2026, de la Universidad de Málaga, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 113,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad española, sin perjuicio de lo dispuesto en el artículo 57 del Estatuto Básico del Empleado Público.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-13",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20196",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20196.pdf",
+   "frase": "Las Universidades convocan 113 plazas.",
    "abierta": true
   },
   {
@@ -1469,6 +1325,133 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-20168",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Ministerio de Agricultura, Pesca y Alimentación",
+   "titulo": "Resolución de 22 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-20",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20168",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20168.pdf",
+   "frase": "El Ministerio de Agricultura, Pesca y Alimentación abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20197",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Murcia, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "48,61",
+   "comoApuntarse": null,
+   "limite": "2026-10-20",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20197",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20197.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20198",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 16 de septiembre de 2026, de la Universidad de Murcia, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "48,61",
+   "comoApuntarse": null,
+   "limite": "2026-10-20",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20198",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20198.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20203",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad Politécnica de Cartagena, por la que se convocan pruebas selectivas para ingreso, por el sistema de promoción interna, en la Escala Técnica Básica de Ciencia y Tecnología.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Técnico o equivalente de la familia profesional Agraria, o estar en condiciones de obtenerlo por haber abonado los derechos para su expedición.",
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-20",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20203",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20203.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20321",
+   "tipo": "oposicion",
+   "fecha": "2026-09-30",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 2369/2026, de 19 de agosto, de la Dirección Gerencia de la Organización Sanitaria Integrada Barrualde-Galdakao, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Servicio Sanitario de Urgencias Hospitalarias.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-21",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20321",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/30/pdfs/BOE-A-2026-20321.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19816",
    "tipo": "oposicion",
    "fecha": "2026-09-24",
@@ -1803,6 +1786,219 @@
    "limite": "2026-10-26",
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20073",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/28/pdfs/BOE-A-2026-20073.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20167",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Ministerio de Hacienda",
+   "titulo": "Resolución de 24 de septiembre de 2026, de la Presidencia de la Agencia Estatal de Administración Tributaria, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre y por promoción interna horizontal, en el grupo profesional I2, sujetos al V Convenio Colectivo del personal laboral de la Agencia Estatal de Administración Tributaria.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20167",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20167.pdf",
+   "frase": "El Ministerio de Hacienda abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20199",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 22 de septiembre de 2026, conjunta de la Universidad Autónoma de Barcelona y el Instituto Catalán de la Salud, por la que se convoca concurso de acceso a plazas vinculadas de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20199",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20199.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20200",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 22 de septiembre de 2026, conjunta de la Universidad Autónoma de Barcelona y el Instituto Catalán de la Salud, por la que se convoca concurso de acceso a plazas vinculadas de cuerpos docentes universitarios.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20200",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20200.pdf",
+   "frase": "Las Universidades abren un proceso selectivo por concurso de méritos.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20201",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo III, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20201",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20201.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20202",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad Nacional de Educación a Distancia, por la que se convocan pruebas selectivas para la provisión, por el sistema general de acceso libre, de plaza de personal laboral, Grupo III, Nivel B.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": "Nacionalidad.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20202",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20202.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20204",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 24 de septiembre de 2026, de la Universidad de Jaén, por la que se convoca proceso selectivo para la provisión, por el sistema general de acceso libre, de plaza de personal laboral de la categoría de Técnico/a Especialista de Prevención de Riesgos Laborales, Medioambiente y Sostenibilidad.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso-oposición",
+   "acceso": [
+    "Acceso libre",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de BUP, Bachiller, Formación Profesional de Segundo Grado o equivalente, de conformidad con la normativa de aplicación, o de la justificación acreditativa de haberlo solicitado y abonado los…",
+   "requisitos": "nacionalidad española o de alguno de los Estados miembros de la Unión Europea, o nacionales de aquellos Estados a los que, en virtud de los Tratados Internacionales, celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-27",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20204",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20204.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20318",
+   "tipo": "oposicion",
+   "fecha": "2026-09-30",
+   "organismo": "Ministerio de Hacienda",
+   "titulo": "Resolución de 24 de septiembre de 2026, de la Presidencia de la Agencia Estatal de Administración Tributaria, por la que se convoca proceso selectivo para ingreso, por promoción interna, en el grupo I2, para el personal laboral de los grupos profesionales T4 y T5, sujeto al V Convenio Colectivo del personal laboral de la Agencia Estatal de Administración Tributaria.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20318",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/30/pdfs/BOE-A-2026-20318.pdf",
+   "frase": "El Ministerio de Hacienda abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20353",
+   "tipo": "oposicion",
+   "fecha": "2026-09-30",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 18 de septiembre de 2026, de la Universidad de Barcelona, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": "72,05",
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20353",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/30/pdfs/BOE-A-2026-20353.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
    "abierta": true
   },
@@ -2431,6 +2627,281 @@
    "abierta": false
   },
   {
+   "id": "BOE-A-2026-18723",
+   "tipo": "oposicion",
+   "fecha": "2026-09-07",
+   "organismo": "Ministerio de Hacienda",
+   "titulo": "Resolución de 1 de septiembre de 2026, del Consorcio de la Ciudad de Santiago de Compostela, por la que se convoca concurso específico para la provisión de puesto de trabajo de Administrativo/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": "C1",
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": "poseer una titulación académica oficial superior a la exigida para el acceso al subgrupo C1 o grupo profesional equivalente en el caso de personal laboral: 1 punto por titulación, hasta un máximo de 3 puntos.",
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18723",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18723.pdf",
+   "frase": "El Ministerio de Hacienda abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18738",
+   "tipo": "oposicion",
+   "fecha": "2026-09-07",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plaza de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18738",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18738.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18739",
+   "tipo": "oposicion",
+   "fecha": "2026-09-07",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18739",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18739.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18740",
+   "tipo": "oposicion",
+   "fecha": "2026-09-07",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 1 de septiembre de 2026, de la Universidad Rey Juan Carlos, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "Nacionalidad: ser español o nacional de algún Estado miembro de la Unión Europea, o nacional de aquellos Estados a los que, en virtud de los Tratados Internacionales celebrados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-28",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18740",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/07/pdfs/BOE-A-2026-18740.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18384",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Ministerio de Educación, Formación Profesional y Deportes",
+   "titulo": "Resolución de 18 de agosto de 2026, de la Dirección de la Agencia Estatal Comisión Española para la Lucha Antidopaje en el Deporte, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, como personal laboral fijo, fuera de convenio.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18384",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18384.pdf",
+   "frase": "El Ministerio de Educación, Formación Profesional y Deportes convoca 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18387",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Comunidad Autónoma del Principado de Asturias",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en el Instituto de Medicina Legal y Ciencias Forenses.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18387",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18387.pdf",
+   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18388",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Comunidad Autónoma del Principado de Asturias",
+   "titulo": "Resolución de 24 de agosto de 2026, de la Consejería de Hacienda, Justicia y Asuntos Europeos, por la que se convoca concurso específico para la provisión de puestos de trabajo singularizados en los partidos judiciales de Oviedo, Gijón y Avilés.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18388",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18388.pdf",
+   "frase": "La Comunidad Autónoma del Principado de Asturias abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18403",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser nacional de un Estado miembro de la Unión Europea o nacional de aquellos Estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18403",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18403.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18404",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 22825,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser de un estado miembro de la Unión Europea o nacional de aquellos estados a los cuales, en virtud de tratados internacionales firmados por la Unión Europea y ratificados por…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18404",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18404.pdf",
+   "frase": "Las Universidades convocan 22.825 plazas.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18405",
+   "tipo": "oposicion",
+   "fecha": "2026-09-01",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 27 de julio de 2026, de la Universidad Jaume I, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 22899,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": "nacionalidad española o ser nacional de un estado miembro de la Unión Europea o nacional de aquellos estados en los que, en virtud de tratados internacionales firmados por la Unión Europea y…",
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18405",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/01/pdfs/BOE-A-2026-18405.pdf",
+   "frase": "Las Universidades convocan 22.899 plazas.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19133",
+   "tipo": "oposicion",
+   "fecha": "2026-09-14",
+   "organismo": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+   "titulo": "Resolución de 8 de septiembre de 2026, de la Dirección General de Seguridad Jurídica y Fe Pública, por la que se convoca concurso ordinario n.º 325, para proveer Registros de la Propiedad, Mercantiles y de Bienes Muebles.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-29",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19133",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19133.pdf",
+   "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
    "id": "BOE-A-2026-18780",
    "tipo": "oposicion",
    "fecha": "2026-09-08",
@@ -2766,6 +3237,27 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20031",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/28/pdfs/BOE-A-2026-20031.pdf",
    "frase": "El Ministerio de Educación, Formación Profesional y Deportes abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-20169",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Ministerio de Vivienda y Agenda Urbana",
+   "titulo": "Resolución de 24 de septiembre de 2026, de la Subsecretaría, por la que se amplía el plazo para aprobar la relación provisional de personas admitidas y excluidas y determinar la celebración de ejercicios de la fase de oposición del proceso selectivo para ingreso, por sistema general de acceso libre y promoción interna, como personal laboral fijo, en los grupos profesionales M1 y E1, sujetos al IV Convenio colectivo único para el personal laboral de la Administración General del Estado, convocado por Resolución de 6 de julio de 2026.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20169",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20169.pdf",
+   "frase": "El Ministerio de Vivienda y Agenda Urbana abre un proceso selectivo por oposición.",
    "abierta": false
   }
  ]

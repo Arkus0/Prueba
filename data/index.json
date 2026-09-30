@@ -1,15 +1,15 @@
 {
  "version": 2,
- "generado": "2026-09-28T14:20:24.068Z",
+ "generado": "2026-09-30T12:54:04.940Z",
  "ventana": {
-  "desde": "2026-09-22",
-  "hasta": "2026-09-28",
+  "desde": "2026-09-24",
+  "hasta": "2026-09-30",
   "dias": 7
  },
  "cobertura": {
   "desde": "2025-07-01",
-  "hasta": "2026-09-28",
-  "dias": 394
+  "hasta": "2026-09-30",
+  "dias": 396
  },
  "demo": false,
  "avisos": [],
@@ -18,7 +18,7 @@
    "clave": "boe",
    "nombre": "Boletín Oficial del Estado",
    "estado": "ok",
-   "registros": 710,
+   "registros": 767,
    "dias": 7,
    "mensaje": null,
    "url": "https://www.boe.es/datosabiertos/"
@@ -26,9 +26,9 @@
   {
    "clave": "placsp",
    "nombre": "Plataforma de Contratación del Sector Público",
-   "estado": "ok",
-   "registros": 11753,
-   "mensaje": null,
+   "estado": "error",
+   "registros": 0,
+   "mensaje": "PLACSP/licitaciones: The operation was aborted due to timeout",
    "url": "https://contrataciondelsectorpublico.gob.es/wps/portal/DatosAbiertos"
   },
   {
@@ -41,21 +41,33 @@
   }
  ],
  "totales": {
-  "contratos": 10576,
-  "importeContratos": 9671699965,
-  "importeAdjudicado": 2001888623,
-  "sinCompetencia": 1925,
-  "importeSinCompetencia": 377236037,
-  "menores": 4208,
-  "documentosBOE": 710,
-  "subvenciones": 113,
+  "contratos": 5632,
+  "importeContratos": 3659259179,
+  "importeAdjudicado": 690097344,
+  "sinCompetencia": 419,
+  "importeSinCompetencia": 58172503,
+  "menores": 3850,
+  "documentosBOE": 767,
+  "subvenciones": 162,
   "importeSubvenciones": 0,
-  "nombramientos": 53,
-  "ceses": 1,
-  "libresDesignaciones": 40,
+  "nombramientos": 65,
+  "ceses": 20,
+  "libresDesignaciones": 29,
   "plazas": 0
  },
  "dias": [
+  {
+   "fecha": "2026-09-30",
+   "contratos": 0,
+   "personas": 82,
+   "importe": 0
+  },
+  {
+   "fecha": "2026-09-29",
+   "contratos": 0,
+   "personas": 49,
+   "importe": 0
+  },
   {
    "fecha": "2026-09-28",
    "contratos": 8,
@@ -762,18 +774,6 @@
    "fecha": "2026-05-19",
    "contratos": 0,
    "personas": 58,
-   "importe": 0
-  },
-  {
-   "fecha": "2026-05-18",
-   "contratos": 0,
-   "personas": 47,
-   "importe": 0
-  },
-  {
-   "fecha": "2026-05-16",
-   "contratos": 0,
-   "personas": 9,
    "importe": 0
   }
  ],
@@ -1482,12 +1482,12 @@
  "historico": [
   {
    "mes": "2026-09",
-   "documentos": 2225,
-   "libresDesignaciones": 155,
-   "nombramientos": 175,
-   "ceses": 8,
+   "documentos": 2488,
+   "libresDesignaciones": 158,
+   "nombramientos": 201,
+   "ceses": 27,
    "plazas": 0,
-   "subvenciones": 305,
+   "subvenciones": 366,
    "contratos": 32152,
    "importeContratos": 10463167854
   },
@@ -1656,8 +1656,8 @@
   "minimoDetalle": 50000
  },
  "oposiciones": {
-  "abiertas": 71,
-  "plazasAbiertas": 45808,
-  "total": 111
+  "abiertas": 78,
+  "plazasAbiertas": 427,
+  "total": 130
  }
 }
