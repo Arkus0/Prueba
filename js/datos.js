@@ -17,6 +17,7 @@ export const nombreDeCCAA = (codigo) => NOMBRES_CCAA.get(codigo) || null;
 export const estado = {
   indice: null,
   dias: new Map(),      // fecha -> { items, omitidos, importeOmitido }
+  fechasActivas: [],    // ventana que la pantalla ha pedido; el caché puede contener más días
   glosario: {},
   senales: {},
   oposiciones: null,
@@ -63,25 +64,34 @@ export function fechasDisponibles() {
   return (estado.indice?.dias || []).map((d) => d.fecha);
 }
 
-/** Carga los N días más recientes y devuelve todos sus items juntos. */
+/**
+ * Carga los N días más recientes y los convierte en la ventana ACTIVA.
+ * El Map conserva otros días ya descargados para no pedirlos dos veces, pero
+ * una pantalla nunca debe mezclar por accidente ese histórico con su ventana:
+ * con meses de datos cacheados (mapa, "buscar más atrás"...), Contratos o
+ * Personas acababan enseñando de golpe todo lo que hubiera en el Map, no solo
+ * los días que esa pantalla pidió.
+ */
 export async function cargarUltimos(nDias) {
   const fechas = fechasDisponibles().slice(0, nDias);
   await Promise.all(fechas.map((f) => cargarDia(f).catch(() => null)));
+  estado.fechasActivas = fechas.filter((f) => estado.dias.has(f));
   return itemsCargados();
 }
 
-/** Todos los items ya descargados, de más reciente a más antiguo. */
+/** Items de la ventana activa, no de todo lo que alguna pantalla haya cacheado. */
 export function itemsCargados() {
   const todos = [];
-  for (const fecha of fechasDisponibles()) {
+  for (const fecha of estado.fechasActivas) {
     const dia = estado.dias.get(fecha);
     if (dia) todos.push(...dia.items);
   }
   return todos;
 }
 
+/** Días que pertenecen a la ventana que el usuario está viendo ahora. */
 export function diasCargados() {
-  return estado.dias.size;
+  return estado.fechasActivas.length;
 }
 
 /** ¿Alguna fuente oficial falló en la última ingesta? */

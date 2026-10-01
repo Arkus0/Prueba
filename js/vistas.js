@@ -9,7 +9,7 @@ import {
   itemsCargados, diasCargados, fuentesConProblema, nombreDeCCAA,
 } from './datos.js';
 import {
-  euros, porHabitante, tituloDeDia, paraBuscar, normalizarBusqueda,
+  euros, numero, porHabitante, tituloDeDia, paraBuscar, normalizarBusqueda,
 } from './formato.js';
 import { esc, listaHTML, tarjetaOposicionHTML, ICONOS } from './ui.js';
 import { barras, mapa, anillo, barraApilada, serie, chispa } from './graficos.js';
@@ -112,7 +112,7 @@ function cifras(indice) {
     </div>`;
 
   return `<div class="rejilla-cifras">
-      ${ficha(String(t.contratos || 0), 'contratos publicados', dias.map((d) => d.contratos))}
+      ${ficha(numero(t.contratos), 'contratos publicados', dias.map((d) => d.contratos))}
       ${ficha(`${porcentajeSinConcurso}%`, 'del dinero, sin concurso abierto')}
       ${ficha(String(indice.oposiciones?.abiertas || 0), 'oposiciones con plazo abierto')}
       ${ficha(String(t.libresDesignaciones || 0), 'puestos por libre designación', dias.map((d) => d.personas))}
@@ -142,18 +142,27 @@ export async function vistaPortada(cont) {
   const fechas = fechasDisponibles().slice(0, filtros.diasVisibles);
   const hayMas = fechasDisponibles().length > filtros.diasVisibles;
 
+  // Un día movido puede traer varios cientos de contratos. Sin tope, "Día a
+  // día" llegaba a pintar más de 400 tarjetas de una vez (~100.000 px de
+  // scroll en el móvil). Se enseña lo más relevante y se cuenta el resto,
+  // igual que ya se hace con los contratos que no llegan a tarjeta.
+  const TOPE_POR_DIA = 20;
   const bloques = fechas.map((fecha) => {
     const dia = estado.dias.get(fecha);
     if (!dia) return '';
     const items = filtrarPorCategoria(dia.items);
+    const visibles = items.slice(0, TOPE_POR_DIA);
+    const sinListar = items.length - visibles.length + (dia.omitidos || 0);
     const gastado = dia.items.reduce((acumulado, i) => acumulado + (Number(i.importeAdjudicado ?? i.importe) || 0), 0);
     return `
       <section class="seccion">
         <h3 class="seccion-titulo">${esc(tituloDeDia(fecha))}</h3>
         ${gastado > 0 ? `<p class="seccion-intro">Se publicaron <strong>${esc(euros(gastado))}</strong> en contratos, ayudas y partidas.${
-          dia.omitidos ? ` Y otros ${dia.omitidos} documentos pequeños que no listamos uno a uno.` : ''
+          sinListar ? ` Y otros ${sinListar} documentos que no listamos aquí.` : ''
         }</p>` : ''}
-        ${listaHTML(items, 'Ese día no hubo nada de esta categoría.', { sinFecha: true })}
+        ${listaHTML(visibles, 'Ese día no hubo nada de esta categoría.', { sinFecha: true })}
+        ${items.length > TOPE_POR_DIA ? `<p class="vacio">Mostramos ${TOPE_POR_DIA} de ${items.length} de ese día.
+          Para verlos todos, usa la pestaña Contratos.</p>` : ''}
       </section>`;
   }).join('');
 
@@ -426,7 +435,7 @@ export async function vistaReparto(cont) {
           ${porHabitante(totalContratos) ? `Son unos <strong>${esc(porHabitante(totalContratos))}</strong>.` : ''}</span>
       </div>
       <div class="rejilla-cifras">
-        <div class="panel destacado"><span class="destacado-cifra cifra">${esc(String(t.contratos || 0))}</span><span class="destacado-pie">contratos</span></div>
+        <div class="panel destacado"><span class="destacado-cifra cifra">${numero(t.contratos)}</span><span class="destacado-pie">contratos</span></div>
         <div class="panel destacado"><span class="destacado-cifra cifra">${porcentajeSinConcurso}%</span><span class="destacado-pie">del dinero, sin concurso abierto</span></div>
         <div class="panel destacado"><span class="destacado-cifra cifra">${t.importeSubvenciones ? esc(euros(t.importeSubvenciones)) : esc(String(t.subvenciones || 0))}</span><span class="destacado-pie">${t.importeSubvenciones ? 'en ayudas y convenios' : 'ayudas y convenios publicados'}</span></div>
         <div class="panel destacado"><span class="destacado-cifra cifra">${esc(String(t.libresDesignaciones || 0))}</span><span class="destacado-pie">puestos por libre designación</span></div>
