@@ -1,131 +1,6 @@
 {
- "generado": "2026-09-30T12:58:10.172Z",
+ "generado": "2026-10-01T14:03:59.480Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18838",
-   "tipo": "oposicion",
-   "fecha": "2026-09-09",
-   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
-   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-30",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18838",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18838.pdf",
-   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18841",
-   "tipo": "oposicion",
-   "fecha": "2026-09-09",
-   "organismo": "Comunidad Autónoma del País Vasco",
-   "titulo": "Resolución 1723/2026, de 8 de junio, de la Dirección Gerencia de la Organización Sanitaria Integrada Barrualde-Galdakao, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Sección Sanitaria de Alergología.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-30",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18841",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18841.pdf",
-   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18842",
-   "tipo": "oposicion",
-   "fecha": "2026-09-09",
-   "organismo": "Comunidad Autónoma del País Vasco",
-   "titulo": "Resolución 1408/2026, de 28 de julio, de la Dirección General de Osakidetza-Servicio Vasco de Salud, por la que se convoca concurso para la provisión del puesto de trabajo de Jefe/a de Sección Sanitaria en la Unidad de Cronicidad y Fin de Vida.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-30",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18842",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18842.pdf",
-   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-18867",
-   "tipo": "oposicion",
-   "fecha": "2026-09-09",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 3 de septiembre de 2026, de la Universidad de Salamanca, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [
-    "Promoción interna",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "nacionalidad extranjera no comunitaria cuando, en el estado de su nacionalidad a los españoles se les reconozca aptitud legal para ocupar en la docencia universitaria posiciones análogas a las de los…",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-09-30",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18867",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18867.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-19220",
-   "tipo": "oposicion",
-   "fecha": "2026-09-15",
-   "organismo": "Comunidad Autónoma de Cataluña",
-   "titulo": "Resolución de 8 de septiembre de 2026, de la Dirección General de Derecho, Entidades Jurídicas y Gestión Adecuada de Conflictos, del Departamento de Justicia y Calidad Democrática, por la que se convoca concurso ordinario n.º 325, para proveer Registros de la Propiedad, Mercantiles y de Bienes Muebles.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "naturales"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-09-30",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19220",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/15/pdfs/BOE-A-2026-19220.pdf",
-   "frase": "La Comunidad Autónoma de Cataluña convoca 1 plaza.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-18920",
    "tipo": "oposicion",
@@ -997,6 +872,30 @@
    "abierta": true
   },
   {
+   "id": "BOE-A-2026-20403",
+   "tipo": "oposicion",
+   "fecha": "2026-10-01",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 22 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para la provisión de cargos judiciales entre miembros de la Carrera Judicial, con categoría de Juez/a.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20403",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/01/pdfs/BOE-A-2026-20403.pdf",
+   "frase": "El Consejo General del Poder Judicial convoca 1 plaza.",
+   "abierta": true
+  },
+  {
    "id": "BOE-A-2026-19586",
    "tipo": "oposicion",
    "fecha": "2026-09-21",
@@ -1602,6 +1501,30 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19822",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/24/pdfs/BOE-A-2026-19822.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20411",
+   "tipo": "oposicion",
+   "fecha": "2026-10-01",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 1351/2026, de 15 de mayo, de la Dirección Gerencia de la Red de Salud Mental de Bizkaia, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Unidad de Salud Mental del Centro de Salud Mental de Adultos de Bombero Etxaniz.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-22",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20411",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/01/pdfs/BOE-A-2026-20411.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
    "abierta": true
   },
   {
@@ -2899,6 +2822,131 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19133",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19133.pdf",
    "frase": "El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18838",
+   "tipo": "oposicion",
+   "fecha": "2026-09-09",
+   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
+   "titulo": "Resolución de 2 de septiembre de 2026, de la Subsecretaría, por la que se convoca concurso específico para la provisión de puestos de trabajo.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18838",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18838.pdf",
+   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18841",
+   "tipo": "oposicion",
+   "fecha": "2026-09-09",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 1723/2026, de 8 de junio, de la Dirección Gerencia de la Organización Sanitaria Integrada Barrualde-Galdakao, por la que se convoca concurso para la provisión de puesto de trabajo de Jefe/a de Sección Sanitaria de Alergología.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18841",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18841.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18842",
+   "tipo": "oposicion",
+   "fecha": "2026-09-09",
+   "organismo": "Comunidad Autónoma del País Vasco",
+   "titulo": "Resolución 1408/2026, de 28 de julio, de la Dirección General de Osakidetza-Servicio Vasco de Salud, por la que se convoca concurso para la provisión del puesto de trabajo de Jefe/a de Sección Sanitaria en la Unidad de Cronicidad y Fin de Vida.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18842",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18842.pdf",
+   "frase": "La Comunidad Autónoma del País Vasco abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18867",
+   "tipo": "oposicion",
+   "fecha": "2026-09-09",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 3 de septiembre de 2026, de la Universidad de Salamanca, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "nacionalidad extranjera no comunitaria cuando, en el estado de su nacionalidad a los españoles se les reconozca aptitud legal para ocupar en la docencia universitaria posiciones análogas a las de los…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-09-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18867",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/09/pdfs/BOE-A-2026-18867.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19220",
+   "tipo": "oposicion",
+   "fecha": "2026-09-15",
+   "organismo": "Comunidad Autónoma de Cataluña",
+   "titulo": "Resolución de 8 de septiembre de 2026, de la Dirección General de Derecho, Entidades Jurídicas y Gestión Adecuada de Conflictos, del Departamento de Justicia y Calidad Democrática, por la que se convoca concurso ordinario n.º 325, para proveer Registros de la Propiedad, Mercantiles y de Bienes Muebles.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "naturales"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-09-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19220",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/15/pdfs/BOE-A-2026-19220.pdf",
+   "frase": "La Comunidad Autónoma de Cataluña convoca 1 plaza.",
    "abierta": false
   },
   {
