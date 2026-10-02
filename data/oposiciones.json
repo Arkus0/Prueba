@@ -1,32 +1,6 @@
 {
- "generado": "2026-10-01T14:03:59.480Z",
+ "generado": "2026-10-02T13:03:53.657Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-18920",
-   "tipo": "oposicion",
-   "fecha": "2026-09-10",
-   "organismo": "Ministerio de Economía, Comercio y Empresa",
-   "titulo": "Resolución de 31 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en el Instituto Nacional de Estadística.",
-   "plazas": null,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": null,
-   "limite": "2026-10-01",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18920",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/10/pdfs/BOE-A-2026-18920.pdf",
-   "frase": "El Ministerio de Economía, Comercio y Empresa abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-19034",
    "tipo": "oposicion",
@@ -2947,6 +2921,32 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19220",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/15/pdfs/BOE-A-2026-19220.pdf",
    "frase": "La Comunidad Autónoma de Cataluña convoca 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-18920",
+   "tipo": "oposicion",
+   "fecha": "2026-09-10",
+   "organismo": "Ministerio de Economía, Comercio y Empresa",
+   "titulo": "Resolución de 31 de agosto de 2026, de la Subsecretaría, por la que se convoca concurso general para la provisión de puestos de trabajo en el Instituto Nacional de Estadística.",
+   "plazas": null,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-01",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-18920",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/10/pdfs/BOE-A-2026-18920.pdf",
+   "frase": "El Ministerio de Economía, Comercio y Empresa abre un proceso selectivo por concurso de méritos.",
    "abierta": false
   },
   {
