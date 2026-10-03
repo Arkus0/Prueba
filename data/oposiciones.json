@@ -1,84 +1,6 @@
 {
- "generado": "2026-10-02T13:03:53.657Z",
+ "generado": "2026-10-03T11:58:59.614Z",
  "convocatorias": [
-  {
-   "id": "BOE-A-2026-19034",
-   "tipo": "oposicion",
-   "fecha": "2026-09-11",
-   "organismo": "Universidades",
-   "titulo": "Resolución de 3 de septiembre de 2026, de la Universidad de Salamanca, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
-   "plazas": 1,
-   "plazo": {
-    "dias": 15,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Oposición",
-   "acceso": [
-    "Acceso libre",
-    "Promoción interna",
-    "Reserva para personas con discapacidad"
-   ],
-   "titulacion": "Estar en posesión del título de Doctor.",
-   "requisitos": "nacionalidad extranjera no comunitaria cuando, en el Estado de su nacionalidad a los españoles se les reconozca aptitud legal para ocupar en la docencia universitaria posiciones análogas a las de los…",
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-10-02",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19034",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19034.pdf",
-   "frase": "Las Universidades convocan 1 plaza.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-19495",
-   "tipo": "oposicion",
-   "fecha": "2026-09-19",
-   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
-   "titulo": "Orden TMD/979/2026, de 16 de septiembre, por la que se convoca el proceso selectivo para la designación de vocales del Consejo Superior de Fundaciones, en representación de las fundaciones.",
-   "plazas": null,
-   "plazo": {
-    "dias": 10,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Proceso selectivo",
-   "acceso": [],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-10-02",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19495",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/19/pdfs/BOE-A-2026-19495.pdf",
-   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo.",
-   "abierta": true
-  },
-  {
-   "id": "BOE-A-2026-20164",
-   "tipo": "oposicion",
-   "fecha": "2026-09-29",
-   "organismo": "Consejo General del Poder Judicial",
-   "titulo": "Acuerdo de 22 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para proveer puesto de trabajo en la Secretaría General.",
-   "plazas": null,
-   "plazo": {
-    "dias": 3,
-    "tipo": "hábiles"
-   },
-   "grupo": null,
-   "sistema": "Concurso de méritos",
-   "acceso": [
-    "Promoción interna"
-   ],
-   "titulacion": null,
-   "requisitos": null,
-   "tasa": null,
-   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
-   "limite": "2026-10-02",
-   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20164",
-   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20164.pdf",
-   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
-   "abierta": true
-  },
   {
    "id": "BOE-A-2026-19136",
    "tipo": "oposicion",
@@ -867,6 +789,60 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20403",
    "urlPdf": "https://www.boe.es/boe/dias/2026/10/01/pdfs/BOE-A-2026-20403.pdf",
    "frase": "El Consejo General del Poder Judicial convoca 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20546",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Ministerio de Defensa",
+   "titulo": "Resolución 430/38403/2026, de 25 de septiembre, de la Subsecretaría, por la que se aprueba la relación provisional de personas admitidas y excluidas, y se anuncia fecha, hora y lugar de celebración del primer y segundo ejercicio o ejercicio único de la fase de oposición del proceso selectivo para ingreso, por el sistema de acceso libre y promoción interna, como personal laboral fijo en los grupos profesionales M3, M2, M1, E2 y E1 sujetos al IV Convenio colectivo único para el personal laboral de la Administración General del Estado, convocado por Resolución 430/38310/2026, de 1 de julio.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20546",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20546.pdf",
+   "frase": "El Ministerio de Defensa abre un proceso selectivo por oposición.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20548",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Ministerio de Derechos Sociales, Consumo y Agenda 2030",
+   "titulo": "Resolución de 30 de septiembre de 2026, de la Subsecretaría, por la que se aprueba la relación provisional de personas admitidas y excluidas, y se anuncia fecha, hora y lugar de celebración del primer ejercicio o ejercicio único de la fase de oposición del proceso selectivo para ingreso, por el sistema general de turno libre y promoción interna, como personal laboral fijo, en los grupos profesionales M2, M1 y E1, sujetos al IV Convenio colectivo único para el personal laboral de la Administración General del Estado, convocado por Resolución de 6 de julio de 2026.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": "nacionalidad y/o permiso de residencia legal y/o autorización de trabajo.",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-16",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20548",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20548.pdf",
+   "frase": "El Ministerio de Derechos Sociales, Consumo y Agenda 2030 abre un proceso selectivo por oposición.",
    "abierta": true
   },
   {
@@ -1897,6 +1873,152 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20353",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/30/pdfs/BOE-A-2026-20353.pdf",
    "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20541",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 30 de septiembre de 2026, del Pleno del Consejo General del Poder Judicial, por el que, en estimación de recurso, se modifica el Acuerdo de 9 de junio de 2026, de la Comisión Permanente, por el que se convoca proceso selectivo para la provisión de plazas, entre juristas de reconocida competencia con más de diez años de ejercicio profesional en las materias propias del orden jurisdiccional contencioso-administrativo, para el acceso a la Carrera Judicial, categoría de Magistrado/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20541",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20541.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20542",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 30 de septiembre de 2026, del Pleno del Consejo General del Poder Judicial, por el que, en estimación de recurso, se modifica el Acuerdo de 9 de junio de 2026, de la Comisión Permanente, por el que se convoca proceso selectivo para la provisión de plazas, entre juristas de reconocida competencia con más de diez años de ejercicio profesional en las materias propias del orden jurisdiccional civil, para el acceso a la Carrera Judicial, categoría de Magistrado/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20542",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20542.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20543",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 30 de septiembre de 2026, del Pleno del Consejo General del Poder Judicial, por el que, en estimación de recurso, se modifica el Acuerdo de 9 de junio de 2026, de la Comisión Permanente, por el que se convoca proceso selectivo para la provisión de plazas, entre juristas de reconocida competencia con más de diez años de ejercicio profesional en las materias propias de los órganos con competencias compartidas en los órdenes jurisdiccionales civil y penal, para el acceso a la Carrera Judicial, categoría de Magistrado/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20543",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20543.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20544",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 30 de septiembre de 2026, del Pleno del Consejo General del Poder Judicial, por el que, en estimación de recurso, se modifica el Acuerdo de 9 de junio de 2026, de la Comisión Permanente, por el que se convoca proceso selectivo para la provisión de plazas, entre juristas de reconocida competencia con más de diez años de ejercicio profesional en las materias propias del orden jurisdiccional penal, para el acceso a la Carrera Judicial, categoría de Magistrado/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20544",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20544.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20545",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 30 de septiembre de 2026, del Pleno del Consejo General del Poder Judicial, por el que, en estimación de recurso, se modifica el Acuerdo de 9 de junio de 2026, de la Comisión Permanente, por el que se convoca proceso selectivo para la provisión de plazas, entre juristas de reconocida competencia con más de diez años de ejercicio profesional en las materias propias del orden jurisdiccional social, para el acceso a la Carrera Judicial, categoría de Magistrado/a.",
+   "plazas": null,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20545",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20545.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo.",
+   "abierta": true
+  },
+  {
+   "id": "BOE-A-2026-20547",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Ministerio de Educación, Formación Profesional y Deportes",
+   "titulo": "Resolución de 28 de septiembre de 2026, de la Presidencia del Consejo Superior de Deportes, por la que se publica la relación de personas que han superado el proceso selectivo para ingreso, por el sistema general de acceso libre, como personal laboral fijo fuera de convenio, en la categoría de Director del Centro de Medicina del Deporte, convocado por Resolución de 26 de diciembre de 2025.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 20,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": "2026-10-30",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20547",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20547.pdf",
+   "frase": "El Ministerio de Educación, Formación Profesional y Deportes convoca 1 plaza.",
    "abierta": true
   },
   {
@@ -2950,6 +3072,84 @@
    "abierta": false
   },
   {
+   "id": "BOE-A-2026-19034",
+   "tipo": "oposicion",
+   "fecha": "2026-09-11",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 3 de septiembre de 2026, de la Universidad de Salamanca, por la que se convoca concurso de acceso a plazas de cuerpos docentes universitarios.",
+   "plazas": 1,
+   "plazo": {
+    "dias": 15,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Oposición",
+   "acceso": [
+    "Acceso libre",
+    "Promoción interna",
+    "Reserva para personas con discapacidad"
+   ],
+   "titulacion": "Estar en posesión del título de Doctor.",
+   "requisitos": "nacionalidad extranjera no comunitaria cuando, en el Estado de su nacionalidad a los españoles se les reconozca aptitud legal para ocupar en la docencia universitaria posiciones análogas a las de los…",
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-02",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19034",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/11/pdfs/BOE-A-2026-19034.pdf",
+   "frase": "Las Universidades convocan 1 plaza.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-19495",
+   "tipo": "oposicion",
+   "fecha": "2026-09-19",
+   "organismo": "Ministerio de Política Territorial y Memoria Democrática",
+   "titulo": "Orden TMD/979/2026, de 16 de septiembre, por la que se convoca el proceso selectivo para la designación de vocales del Consejo Superior de Fundaciones, en representación de las fundaciones.",
+   "plazas": null,
+   "plazo": {
+    "dias": 10,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Proceso selectivo",
+   "acceso": [],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-02",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-19495",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/19/pdfs/BOE-A-2026-19495.pdf",
+   "frase": "El Ministerio de Política Territorial y Memoria Democrática abre un proceso selectivo.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-20164",
+   "tipo": "oposicion",
+   "fecha": "2026-09-29",
+   "organismo": "Consejo General del Poder Judicial",
+   "titulo": "Acuerdo de 22 de septiembre de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por el que se convoca concurso para proveer puesto de trabajo en la Secretaría General.",
+   "plazas": null,
+   "plazo": {
+    "dias": 3,
+    "tipo": "hábiles"
+   },
+   "grupo": null,
+   "sistema": "Concurso de méritos",
+   "acceso": [
+    "Promoción interna"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": "Solicitud por internet, en la sede electrónica del organismo o en el punto de acceso general administracion.gob.es.",
+   "limite": "2026-10-02",
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20164",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20164.pdf",
+   "frase": "El Consejo General del Poder Judicial abre un proceso selectivo por concurso de méritos.",
+   "abierta": false
+  },
+  {
    "id": "BOE-A-2026-18780",
    "tipo": "oposicion",
    "fecha": "2026-09-08",
@@ -3306,6 +3506,29 @@
    "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20169",
    "urlPdf": "https://www.boe.es/boe/dias/2026/09/29/pdfs/BOE-A-2026-20169.pdf",
    "frase": "El Ministerio de Vivienda y Agenda Urbana abre un proceso selectivo por oposición.",
+   "abierta": false
+  },
+  {
+   "id": "BOE-A-2026-20574",
+   "tipo": "oposicion",
+   "fecha": "2026-10-03",
+   "organismo": "Universidades",
+   "titulo": "Resolución de 25 de septiembre de 2026, de la Universidad de Granada, por la que se corrigen errores en la de 30 de junio de 2026, por la que se convoca proceso selectivo para ingreso, por el sistema general de acceso libre, en la Escala Administrativa.",
+   "plazas": null,
+   "plazo": null,
+   "grupo": null,
+   "sistema": null,
+   "acceso": [
+    "Acceso libre"
+   ],
+   "titulacion": null,
+   "requisitos": null,
+   "tasa": null,
+   "comoApuntarse": null,
+   "limite": null,
+   "url": "https://boe.es/diario_boe/txt.php?id=BOE-A-2026-20574",
+   "urlPdf": "https://www.boe.es/boe/dias/2026/10/03/pdfs/BOE-A-2026-20574.pdf",
+   "frase": "Las Universidades abren un proceso selectivo.",
    "abierta": false
   }
  ]
