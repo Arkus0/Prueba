@@ -1,13 +1,11 @@
-// ui.js — render de la interfaz: estado, marcador de respuestas y panel de
-// depuración. No contiene lógica del pipeline.
+// ui.js — interfaz de control y modo auditorio.
+// La respuesta actual domina la pantalla; todas las preguntas respondidas quedan
+// en un carril horizontal cronológico: antiguas a la izquierda, nuevas a la derecha.
 
 const $ = (id) => document.getElementById(id);
 
-// ---------------------------------------------------------------------------
-// Marcador: últimas respuestas visibles a la vez, la última en grande
-// ---------------------------------------------------------------------------
-
-const board = []; // filas mostradas (se conservan las últimas 12, se pintan 4)
+const board = [];
+const MAX_ROWS = 200;
 
 function localFp(text) {
   return String(text || '').toLowerCase().normalize('NFD')
@@ -21,11 +19,14 @@ function truncate(s, n) {
   return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
-// El enunciado en una línea (sin las opciones: la respuesta ya muestra la elegida)
 function questionLine(item) {
   let header = (item && item.header) || '';
   if (!header && item) header = questionText(item);
-  return truncate(String(header).replace(/\s+/g, ' ').trim(), 110);
+  return truncate(String(header).replace(/\s+/g, ' ').trim(), 180);
+}
+
+function questionKey(item) {
+  return localFp((item && item.header) || questionText(item));
 }
 
 export function questionText(item) {
@@ -41,69 +42,77 @@ export function setStatus(text, kind = 'idle') {
 }
 
 export function showWaiting(message) {
+  if (board.length) return;
   $('board-empty').hidden = false;
-  $('board-empty').textContent = message || 'Escaneando… las respuestas aparecerán aquí: la última en grande y las anteriores debajo.';
+  $('board-empty').textContent = message || 'Escaneando… la primera respuesta aparecerá aquí.';
+  $('focus-answer').hidden = true;
 }
 
 export function showAnswer(answer) {
   const item = answer.item || {};
+  const key = questionKey(item);
+
+  // Una revisión nunca altera lo que ya vio el público. La primera respuesta queda
+  // bloqueada incluso si después el OCR descubre C/D u otras opciones.
+  if (answer.revision) {
+    logEvent(`revisión posterior no mostrada (respuesta bloqueada): ${truncate(item.header, 70)}`);
+    return;
+  }
+
+  // Reapariciones desde caché no crean tarjetas nuevas.
+  if (answer.fromCache && board.some((r) => r.key === key)) return;
+  if (board.some((r) => r.key === key)) return;
+
   const row = {
-    fp: localFp(questionText(item)),
+    key,
+    sequence: Number.isFinite(item.sequence) ? item.sequence : board.length,
     question: questionLine(item),
     answerLine: (answer.parsed && answer.parsed.answerLine) || answer.content || '',
     isTest: (item.options || []).length >= 2,
-    revision: !!answer.revision,
     at: answer.at,
   };
-  // una respuesta en caché que ya está en el marcador no duplica fila
-  if (answer.fromCache && board.some((r) => r.fp === row.fp)) return;
+
   board.push(row);
-  while (board.length > 12) board.shift();
+  board.sort((a, b) => a.sequence - b.sequence);
+  while (board.length > MAX_ROWS) board.shift();
+
   renderBoard();
-  if (!answer.fromCache) addReview(row);
   logEvent(`respuesta: ${truncate(row.answerLine, 60)}`);
 }
 
-// Lista completa de la sesión para el repaso final (no desaparece nada)
-const review = [];
-
-function addReview(row) {
-  review.push(row);
-  if (review.length > 200) review.shift();
-  renderReview();
-}
-
-function renderReview() {
-  const list = $('review-list');
-  $('review-count').textContent = String(review.length);
-  list.hidden = review.length === 0;
-  list.replaceChildren();
-  [...review].reverse().forEach((r) => {
-    const li = document.createElement('li');
-    const q = document.createElement('span');
-    q.className = 'review-q';
-    q.textContent = (r.revision ? '↻ ' : '') + r.question;
-    const a = document.createElement('span');
-    a.className = 'review-a';
-    a.textContent = r.answerLine;
-    li.append(q, a);
-    list.append(li);
-  });
-}
-
 function renderBoard() {
-  const cont = $('answer-board');
-  $('board-empty').hidden = board.length > 0;
-  cont.replaceChildren();
-  const visible = board.slice(-4).reverse(); // la más reciente arriba
-  visible.forEach((r, i) => {
+  const rail = $('answer-board');
+  const empty = $('board-empty');
+  const focus = $('focus-answer');
+  const count = $('timeline-count');
+
+  count.textContent = String(board.length);
+  empty.hidden = board.length > 0;
+  focus.hidden = board.length === 0;
+  rail.replaceChildren();
+
+  if (!board.length) return;
+
+  // La pregunta lógicamente más reciente manda, aunque una consulta anterior termine
+  // después por la concurrencia del LLM.
+  const latest = board[board.length - 1];
+  $('focus-question').textContent = latest.question;
+  $('focus-value').textContent = latest.answerLine;
+  $('focus-meta').textContent = `${latest.isTest ? '🔒 RESPUESTA BLOQUEADA · ' : ''}${hhmmss(latest.at)}`;
+
+  board.forEach((r, i) => {
     const el = document.createElement('article');
-    el.className = 'board-row' + (i === 0 ? ' board-row-new' : '');
-    el.dataset.pos = String(i);
+    el.className = 'board-row' + (i === board.length - 1 ? ' board-row-new' : '');
+    el.dataset.sequence = String(r.sequence);
+
+    const n = document.createElement('span');
+    n.className = 'board-n';
+    const m = r.question.match(/^\s*(\d{1,3})[.)\-:]\s*/);
+    n.textContent = m ? `#${m[1]}` : `#${i + 1}`;
 
     const q = document.createElement('p');
     q.className = 'board-q';
-    q.textContent = (r.revision ? '↻ ' : '') + r.question;
+    q.textContent = r.question;
 
     const a = document.createElement('p');
     a.className = 'board-a';
@@ -113,18 +122,28 @@ function renderBoard() {
     meta.className = 'board-meta';
     meta.textContent = (r.isTest ? '🔒 ' : '') + hhmmss(r.at);
 
-    el.append(q, a, meta);
-    cont.append(el);
+    el.append(n, q, a, meta);
+    rail.append(el);
+  });
+
+  requestAnimationFrame(() => {
+    rail.scrollTo({ left: rail.scrollWidth, behavior: 'smooth' });
   });
 }
 
 export function clearBoard() {
   board.length = 0;
-  review.length = 0;
   renderBoard();
-  renderReview();
   showWaiting('Sesión nueva. Escaneando…');
 }
+
+// La rueda vertical desplaza el carril horizontal: útil con ratón desde la mesa.
+const rail = $('answer-board');
+rail.addEventListener('wheel', (e) => {
+  if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+  rail.scrollLeft += e.deltaY;
+  e.preventDefault();
+}, { passive: false });
 
 // ---------- depuración ----------
 
