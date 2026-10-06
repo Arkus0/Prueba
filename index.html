@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <title>OCR → IA · Respuestas en directo</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Tesseract.js local (vendor); si el navegador no lo encuentra, main.js avisa -->
+  <script src="vendor/tesseract.min.js"></script>
+</head>
+<body>
+  <!-- Pantalla de arranque: único toque necesario de la sesión -->
+  <div id="start-overlay" class="start-overlay">
+    <div class="start-box">
+      <h1>OCR → IA</h1>
+      <p>Apunta la webcam a la pantalla donde aparecen las preguntas.
+         La detección, la consulta al modelo y la respuesta son automáticas.</p>
+      <button id="btn-start" class="btn btn-primary btn-big">Iniciar cámara</button>
+      <p id="start-error" class="start-error" hidden></p>
+      <button id="btn-start-settings" class="btn btn-ghost">Configurar LLM primero</button>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <span class="brand">OCR&nbsp;→&nbsp;IA</span>
+    <span id="status-chip" class="chip chip-idle">Iniciando…</span>
+    <span class="spacer"></span>
+    <button id="btn-new-session" class="btn btn-ghost" title="Nueva sesión: olvida las preguntas ya respondidas">↻<span class="btn-label">Sesión</span></button>
+    <button id="btn-debug" class="btn btn-ghost" title="Ver OCR crudo y eventos">☰</button>
+    <button id="btn-settings" class="btn btn-ghost" title="Ajustes">⚙</button>
+  </header>
+
+  <main class="layout">
+    <section class="camera-panel">
+      <div id="camera-wrap" class="camera-wrap">
+        <video id="camera" autoplay muted playsinline></video>
+        <div id="crop-box" class="crop-box" hidden>
+          <span class="crop-handle" data-role="resize"></span>
+        </div>
+      </div>
+      <div class="camera-tools">
+        <span class="hint">Arrastra el recuadro para ceñirlo a la zona con la pregunta (funciona con ratón o táctil).</span>
+        <button id="btn-crop-full" class="btn btn-ghost btn-small">Zona completa</button>
+      </div>
+    </section>
+
+    <section class="answer-panel">
+      <article id="answer-card" class="answer-card waiting">
+        <p class="card-waiting" id="card-waiting">Escaneando… aparecerá aquí la respuesta a la primera pregunta detectada.</p>
+        <div id="card-body" hidden>
+          <p id="card-question" class="card-question"></p>
+          <div class="card-answer">
+            <span class="card-label">RESPUESTA</span>
+            <span id="card-answer-value" class="card-answer-value"></span>
+          </div>
+          <div class="card-expl" id="card-expl">
+            <span class="card-label">EXPLICACIÓN</span>
+            <span id="card-expl-value" class="card-expl-value"></span>
+          </div>
+          <p id="card-meta" class="card-meta"></p>
+        </div>
+      </article>
+
+      <h2 class="section-title">Historial</h2>
+      <ul id="history" class="history">
+        <li class="history-empty" id="history-empty">Aún no hay respuestas en esta sesión.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Cajón de depuración -->
+  <section id="debug-drawer" class="debug-drawer" hidden>
+    <h3>OCR crudo <span id="ocr-conf" class="ocr-conf"></span></h3>
+    <pre id="raw-ocr" class="raw-ocr">(esperando primeras lecturas)</pre>
+    <h3>Eventos</h3>
+    <ul id="event-log" class="event-log"></ul>
+  </section>
+
+  <!-- Modal de ajustes -->
+  <dialog id="settings-dialog" class="settings-dialog">
+    <form id="settings-form" method="dialog">
+      <h2>Ajustes</h2>
+      <label>
+        URL base de la API (OpenAI-compatible)
+        <input id="set-baseurl" name="baseUrl" type="url" placeholder="https://api.openai.com/v1" required>
+      </label>
+      <label>
+        Modelo
+        <input id="set-model" name="model" type="text" placeholder="gpt-4o-mini" required>
+      </label>
+      <label>
+        Clave de API (se guarda solo en este dispositivo)
+        <input id="set-apikey" name="apiKey" type="password" placeholder="sk-…" autocomplete="off">
+      </label>
+      <label>
+        Cámara
+        <select id="set-camera" name="cameraId"></select>
+      </label>
+      <label>
+        Periodo de escaneo (ms)
+        <input id="set-period" name="ocrPeriodMs" type="number" min="800" max="10000" step="100">
+      </label>
+      <p class="settings-note">Funciona con cualquier endpoint compatible: OpenAI, Groq, OpenRouter,
+        Ollama local (<code>http://IP-DEL-PC:11434/v1</code>), etc.</p>
+      <div class="dialog-actions">
+        <button type="button" id="btn-settings-cancel" class="btn btn-ghost">Cancelar</button>
+        <button type="submit" id="btn-settings-save" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
