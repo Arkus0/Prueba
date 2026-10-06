@@ -13,4 +13,4 @@ jobs:
         with:
           node-version: '22'
       - name: Run logic and capture tests
-        run: node --test tests/
+        run: node --test tests/*.test.mjs
