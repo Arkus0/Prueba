@@ -1,7 +1,7 @@
 // logic.js — motor del pipeline: normalización de OCR, agrupación de preguntas tipo
 // test (incluidas varias preguntas visibles a la vez), clasificación, deduplicación
-// y cola de consultas al LLM. Sin DOM: es puro y funciona igual en el navegador y
-// en los tests de Node.
+// con estados (pendiente/respondida/fallada/descartada) y cola de consultas al LLM.
+// Sin DOM: es puro y funciona igual en el navegador y en los tests de Node.
 
 export const DEFAULT_CONFIG = {
   ocrPeriodMs: 2000,      // periodo del bucle de OCR (lo usa main.js, no el motor)
@@ -11,11 +11,15 @@ export const DEFAULT_CONFIG = {
   groupTimeoutMs: 30000,  // vida máxima de un grupo abierto
   revisionWindowMs: 30000,// ventana para reenviar una pregunta ya respondida si aparecen sus opciones
   sameGroupSim: 0.55,     // similitud mínima para considerar que dos cabeceras son la misma pregunta
+  sameGroupSimPlain: 0.92, // umbral más estricto cuando ambas preguntas no tienen opciones
   dupSim: 0.9,            // similitud a partir de la cual dos preguntas se consideran duplicadas
   maxPending: 8,          // tareas máximas en cola (varias preguntas pueden verse a la vez)
-  askTimeoutMs: 20000,    // timeout por consulta al LLM
+  maxConcurrent: 2,       // consultas al LLM simultáneas
+  askTimeoutMs: 10000,    // timeout por consulta al LLM
   askRetries: 1,          // reintentos por consulta
   dedupMemory: 25,        // cuántas preguntas recientes recordar para dedup
+  confHigh: 75,           // confianza OCR por debajo de la cual se exige estabilidad estricta
+  confLow: 55,            // confianza OCR por debajo de la cual se congela la finalización
 };
 
 const LETTERS = 'ABCDEFGH';
@@ -145,6 +149,15 @@ export function isQuestionText(text) {
   return false;
 }
 
+// ¿La línea empieza por interrogación (sirve para partir preguntas apiladas)?
+function startsInterrogatively(line) {
+  const t = String(line).trim();
+  if (t.startsWith('¿') || t.startsWith('(')) return true;
+  const toks = normalizeForCompare(t).split(' ').filter(Boolean);
+  if (!toks.length) return false;
+  return INTERROGATIVES.has(toks[0]) || (PREPS_FOR_QUE.has(toks[0]) && toks[1] === 'que');
+}
+
 // Arranque numerado de pregunta: "1. ¿...?", "2) ...", "Pregunta 3 - ..."
 const NUMBERED_START = /^\(?\s*(?:pregunta\s*)?(\d{1,2})\s*[\).\:\-–—]\s+(.+)$/i;
 
@@ -176,14 +189,6 @@ function isNumberedQuestionStart(line) {
   return !!(m && isQuestionText(m[2]));
 }
 
-// ¿Esta línea arranca una pregunta nueva distinta de la que se está acumulando?
-// Solo cuenta si el bloque actual ya tiene opciones (si no, es la primera pregunta).
-function startsNewQuestion(line, currentHasOptions) {
-  if (!currentHasOptions) return false;
-  if (isNumberedQuestionStart(line)) return true;
-  return isQuestionText(line) && normalizeForCompare(line).length >= 8;
-}
-
 function classifyLine(line) {
   // un arranque numerado de pregunta nunca es una opción (evita p.ej. "4." → "A")
   if (isNumberedQuestionStart(line)) return { line, kind: 'header', numbered: true };
@@ -192,6 +197,24 @@ function classifyLine(line) {
   const loose = parseOptionLineLoose(line);
   if (loose) return { line, kind: 'option', opt: loose, strict: false };
   return { line, kind: 'header' };
+}
+
+// ¿Esta línea arranca una pregunta nueva distinta de la que se está acumulando?
+function startsNewQuestion(line, cur) {
+  const hasOpts = cur.some((i) => i.kind === 'option');
+  if (hasOpts) {
+    if (isNumberedQuestionStart(line)) return true;
+    return isQuestionText(line) && normalizeForCompare(line).length >= 8;
+  }
+  // sin opciones aún: parted sólo si la cabecera acumulada ya es una pregunta
+  // COMPLETA (termina en ?) y la nueva línea arranca interrogativamente
+  const headerLines = cur.filter((i) => i.kind === 'header').map((i) => i.line);
+  const prev = headerLines[headerLines.length - 1] || '';
+  return (
+    /[?¿]\s*$/.test(prev) &&
+    startsInterrogatively(line) &&
+    normalizeForCompare(line).length >= 8
+  );
 }
 
 // Parte un snapshot del OCR en bloques de pregunta: cabecera + opciones. Soporta
@@ -223,14 +246,13 @@ function legacySegment(lines) {
     if (cur.length) segments.push(cur);
     cur = [];
   };
-  const hasOptions = (items) => items.some((i) => i.kind === 'option');
   for (const line of lines) {
     const c = classifyLine(line);
     if (c.kind === 'option') {
       // reaparece la letra A habiendo opciones: empieza otra pregunta
-      if (c.opt.letter === 'A' && hasOptions(cur)) close();
+      if (c.opt.letter === 'A' && cur.some((i) => i.kind === 'option')) close();
       cur.push(c);
-    } else if (startsNewQuestion(line, hasOptions(cur))) {
+    } else if (startsNewQuestion(line, cur)) {
       close();
       cur.push(c);
     } else {
@@ -343,8 +365,24 @@ export function parseAnswer(content) {
 }
 
 // ---------------------------------------------------------------------------
-// Motor: agrupación + dedup + cola
+// Motor: agrupación + dedup con estados + cola
 // ---------------------------------------------------------------------------
+
+// El texto ganador de unas votaciones: el más visto; a igualdad, el más largo.
+function bestOf(votes) {
+  let best = null;
+  let bestN = -1;
+  let bestLen = -1;
+  for (const [text, n] of votes) {
+    const len = normalizeForCompare(text).length;
+    if (n > bestN || (n === bestN && len > bestLen)) {
+      best = text;
+      bestN = n;
+      bestLen = len;
+    }
+  }
+  return best || '';
+}
 
 export class LogicEngine {
   constructor({ config = {}, llmCall = async () => '', now } = {}) {
@@ -352,12 +390,13 @@ export class LogicEngine {
     this._llmCall = llmCall;
     this._now = now || (() => Date.now());
     this._listeners = {};
+    this._sessionId = 0;
     this._groups = [];        // preguntas abiertas en pantalla (puede haber varias)
     this._noDataSince = null;
-    this._asked = [];         // [{ text, header, nOptions, at }] últimas preguntas enviadas
+    this._asked = [];         // [{ text, header, nOptions, at, state }]
     this._answers = new Map(); // payloadNormalizado -> respuesta
     this._queue = [];
-    this._inFlight = null;
+    this._inFlight = new Set(); // tareas en vuelo (con .controller abortable)
     this._lastMessage = '';
   }
 
@@ -379,8 +418,8 @@ export class LogicEngine {
     return this._groups.length > 0;
   }
 
-  // Un ciclo de OCR entrega su texto crudo.
-  feed(rawText, now = this._now()) {
+  // Un ciclo de OCR entrega su texto crudo y (opcional) su confianza 0-100.
+  feed(rawText, now = this._now(), confidence) {
     const lines = normalizeLines(rawText);
     if (normalizeForCompare(lines.join(' ')).length < 4) {
       if (this._groups.length && this._noDataSince == null) this._noDataSince = now;
@@ -389,7 +428,7 @@ export class LogicEngine {
     }
     this._noDataSince = null;
     const segments = segmentSnapshot(lines);
-    for (const seg of segments) this._ingestSegment(seg, now);
+    for (const seg of segments) this._ingestSegment(seg, now, confidence);
     this._maybeFinalize(now);
   }
 
@@ -398,7 +437,12 @@ export class LogicEngine {
     this._maybeFinalize(now);
   }
 
+  // Reinicia la sesión abortando consultas en vuelo y descartando sus resultados.
   reset() {
+    this._sessionId += 1;
+    for (const task of this._inFlight) {
+      if (task.controller) task.controller.abort();
+    }
     this._groups = [];
     this._noDataSince = null;
     this._asked = [];
@@ -411,21 +455,36 @@ export class LogicEngine {
   // -- agrupación ------------------------------------------------------------
 
   _newGroup(snap, now) {
-    return {
-      headerLines: snap.headerLines.slice(),
-      options: new Map(snap.options.map((o) => [o.letter, o.text])),
+    const g = {
+      headerVotes: new Map(),
+      options: new Map(), // letter -> { votes: Map<text, n> }
       openedAt: now,
       lastChangeAt: now,
       stableReads: 0,
+      lastConf: null,
     };
+    if (snap.header) g.headerVotes.set(snap.header, 1);
+    for (const o of snap.options) {
+      g.options.set(o.letter, { votes: new Map([[o.text, 1]]) });
+    }
+    return g;
+  }
+
+  _groupHeader(g) {
+    return bestOf(g.headerVotes);
   }
 
   _matchGroup(seg) {
     const segNum = leadingNumber(seg.header);
+    const bothPlain = seg.options.length === 0;
     let best = null;
     let bestScore = this.cfg.sameGroupSim - 0.001;
     for (const g of this._groups) {
-      const gHeader = g.headerLines.join(' ');
+      const gHeader = this._groupHeader(g);
+      // dos preguntas SIN opciones solo se consideran la misma si se parecen mucho
+      const threshold = bothPlain && g.options.size === 0
+        ? Math.max(this.cfg.sameGroupSim, this.cfg.sameGroupSimPlain)
+        : this.cfg.sameGroupSim;
       // enunciados numerados con número distinto: preguntas distintas, no fusionar
       const gNum = leadingNumber(gHeader);
       if (segNum && gNum && segNum !== gNum) continue;
@@ -438,7 +497,7 @@ export class LogicEngine {
         for (const o of seg.options) if (g.options.has(o.letter)) overlap = true;
         if (overlap) score = Math.max(score, 0.7);
       }
-      if (score > bestScore) {
+      if (score >= threshold && score > bestScore) {
         bestScore = score;
         best = g;
       }
@@ -446,35 +505,47 @@ export class LogicEngine {
     return best;
   }
 
-  _ingestSegment(seg, now) {
+  _ingestSegment(seg, now, confidence) {
     const g = this._matchGroup(seg);
     if (!g) {
       this._groups.push(this._newGroup(seg, now));
       this._emit('tracking', { header: seg.header, options: seg.options.length });
       return;
     }
-    this._mergeInto(g, seg, now);
+    this._mergeInto(g, seg, now, confidence);
   }
 
-  _mergeInto(g, snap, now) {
-    let changed = false;
-    const snapH = snap.header;
-    const gH = g.headerLines.join(' ');
-    if (snapH && normalizeForCompare(snapH).length > normalizeForCompare(gH).length) {
-      g.headerLines = snap.headerLines.slice();
-      changed = true;
-    }
+  // Consenso por votación: cada lectura suma un voto a los textos vistos y gana el
+  // más votado (a igualdad, el más largo). Así "Kant → Kani → Kant" acaba en "Kant".
+  _mergeInto(g, snap, now, confidence) {
+    const prevHeader = this._groupHeader(g);
+    const prevBests = new Map();
+    for (const [letter, v] of g.options) prevBests.set(letter, bestOf(v.votes));
+
+    if (snap.header) g.headerVotes.set(snap.header, (g.headerVotes.get(snap.header) || 0) + 1);
     for (const o of snap.options) {
-      const cur = g.options.get(o.letter);
-      if (!cur) {
-        g.options.set(o.letter, o.text);
-        changed = true;
-      } else if (normalizeForCompare(o.text).length > normalizeForCompare(cur).length + 1) {
-        g.options.set(o.letter, o.text);
-        changed = true;
+      let v = g.options.get(o.letter);
+      if (!v) {
+        v = { votes: new Map() };
+        g.options.set(o.letter, v);
       }
+      v.votes.set(o.text, (v.votes.get(o.text) || 0) + 1);
     }
-    if (changed) {
+
+    let changed = this._groupHeader(g) !== prevHeader;
+    for (const [letter, v] of g.options) {
+      const nowBest = bestOf(v.votes);
+      if (nowBest !== prevBests.get(letter)) changed = true;
+    }
+    if ([...g.options.keys()].some((l) => !prevBests.has(l))) changed = true;
+
+    if (confidence != null) g.lastConf = confidence;
+
+    if (confidence != null && confidence < this.cfg.confLow) {
+      // lectura poco fiable: actualiza contenido pero congela la finalización
+      g.stableReads = 0;
+      g.lastChangeAt = now;
+    } else if (changed) {
       g.lastChangeAt = now;
       g.stableReads = 0;
     } else {
@@ -489,17 +560,23 @@ export class LogicEngine {
       const nOpts = g.options.size;
       const letters = [...g.options.keys()];
       const stable = g.stableReads >= this.cfg.stableReads;
+      // con confianza media se exige estabilidad real; el reloj solo es emergencia
+      const minStable = g.lastConf != null && g.lastConf < this.cfg.confHigh
+        ? this.cfg.stableReads
+        : 1;
       const sinceChange = now - g.lastChangeAt;
       const sinceNoData = this._noDataSince != null ? now - this._noDataSince : 0;
-      const header = g.headerLines.join(' ');
+      const header = this._groupHeader(g);
 
       if (nOpts >= 2 && isConsecutiveFromA(letters) && stable) {
         this._finalizeGroup(g, now, 'test-completo');
-      } else if (nOpts >= 2 && sinceChange >= this.cfg.testGraceMs) {
+      } else if (nOpts >= 2 && sinceChange >= this.cfg.testGraceMs && g.stableReads >= minStable) {
         this._finalizeGroup(g, now, 'test-gracia');
-      } else if (nOpts === 0 && isQuestionText(header) && sinceChange >= this.cfg.testGraceMs) {
+      } else if (nOpts === 0 && isQuestionText(header) && sinceChange >= this.cfg.testGraceMs && g.stableReads >= minStable) {
         this._finalizeGroup(g, now, 'pregunta-simple');
-      } else if (nOpts === 0 && sinceChange >= this.cfg.messageGraceMs) {
+      } else if (nOpts === 0 && !isQuestionText(header) && sinceChange >= this.cfg.messageGraceMs) {
+        // solo para textos que no son pregunta: una pregunta poco fiable sigue
+        // esperando (la envía el timeout de emergencia o una lectura mejor)
         this._finalizeGroup(g, now, 'mensaje');
       } else if (sinceNoData >= this.cfg.messageGraceMs) {
         this._finalizeGroup(g, now, 'sin-datos');
@@ -515,9 +592,9 @@ export class LogicEngine {
     if (!this._groups.length) this._noDataSince = null;
 
     const options = [...g.options.entries()]
-      .map(([letter, text]) => ({ letter, text }))
+      .map(([letter, v]) => ({ letter, text: bestOf(v.votes) }))
       .sort((a, b) => a.letter.localeCompare(b.letter));
-    const header = g.headerLines.join(' ').trim();
+    const header = this._groupHeader(g).trim();
     if (!header && options.length === 0) return;
 
     const item = { header, options, reason, detectedAt: now };
@@ -532,15 +609,15 @@ export class LogicEngine {
     const dup = this._findDup(item, now);
     if (dup) {
       const cached = this._findCachedAnswer(dup.text);
-      this._emit('duplicate', { item, hasCached: !!cached });
+      this._emit('duplicate', { item, hasCached: !!cached, state: dup.state });
       if (cached) this._emit('answer', { ...cached, item, fromCache: true });
       return;
     }
 
     const revision = this._detectRevision(item, now);
     const payload = buildUserPayload(item);
-    this._rememberAsked(item, now);
-    const task = { item, payload, revision, queuedAt: now };
+    const entry = this._rememberAsked(item, now);
+    const task = { item, payload, revision, queuedAt: now, sessionId: this._sessionId, entry };
     this._enqueue(task);
   }
 
@@ -548,17 +625,20 @@ export class LogicEngine {
     return normalizeForCompare(buildUserPayload(item));
   }
 
+  // Una pregunta solo cuenta como "ya vista" si está pendiente o respondida;
+  // las falladas o descartadas por cola llena se pueden reintentar.
   _findDup(item, now) {
     const text = this._itemText(item);
     for (const a of this._asked) {
-      if (similarity(text, a.text) >= this.cfg.dupSim) return a;
-      // excepción: versión con más opciones de una pregunta recién enviada
-      // (opciones que se revelan después, incluido el caso de pregunta simple)
+      if (a.state === 'failed' || a.state === 'dropped') continue;
+      // la excepción de revisión (han aparecido más opciones) se comprueba ANTES
+      // del corte por similitud, o la nueva versión se perdería como duplicado
       if (
         item.options.length > a.nOptions &&
         now - a.at <= this.cfg.revisionWindowMs &&
         similarity(normalizeForCompare(item.header), a.header) >= 0.8
       ) continue;
+      if (similarity(text, a.text) >= this.cfg.dupSim) return a;
     }
     return null;
   }
@@ -566,6 +646,7 @@ export class LogicEngine {
   _detectRevision(item, now) {
     if (!item.options.length) return false;
     for (const a of this._asked) {
+      if (a.state === 'failed' || a.state === 'dropped') continue;
       if (
         now - a.at <= this.cfg.revisionWindowMs &&
         item.options.length > a.nOptions &&
@@ -578,13 +659,16 @@ export class LogicEngine {
   }
 
   _rememberAsked(item, now) {
-    this._asked.push({
+    const entry = {
       text: this._itemText(item),
       header: normalizeForCompare(item.header),
       nOptions: item.options.length,
       at: now,
-    });
+      state: 'pending',
+    };
+    this._asked.push(entry);
     if (this._asked.length > this.cfg.dedupMemory) this._asked.shift();
+    return entry;
   }
 
   _findCachedAnswer(normalizedText) {
@@ -602,23 +686,33 @@ export class LogicEngine {
     this._emit('queued', { item: task.item, revision: task.revision });
     while (this._queue.length > this.cfg.maxPending) {
       const dropped = this._queue.shift();
+      dropped.entry.state = 'dropped'; // podrá reintentarse si reaparece
       this._emit('dropped', { item: dropped.item });
     }
     this._pump();
   }
 
-  async _pump() {
-    if (this._inFlight || !this._queue.length) return;
-    const task = this._queue.shift();
-    this._inFlight = task;
+  _pump() {
+    while (this._inFlight.size < this.cfg.maxConcurrent && this._queue.length) {
+      const task = this._queue.shift();
+      if (task.sessionId !== this._sessionId) continue; // sesión reiniciada: fuera
+      this._runTask(task);
+    }
+  }
+
+  async _runTask(task) {
+    this._inFlight.add(task);
     this._emit('asking', { item: task.item, revision: task.revision });
     let lastErr = null;
     for (let attempt = 0; attempt <= this.cfg.askRetries; attempt++) {
+      if (task.sessionId !== this._sessionId) break; // abortada por reset
       const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      task.controller = controller;
       const timer = controller ? setTimeout(() => controller.abort(), this.cfg.askTimeoutMs) : null;
       try {
         const content = await this._llmCall(task.payload, { signal: controller && controller.signal });
         if (timer) clearTimeout(timer);
+        if (task.sessionId !== this._sessionId) break; // la respuesta es de otra sesión
         const answer = {
           item: task.item,
           content: String(content || '').trim(),
@@ -626,6 +720,7 @@ export class LogicEngine {
           revision: task.revision,
           at: this._now(),
         };
+        task.entry.state = 'answered';
         this._answers.set(this._itemText(task.item), answer);
         this._emit('answer', answer);
         lastErr = null;
@@ -635,10 +730,11 @@ export class LogicEngine {
         lastErr = err;
       }
     }
-    if (lastErr) {
+    if (lastErr && task.sessionId === this._sessionId) {
+      task.entry.state = 'failed'; // podrá reintentarse si la pregunta reaparece
       this._emit('error', { item: task.item, error: String((lastErr && lastErr.message) || lastErr) });
     }
-    this._inFlight = null;
+    this._inFlight.delete(task);
     if (this._queue.length) this._pump();
   }
 
@@ -646,7 +742,7 @@ export class LogicEngine {
   idle() {
     return new Promise((resolve) => {
       const check = () => {
-        if (!this._inFlight && !this._queue.length) resolve();
+        if (!this._inFlight.size && !this._queue.length) resolve();
         else setTimeout(check, 10);
       };
       check();

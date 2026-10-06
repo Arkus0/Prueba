@@ -264,6 +264,121 @@ test('la cola acota las tareas pendientes y descarta las más antiguas', async (
 });
 
 // ---------------------------------------------------------------------------
+// Hardening: estados de dedup, consenso OCR, confianza, reset seguro
+// ---------------------------------------------------------------------------
+
+test('consenso OCR: "Kant" → "Kani" → "Kant" acaba enviando "Kant"', async () => {
+  const { engine, calls } = makeEngine();
+  const q = '¿Quién escribió la Crítica de la razón pura?';
+  engine.feed(q + '\nA) Hegel\nB) Kani', 0);
+  engine.feed(q + '\nA) Hegel\nB) Kant', 2000);
+  engine.feed(q + '\nA) Hegel\nB) Kant', 4000);
+  engine.feed(q + '\nA) Hegel\nB) Kant', 6000);
+  engine.feed(q + '\nA) Hegel\nB) Kant', 8000);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+  assert.ok(calls[0].includes('B) Kant'));
+  assert.ok(!calls[0].includes('Kani'));
+});
+
+test('dos preguntas simples simultáneas no se fusionan (Kant vs Hume)', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = '¿En qué consiste la ética de Kant?\n¿En qué consiste la ética de Hume?';
+  engine.feed(pantalla, 0);
+  engine.feed(pantalla, 2000);
+  engine.feed(pantalla, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 2);
+  assert.ok(calls.some(c => c.includes('Kant')));
+  assert.ok(calls.some(c => c.includes('Hume')));
+});
+
+test('si el LLM falla, la pregunta NO queda muerta: se reintenta al reaparecer', async () => {
+  let fail = true;
+  const events = [];
+  const engine = new LogicEngine({
+    config: { askRetries: 0 },
+    llmCall: async () => {
+      if (fail) throw new Error('boom');
+      return 'RESPUESTA: X) Y';
+    },
+  });
+  engine.on('answer', d => events.push({ name: 'answer', data: d }));
+  engine.on('error', d => events.push({ name: 'error', data: d }));
+  const q = '¿Pregunta que falla la primera vez?';
+  engine.feed(q, 0); engine.feed(q, 2000); engine.feed(q, 4000);
+  await engine.idle();
+  assert.equal(events.filter(e => e.name === 'error').length, 1);
+  assert.equal(events.filter(e => e.name === 'answer').length, 0);
+
+  fail = false;
+  engine.feed(q, 10000); engine.feed(q, 12000); engine.feed(q, 14000);
+  await engine.idle();
+  assert.equal(events.filter(e => e.name === 'answer').length, 1);
+});
+
+test('una pregunta descartada por cola llena se reintenta al reaparecer', async () => {
+  const { engine, calls, events } = makeEngine({ maxPending: 0 });
+  const q = '¿Pregunta descartada por la cola?';
+  engine.feed(q, 0); engine.feed(q, 2000); engine.feed(q, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 0);
+  assert.ok(events.some(e => e.name === 'dropped'));
+
+  const { engine: e2, calls: calls2 } = makeEngine({ maxPending: 8 });
+  e2.feed(q, 0); e2.feed(q, 2000); e2.feed(q, 4000);
+  await e2.idle();
+  assert.equal(calls2.length, 1);
+});
+
+test('reset durante una consulta en vuelo: la respuesta antigua no aparece', async () => {
+  let liberar = null;
+  const events = [];
+  const engine = new LogicEngine({
+    llmCall: () => new Promise((res) => { liberar = () => res('RESPUESTA: tardía'); }),
+  });
+  engine.on('answer', d => events.push({ name: 'answer', data: d }));
+  const q = '¿Pregunta de la sesión antigua?';
+  engine.feed(q, 0); engine.feed(q, 2000); engine.feed(q, 4000);
+  await new Promise(r => setTimeout(r, 30)); // la consulta queda en vuelo
+  engine.reset();
+  liberar();
+  await new Promise(r => setTimeout(r, 50));
+  assert.equal(events.filter(e => e.name === 'answer').length, 0);
+});
+
+test('revisión con similitud > 0.9: la excepción se aplica antes del corte por duplicado', async () => {
+  const { engine, calls, events } = makeEngine({ testGraceMs: 2000 });
+  const q = '¿Cuál de las siguientes afirmaciones sobre la ética kantiana describe mejor el concepto de imperativo categórico en la fundamentación de la metafísica de las costumbres?';
+  const abc = q + '\nA) Una\nB) Otra\nC) Más';
+  const abcd = abc + '\nD) Última';
+  engine.feed(abc, 0); engine.feed(abc, 2000);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+  // similitud entre ambas versiones por encima del umbral de duplicado
+  const { similarity } = await import('../js/logic.js');
+  assert.ok(similarity(abc, abcd) >= 0.9);
+  engine.feed(abcd, 4000); engine.feed(abcd, 6000); engine.feed(abcd, 8000);
+  await engine.idle();
+  assert.equal(calls.length, 2);
+  assert.ok(calls[1].includes('D) Última'));
+  assert.ok(events.filter(e => e.name === 'answer')[1].data.revision);
+});
+
+test('lecturas con confianza baja no finalizan la pregunta', async () => {
+  const { engine, calls } = makeEngine();
+  const q = '¿Pregunta leída con poca confianza?';
+  for (let t = 0; t <= 6000; t += 2000) engine.feed(q, t, 40);
+  engine.tick(20000);
+  await engine.idle();
+  assert.equal(calls.length, 0);
+  engine.feed(q, 22000, 95);
+  engine.feed(q, 24000, 95);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+});
+
+// ---------------------------------------------------------------------------
 // Varias preguntas tipo test visibles a la vez
 // ---------------------------------------------------------------------------
 

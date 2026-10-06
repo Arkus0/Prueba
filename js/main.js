@@ -114,13 +114,59 @@ els.video.addEventListener('loadedmetadata', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Bucle de OCR
+// Bucle de captura: comprobación barata de cambios en la ROI (~700 ms) y OCR solo
+// cuando la imagen ha cambiado y ha pasado el periodo configurado.
 // ---------------------------------------------------------------------------
+
+const DIFF_W = 64;
+const DIFF_H = 36;
+const diffCanvas = document.createElement('canvas');
+let prevLum = null;
+let lastOcrAt = 0;
+
+function clamp01(v) {
+  return Math.max(0, Math.min(1, v));
+}
+
+function roiChanged() {
+  const vw = els.video.videoWidth;
+  const vh = els.video.videoHeight;
+  if (!vw || !vh) return true;
+  diffCanvas.width = DIFF_W;
+  diffCanvas.height = DIFF_H;
+  const ctx = diffCanvas.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(
+    els.video,
+    Math.round(clamp01(crop.x) * vw), Math.round(clamp01(crop.y) * vh),
+    Math.max(16, Math.round(clamp01(crop.w) * vw)), Math.max(16, Math.round(clamp01(crop.h) * vh)),
+    0, 0, DIFF_W, DIFF_H,
+  );
+  const d = ctx.getImageData(0, 0, DIFF_W, DIFF_H).data;
+  const lum = new Uint8Array(DIFF_W * DIFF_H);
+  for (let i = 0; i < lum.length; i++) {
+    const j = i * 4;
+    lum[i] = (d[j] * 299 + d[j + 1] * 587 + d[j + 2] * 114) / 1000 | 0;
+  }
+  if (!prevLum) {
+    prevLum = lum;
+    return true;
+  }
+  let changed = 0;
+  for (let i = 0; i < lum.length; i++) {
+    if (Math.abs(lum[i] - prevLum[i]) > 25) changed++;
+  }
+  prevLum = lum;
+  return changed / lum.length > 0.004;
+}
 
 async function loop() {
   if (!running) return;
-  const started = performance.now();
-  if (ocr && els.video.readyState >= 2) {
+  const t0 = performance.now();
+  const period = Number(loadSettings().ocrPeriodMs) || 2000;
+  let didOcr = false;
+  if (ocr && els.video.readyState >= 2 && t0 - lastOcrAt >= period * 0.9 && roiChanged()) {
+    lastOcrAt = t0;
+    didOcr = true;
     try {
       const canvas = grabFrame(els.video, crop, els.workCanvas);
       if (canvas) {
@@ -129,14 +175,13 @@ async function loop() {
         if (!engine.hasOpenGroup() && (data.text || '').trim().length > 3) {
           ui.setStatus('Escaneando…', 'scan');
         }
-        engine.feed(data.text || '');
+        engine.feed(data.text || '', Date.now(), data.confidence);
       }
     } catch (e) {
       ui.logEvent(`OCR: ${e.message}`);
     }
   }
-  const period = Number(loadSettings().ocrPeriodMs) || 2000;
-  const wait = Math.max(250, period - (performance.now() - started));
+  const wait = didOcr ? Math.max(300, period - (performance.now() - t0)) : 700;
   setTimeout(loop, wait);
 }
 
@@ -230,6 +275,33 @@ $('btn-crop-full').addEventListener('click', () => {
   applyCropBox();
   saveCrop();
 });
+
+// ---------------------------------------------------------------------------
+// Modo presentación: solo la respuesta, a pantalla completa
+// ---------------------------------------------------------------------------
+
+$('btn-present').addEventListener('click', () => setPresentMode(true));
+$('btn-exit-present').addEventListener('click', () => setPresentMode(false));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') setPresentMode(false);
+});
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && document.body.classList.contains('present')) {
+    document.body.classList.remove('present');
+    $('btn-exit-present').hidden = true;
+  }
+});
+
+function setPresentMode(on) {
+  document.body.classList.toggle('present', on);
+  $('btn-exit-present').hidden = !on;
+  if (on && document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(() => { /* sin permiso: seguir en modo presentación */ });
+  }
+  if (!on && document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => { /* ya salimos */ });
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Botones y ajustes

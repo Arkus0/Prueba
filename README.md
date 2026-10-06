@@ -56,24 +56,40 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
   `RESPUESTA: C) Mercurio`), sin explicación, para leerse de un vistazo.
 - **Varias preguntas a la vez**: si en pantalla hay 3, 4 o más preguntas apiladas
   (numeradas «1.», «2.» o simplemente seguidas), se separan, se rastrea cada una por
-  separado y se consulta el modelo una vez por pregunta (en orden, hasta 8 en cola).
-  Las respuestas van apareciendo en la tarjeta y quedan en el historial. En
-  pantallas de cuestionario con preguntas numeradas se analiza la estructura por
-  bloques: las líneas de instrucción («Seleccione la respuesta adecuada») separan
-  enunciado de opciones, las opciones **sin letra** reciben letras sintetizadas
-  (A, B, C…) y el ruido de interfaz (URLs del navegador, relojes) se descarta.
-- **Preguntas normales**: se responden directamente en 1-3 frases.
-- **Sin duplicados**: una pregunta que sigue en pantalla no se consulta dos veces.
-  Si reaparece, se vuelve a mostrar la respuesta en caché.
-- **Revisión**: si se envió una pregunta y después aparecen más opciones (o la
-  pregunta simple gana opciones), se hace una única consulta de revisión con el
-  contenido completo (se marca como "actualizada con opciones").
-- **Cola pequeña**: si se acumulan preguntas, se procesan en orden con un máximo de
-  8 pendientes; las más antiguas se descartan (quedan registradas en el log).
-- **Nueva sesión (↻)**: olvida las preguntas ya respondidas y el historial — úsalo
-  al empezar otra presentación.
+  separado y se consulta el modelo una vez por pregunta (en orden, hasta 8 en cola y
+  2 consultas simultáneas). En pantallas de cuestionario con preguntas numeradas se
+  analiza la estructura por bloques: las líneas de instrucción («Seleccione la
+  respuesta adecuada») separan enunciado de opciones, las opciones **sin letra**
+  reciben letras sintetizadas (A, B, C…) y el ruido de interfaz (URLs del navegador,
+  relojes) se descarta.
+- **Preguntas normales**: se responden directamente en 1-3 frases; varias preguntas
+  simples simultáneas se tratan por separado.
+- **Sin duplicados ni preguntas muertas**: una pregunta que sigue en pantalla no se
+  consulta dos veces (si reaparece, se re-muestra la respuesta en caché). Si una
+  consulta al LLM **falla** o la pregunta se descarta por cola llena, queda marcada
+  para reintentarse cuando reaparezca.
+- **Respuestas bloqueadas**: la respuesta a una pregunta tipo test se marca
+  «🔒 respuesta bloqueada» con su hora. Si después aparecen más opciones, la revisión
+  se guarda en el historial pero **no sustituye la tarjeta**, de modo que el público
+  ve lo que la IA respondió antes de conocer el resultado.
+- **Modo presentación (▶)**: pantalla completa solo con la pregunta y la respuesta
+  enorme; se ocultan cámara, controles e historial (Esc o «✕ Salir» para volver).
+  Ideal para proyectar o para que los asistentes comparen su respuesta.
+- **Nueva sesión (↻)**: aborta las consultas en curso, descarta sus resultados y
+  olvida las preguntas ya respondidas — úsalo al empezar otra presentación.
 - **☰** muestra el OCR crudo (con confianza) y el log de eventos, útil para ajustar
   la webcam o la zona de captura.
+
+## Fiabilidad del OCR
+
+- Cada grupo acumula **votos por texto** (consenso): si el OCR alterna
+  «Kant → Kani → Kant», gana la lectura más repetida.
+- La **confianza** de Tesseract gobierna la finalización: por debajo de ~55% la
+  pregunta espera lecturas mejores; entre 55-75% se exige estabilidad real (dos
+  lecturas iguales) en vez del temporizador.
+- **CPU**: se compara la zona de captura cada ~700 ms y solo se lanza el OCR cuando
+  la imagen ha cambiado — 40 s de pantalla quieta no consumen reconocimiento.
+- Motor **Tesseract.js 7** (wasm local en `vendor/`, spa+eng).
 
 ## Ajustes disponibles
 

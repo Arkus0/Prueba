@@ -23,7 +23,31 @@ export function showWaiting(message) {
   $('card-waiting').textContent = message || 'Escaneando… aparecerá aquí la respuesta a la primera pregunta detectada.';
 }
 
+// Huella local de una pregunta (para saber si una respuesta es de la misma pregunta)
+function localFp(text) {
+  return String(text || '').toLowerCase().normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+let lockedFp = null; // pregunta tipo test cuya respuesta se muestra bloqueada
+
 export function showAnswer(answer) {
+  const fp = localFp(questionText(answer.item));
+  const isTest = !!(answer.item && (answer.item.options || []).length >= 2);
+  if (isTest) {
+    if (answer.revision && fp === lockedFp) {
+      // la tarjeta está bloqueada ante el público: la revisión queda en el historial
+      addHistory(answer);
+      logEvent('revisión con más opciones guardada en el historial (tarjeta bloqueada)');
+      return;
+    }
+    lockedFp = fp;
+  } else {
+    lockedFp = null;
+  }
+
   const card = $('answer-card');
   card.classList.remove('waiting');
   card.classList.add('answered');
@@ -37,6 +61,7 @@ export function showAnswer(answer) {
   $('card-expl').style.display = expl ? '' : 'none';
 
   const meta = [];
+  if (isTest) meta.push('🔒 respuesta bloqueada');
   if (answer.revision) meta.push('actualizada con opciones');
   if (answer.fromCache) meta.push('desde caché');
   meta.push(hhmmss(answer.at));
@@ -67,6 +92,7 @@ function addHistory(answer) {
 }
 
 export function clearHistory() {
+  lockedFp = null;
   const list = $('history');
   list.replaceChildren();
   const li = document.createElement('li');
