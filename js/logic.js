@@ -183,10 +183,16 @@ function isNoiseLine(line) {
   return false;
 }
 
-// ¿La línea es el arranque numerado de una pregunta ("1. ¿...?")?
+// ¿La línea es el arranque numerado de una pregunta?
+// Acepta interrogativas y también enunciados declarativos de examen:
+// "3. La concepción heideggeriana del Dasein se caracteriza por:".
 function isNumberedQuestionStart(line) {
   const m = String(line).match(NUMBERED_START);
-  return !!(m && isQuestionText(m[2]));
+  if (!m) return false;
+  const body = String(m[2] || '').trim();
+  if (isQuestionText(body)) return true;
+  const words = normalizeForCompare(body).split(' ').filter(Boolean);
+  return body.length >= 18 && words.length >= 4;
 }
 
 function classifyLine(line) {
@@ -391,6 +397,7 @@ export class LogicEngine {
     this._now = now || (() => Date.now());
     this._listeners = {};
     this._sessionId = 0;
+    this._sequence = 0;
     this._groups = [];        // preguntas abiertas en pantalla (puede haber varias)
     this._noDataSince = null;
     this._asked = [];         // [{ text, header, nOptions, at, state }]
@@ -427,6 +434,19 @@ export class LogicEngine {
       return;
     }
     this._noDataSince = null;
+
+    // Una lectura globalmente mala no debe votar en el consenso ni crear grupos.
+    // Si ya había una pregunta abierta, la deja congelada hasta una lectura mejor.
+    if (confidence != null && confidence < this.cfg.confLow) {
+      for (const g of this._groups) {
+        g.lastConf = confidence;
+        g.stableReads = 0;
+        g.lastChangeAt = now;
+      }
+      this._emit('lowConfidence', { confidence, at: now });
+      return;
+    }
+
     const segments = segmentSnapshot(lines);
     for (const seg of segments) this._ingestSegment(seg, now, confidence);
     this._maybeFinalize(now);
@@ -440,6 +460,7 @@ export class LogicEngine {
   // Reinicia la sesión abortando consultas en vuelo y descartando sus resultados.
   reset() {
     this._sessionId += 1;
+    this._sequence = 0;
     for (const task of this._inFlight) {
       if (task.controller) task.controller.abort();
     }
@@ -454,14 +475,14 @@ export class LogicEngine {
 
   // -- agrupación ------------------------------------------------------------
 
-  _newGroup(snap, now) {
+  _newGroup(snap, now, confidence) {
     const g = {
       headerVotes: new Map(),
       options: new Map(), // letter -> { votes: Map<text, n> }
       openedAt: now,
       lastChangeAt: now,
       stableReads: 0,
-      lastConf: null,
+      lastConf: confidence != null ? confidence : null,
     };
     if (snap.header) g.headerVotes.set(snap.header, 1);
     for (const o of snap.options) {
@@ -508,7 +529,7 @@ export class LogicEngine {
   _ingestSegment(seg, now, confidence) {
     const g = this._matchGroup(seg);
     if (!g) {
-      this._groups.push(this._newGroup(seg, now));
+      this._groups.push(this._newGroup(seg, now, confidence));
       this._emit('tracking', { header: seg.header, options: seg.options.length });
       return;
     }
@@ -557,6 +578,9 @@ export class LogicEngine {
 
   _maybeFinalize(now) {
     for (const g of [...this._groups]) {
+      // Nunca finalizar por timeout una lectura que el propio OCR considera mala.
+      if (g.lastConf != null && g.lastConf < this.cfg.confLow) continue;
+
       const nOpts = g.options.size;
       const letters = [...g.options.keys()];
       const stable = g.stableReads >= this.cfg.stableReads;
@@ -568,7 +592,7 @@ export class LogicEngine {
       const sinceNoData = this._noDataSince != null ? now - this._noDataSince : 0;
       const header = this._groupHeader(g);
 
-      if (nOpts >= 2 && isConsecutiveFromA(letters) && stable) {
+      if (nOpts >= 4 && isConsecutiveFromA(letters) && stable) {
         this._finalizeGroup(g, now, 'test-completo');
       } else if (nOpts >= 2 && sinceChange >= this.cfg.testGraceMs && g.stableReads >= minStable) {
         this._finalizeGroup(g, now, 'test-gracia');
@@ -597,7 +621,7 @@ export class LogicEngine {
     const header = this._groupHeader(g).trim();
     if (!header && options.length === 0) return;
 
-    const item = { header, options, reason, detectedAt: now };
+    const item = { header, options, reason, detectedAt: now, sequence: this._sequence++ };
     if (!isQuestionText(header) && options.length < 2) {
       if (similarity(header, this._lastMessage) < 0.8) {
         this._lastMessage = header;
