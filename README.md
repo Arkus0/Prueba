@@ -50,10 +50,10 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
 
 ## Cómo se comporta
 
-- **Marcador de respuestas**: la última respuesta se muestra en grande y debajo las
-  3 anteriores, aún legibles pero progresivamente más pequeñas — pensado para leerse
-  desde la última fila de un auditorio. En **Repaso** (bajo el marcador) quedan
-  **todas** las respuestas de la sesión para el repaso final.
+- **UI para auditorio**: la respuesta lógicamente más reciente ocupa la zona principal
+  con tipografía muy grande. Debajo hay un **carril horizontal con toda la sesión**:
+  preguntas antiguas a la izquierda y nuevas a la derecha. El carril se desplaza
+  automáticamente al extremo derecho y puede recorrerse con la rueda del ratón.
 - **Preguntas tipo test**: las opciones `A) … B) … C) … D) …` se agrupan con su
   enunciado en una sola pregunta (aunque aparezcan por fases en pantalla) y se envían
   juntas al modelo, que responde **solo con la opción elegida** (p. ej.
@@ -79,10 +79,9 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
   «🔒 respuesta bloqueada» con su hora. Si después aparecen más opciones, la revisión
   se guarda en el historial pero **no sustituye la tarjeta**, de modo que el público
   ve lo que la IA respondió antes de conocer el resultado.
-- **Modo presentación (▶)**: pantalla completa solo con el marcador (la última
-  respuesta enorme y las anteriores debajo); se ocultan cámara, controles y repaso
-  (Esc o «✕ Salir» para volver). Ideal para proyectar o para que los asistentes
-  comparen su respuesta.
+- **Modo presentación (▶)**: pantalla completa con una respuesta focal enorme y el
+  carril cronológico visible en la parte inferior. Se ocultan cámara y controles
+  (Esc o «✕ Salir» para volver). Ideal para proyectar en auditorios.
 - **Nueva sesión (↻)**: aborta las consultas en curso, descarta sus resultados y
   olvida las preguntas ya respondidas — úsalo al empezar otra presentación.
 - **☰** muestra el OCR crudo (con confianza) y el log de eventos, útil para ajustar
@@ -95,13 +94,15 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
 - La **confianza** de Tesseract gobierna la finalización: por debajo de ~55% la
   pregunta espera lecturas mejores; entre 55-75% se exige estabilidad real (dos
   lecturas iguales) en vez del temporizador.
-- **CPU**: se compara la zona de captura cada ~700 ms y solo se lanza el OCR cuando
-  la imagen ha cambiado — 40 s de pantalla quieta no consumen reconocimiento.
+- **CPU + estabilidad**: en reposo se compara la zona de captura cada ~700 ms. Cuando
+  cambia, se fuerza una pequeña ráfaga de OCR de confirmación aunque la imagen vuelva
+  a quedar quieta; mientras haya una pregunta abierta también se siguen tomando
+  lecturas hasta estabilizarla. En reposo hay un watchdog ocasional para no perder cambios.
 - Motor **Tesseract.js 7** (wasm local en `vendor/`, spa+eng).
 
 ## Ajustes disponibles
 
-URL base, modelo, clave, cámara y periodo de escaneo (ms, por defecto 2000). Baja el
+URL base, modelo, clave, cámara y periodo de escaneo (ms, por defecto 1500). Baja el
 periodo si quieres respuestas más rápidas a costa de CPU; súbelo si el PC va justo.
 
 ## Consejos de calidad del OCR
