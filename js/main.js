@@ -48,7 +48,6 @@ engine.on('asking', ({ revision }) => {
 engine.on('answer', (answer) => {
   ui.setStatus('Respondida', 'done');
   ui.showAnswer(answer);
-  ui.logEvent(`respuesta: ${truncate(answer.parsed.answerLine, 60)}`);
 });
 
 engine.on('duplicate', ({ hasCached }) => {
@@ -66,7 +65,7 @@ engine.on('error', ({ error }) => {
 });
 
 engine.on('reset', () => {
-  ui.clearHistory();
+  ui.clearBoard();
   ui.logEvent('sesión reiniciada');
 });
 

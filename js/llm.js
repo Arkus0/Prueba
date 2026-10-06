@@ -41,7 +41,7 @@ export const DEFAULT_SETTINGS = {
   apiKey: '',
   temperature: 0,
   maxTokens: 400,
-  ocrPeriodMs: 2000,
+  ocrPeriodMs: 1500,
   cameraId: '',
 };
 

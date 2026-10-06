@@ -47,26 +47,11 @@
     </section>
 
     <section class="answer-panel">
-      <article id="answer-card" class="answer-card waiting">
-        <p class="card-waiting" id="card-waiting">Escaneando… aparecerá aquí la respuesta a la primera pregunta detectada.</p>
-        <div id="card-body" hidden>
-          <p id="card-question" class="card-question"></p>
-          <div class="card-answer">
-            <span class="card-label">RESPUESTA</span>
-            <span id="card-answer-value" class="card-answer-value"></span>
-          </div>
-          <div class="card-expl" id="card-expl">
-            <span class="card-label">EXPLICACIÓN</span>
-            <span id="card-expl-value" class="card-expl-value"></span>
-          </div>
-          <p id="card-meta" class="card-meta"></p>
-        </div>
-      </article>
+      <div id="answer-board" class="answer-board" aria-live="polite"></div>
+      <p id="board-empty" class="board-empty">Escaneando… las respuestas aparecerán aquí: la última en grande y las anteriores debajo.</p>
 
-      <h2 class="section-title">Historial</h2>
-      <ul id="history" class="history">
-        <li class="history-empty" id="history-empty">Aún no hay respuestas en esta sesión.</li>
-      </ul>
+      <h2 class="section-title">Repaso · <span id="review-count">0</span> respuestas</h2>
+      <ul id="review-list" class="review-list" hidden></ul>
     </section>
   </main>
 

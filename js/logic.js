@@ -4,7 +4,7 @@
 // Sin DOM: es puro y funciona igual en el navegador y en los tests de Node.
 
 export const DEFAULT_CONFIG = {
-  ocrPeriodMs: 2000,      // periodo del bucle de OCR (lo usa main.js, no el motor)
+  ocrPeriodMs: 1500,      // periodo del bucle de OCR (lo usa main.js, no el motor)
   stableReads: 2,         // lecturas consecutivas iguales para dar el texto por estable
   testGraceMs: 4000,      // espera antes de enviar una pregunta sin opciones (las opciones pueden aparecer)
   messageGraceMs: 8000,   // espera antes de descartar un texto que no es pregunta
@@ -629,8 +629,12 @@ export class LogicEngine {
   // las falladas o descartadas por cola llena se pueden reintentar.
   _findDup(item, now) {
     const text = this._itemText(item);
+    const iNum = leadingNumber(item.header);
     for (const a of this._asked) {
       if (a.state === 'failed' || a.state === 'dropped') continue;
+      // preguntas numeradas con número distinto: jamás la misma pregunta,
+      // aunque compartan enunciado corto y opciones idénticas
+      if (iNum && a.num && iNum !== a.num) continue;
       // la excepción de revisión (han aparecido más opciones) se comprueba ANTES
       // del corte por similitud, o la nueva versión se perdería como duplicado
       if (
@@ -645,8 +649,10 @@ export class LogicEngine {
 
   _detectRevision(item, now) {
     if (!item.options.length) return false;
+    const iNum = leadingNumber(item.header);
     for (const a of this._asked) {
       if (a.state === 'failed' || a.state === 'dropped') continue;
+      if (iNum && a.num && iNum !== a.num) continue;
       if (
         now - a.at <= this.cfg.revisionWindowMs &&
         item.options.length > a.nOptions &&
@@ -662,6 +668,7 @@ export class LogicEngine {
     const entry = {
       text: this._itemText(item),
       header: normalizeForCompare(item.header),
+      num: leadingNumber(item.header),
       nOptions: item.options.length,
       at: now,
       state: 'pending',

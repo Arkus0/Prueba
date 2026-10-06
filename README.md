@@ -50,10 +50,17 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
 
 ## Cómo se comporta
 
+- **Marcador de respuestas**: la última respuesta se muestra en grande y debajo las
+  3 anteriores, aún legibles pero progresivamente más pequeñas — pensado para leerse
+  desde la última fila de un auditorio. En **Repaso** (bajo el marcador) quedan
+  **todas** las respuestas de la sesión para el repaso final.
 - **Preguntas tipo test**: las opciones `A) … B) … C) … D) …` se agrupan con su
   enunciado en una sola pregunta (aunque aparezcan por fases en pantalla) y se envían
   juntas al modelo, que responde **solo con la opción elegida** (p. ej.
   `RESPUESTA: C) Mercurio`), sin explicación, para leerse de un vistazo.
+- **Tests en lotes**: diseñado para cuestionarios de 40-50 preguntas que aparecen en
+  lotes de 3-4 cada ~10 s. Las preguntas numeradas con número distinto jamás se
+  consideran duplicadas, aunque compartan enunciado corto y opciones idénticas.
 - **Varias preguntas a la vez**: si en pantalla hay 3, 4 o más preguntas apiladas
   (numeradas «1.», «2.» o simplemente seguidas), se separan, se rastrea cada una por
   separado y se consulta el modelo una vez por pregunta (en orden, hasta 8 en cola y
@@ -72,9 +79,10 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
   «🔒 respuesta bloqueada» con su hora. Si después aparecen más opciones, la revisión
   se guarda en el historial pero **no sustituye la tarjeta**, de modo que el público
   ve lo que la IA respondió antes de conocer el resultado.
-- **Modo presentación (▶)**: pantalla completa solo con la pregunta y la respuesta
-  enorme; se ocultan cámara, controles e historial (Esc o «✕ Salir» para volver).
-  Ideal para proyectar o para que los asistentes comparen su respuesta.
+- **Modo presentación (▶)**: pantalla completa solo con el marcador (la última
+  respuesta enorme y las anteriores debajo); se ocultan cámara, controles y repaso
+  (Esc o «✕ Salir» para volver). Ideal para proyectar o para que los asistentes
+  comparen su respuesta.
 - **Nueva sesión (↻)**: aborta las consultas en curso, descarta sus resultados y
   olvida las preguntas ya respondidas — úsalo al empezar otra presentación.
 - **☰** muestra el OCR crudo (con confianza) y el log de eventos, útil para ajustar

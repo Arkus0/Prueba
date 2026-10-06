@@ -378,6 +378,26 @@ test('lecturas con confianza baja no finalizan la pregunta', async () => {
   assert.equal(calls.length, 1);
 });
 
+test('test de 40-50 preguntas en lotes: ninguna se pierde aunque compartan opciones', async () => {
+  const { engine, calls, events } = makeEngine();
+  const pantalla = (n, tema) => n + '. ¿Pregunta ' + n + ' sobre ' + tema + '?\nA) Una\nB) Otra\nC) Tercera\nD) Cuarta';
+  const temas = ['epistemología', 'lógica', 'ética', 'metafísica', 'estética', 'política', 'antropología', 'axiología', 'ontología', 'gnoseología'];
+  // 12 lotes de 3-4 preguntas con opciones idénticas (peor caso para el dedup)
+  let enviadas = 0;
+  let t = 0;
+  for (let lote = 0; lote < 12; lote++) {
+    const nums = [0, 1, 2, 3].slice(0, 3 + (lote % 2)).map((i) => lote * 3 + Math.floor(lote / 2) + i + 1);
+    const pantallaLote = nums.map((n) => pantalla(n, temas[n % temas.length])).join('\n');
+    t = lote * 10000;       engine.feed(pantallaLote, t, 90);
+    t = lote * 10000 + 1500; engine.feed(pantallaLote, t, 90);
+    t = lote * 10000 + 3000; engine.feed(pantallaLote, t, 90);
+    enviadas += nums.length;
+    await engine.idle();
+  }
+  assert.equal(calls.length, enviadas);
+  assert.equal(events.filter(e => e.name === 'duplicate').length, 0);
+});
+
 // ---------------------------------------------------------------------------
 // Varias preguntas tipo test visibles a la vez
 // ---------------------------------------------------------------------------
