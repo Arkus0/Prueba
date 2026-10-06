@@ -374,8 +374,58 @@ test('lecturas con confianza baja no finalizan la pregunta', async () => {
   assert.equal(calls.length, 0);
   engine.feed(q, 22000, 95);
   engine.feed(q, 24000, 95);
+  engine.feed(q, 26000, 95);
   await engine.idle();
   assert.equal(calls.length, 1);
+});
+
+test('A/B estable no se considera test completo antes del periodo de gracia', async () => {
+  const { engine, calls } = makeEngine({ testGraceMs: 4000 });
+  const q = '¿Cuál es la opción correcta?\nA) Primera\nB) Segunda';
+  engine.feed(q, 0, 90);
+  engine.feed(q, 1000, 90);
+  engine.feed(q, 2000, 90);
+  await engine.idle();
+  assert.equal(calls.length, 0);
+  engine.tick(4000);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+});
+
+test('OCR de confianza baja no contamina el consenso', async () => {
+  const { engine, calls } = makeEngine();
+  const q = '¿Quién escribió la Crítica de la razón pura?';
+  for (let t = 0; t <= 4000; t += 1000) {
+    engine.feed(q + '\nA) Hegel\nB) Kani\nC) Hume\nD) Nietzsche', t, 40);
+  }
+  engine.feed(q + '\nA) Hegel\nB) Kant\nC) Hume\nD) Nietzsche', 6000, 95);
+  engine.feed(q + '\nA) Hegel\nB) Kant\nC) Hume\nD) Nietzsche', 7500, 95);
+  engine.feed(q + '\nA) Hegel\nB) Kant\nC) Hume\nD) Nietzsche', 9000, 95);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+  assert.ok(calls[0].includes('B) Kant'));
+  assert.ok(!calls[0].includes('Kani'));
+});
+
+test('preguntas numeradas declarativas se segmentan como preguntas distintas', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = [
+    '1. La concepción heideggeriana del Dasein se caracteriza por:',
+    'Seleccione la respuesta adecuada',
+    'Ser una sustancia pensante', 'Ser-en-el-mundo', 'Ser una idea regulativa', 'Ser voluntad de poder',
+    '2. Señale la afirmación correcta sobre la deducción trascendental kantiana.',
+    'Seleccione la respuesta adecuada',
+    'Justifica las categorías', 'Niega la experiencia', 'Es una prueba cosmológica', 'Elimina la apercepción',
+  ].join('\n');
+  engine.feed(pantalla, 0, 90);
+  engine.feed(pantalla, 1500, 90);
+  engine.feed(pantalla, 3000, 90);
+  await engine.idle();
+  assert.equal(calls.length, 2);
+  assert.ok(calls[0].includes('Dasein'));
+  assert.ok(calls[0].includes('B) Ser-en-el-mundo'));
+  assert.ok(calls[1].includes('deducción trascendental'));
+  assert.ok(calls[1].includes('A) Justifica las categorías'));
 });
 
 test('test de 40-50 preguntas en lotes: ninguna se pierde aunque compartan opciones', async () => {
