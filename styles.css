@@ -152,49 +152,132 @@ html, body {
 }
 .hint { color: var(--muted); font-size: 0.78rem; flex: 1; line-height: 1.3; }
 
-/* ---------- marcador de respuestas ---------- */
+/* ---------- respuesta actual + timeline horizontal ---------- */
 
-.answer-board { display: grid; gap: 10px; }
+.answer-panel { min-width: 0; }
 
 .board-empty {
   color: var(--muted);
   text-align: center;
-  padding: 24px 8px;
+  padding: 36px 12px;
   font-size: 1rem;
   line-height: 1.5;
 }
 .board-empty[hidden] { display: none; }
 
+.focus-answer {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(180deg, #17241b, var(--panel));
+  border: 1px solid rgba(74, 222, 128, 0.45);
+  border-radius: 18px;
+  padding: 22px 26px;
+}
+.focus-answer[hidden] { display: none; }
+
+.focus-question {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  line-height: 1.3;
+}
+
+.focus-kicker {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.focus-value {
+  margin: 4px 0;
+  color: var(--accent);
+  font-size: clamp(2.7rem, 7vw, 5.3rem);
+  font-weight: 900;
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+}
+
+.focus-meta {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.timeline-shell {
+  margin-top: 14px;
+  min-width: 0;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 2px 7px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.answer-board {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 12px;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
 .board-row {
   position: relative;
+  flex: 0 0 clamp(250px, 31vw, 355px);
+  min-height: 154px;
+  scroll-snap-align: end;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-left: 6px solid var(--line);
+  border-top: 5px solid var(--line);
   border-radius: 14px;
-  padding: 10px 16px 14px;
+  padding: 13px 15px 14px;
 }
 
 .board-row-new {
-  border-color: rgba(74, 222, 128, 0.5);
-  border-left-color: var(--accent);
-  background: linear-gradient(180deg, #1c2a20, var(--panel));
+  border-color: rgba(74, 222, 128, 0.72);
+  border-top-color: var(--accent);
+  background: linear-gradient(180deg, #1b2d21, var(--panel));
+}
+
+.board-n {
+  display: inline-block;
+  margin-bottom: 5px;
+  color: var(--info);
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
 .board-q {
-  margin: 0;
-  color: var(--muted);
-  white-space: nowrap;
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 650;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: clamp(0.9rem, 1.6vw, 1.15rem);
-  padding-right: 90px;
 }
 
 .board-a {
-  margin: 2px 0 0;
-  font-weight: 800;
+  margin: 0;
   color: var(--accent);
-  line-height: 1.15;
+  font-size: clamp(1.45rem, 3.1vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1.08;
   overflow-wrap: anywhere;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -203,61 +286,10 @@ html, body {
 }
 
 .board-meta {
-  position: absolute;
-  top: 8px;
-  right: 12px;
+  display: block;
+  margin-top: 8px;
   color: var(--muted);
   font-size: 0.72rem;
-}
-
-/* tamaños decrecientes: la última respuesta domina, las anteriores siguen leyéndose */
-.board-row[data-pos="0"] .board-a { font-size: clamp(2.2rem, 6.5vw, 4.2rem); }
-.board-row[data-pos="1"] .board-a { font-size: clamp(1.6rem, 4.2vw, 2.6rem); opacity: 0.85; }
-.board-row[data-pos="2"] .board-a { font-size: clamp(1.35rem, 3.2vw, 2rem); opacity: 0.7; }
-.board-row[data-pos="3"] .board-a { font-size: clamp(1.15rem, 2.6vw, 1.7rem); opacity: 0.55; }
-
-/* ---------- repaso: todas las respuestas de la sesión ---------- */
-
-.section-title {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  margin: 14px 2px 6px;
-}
-
-.review-list {
-  list-style: none;
-  margin: 0;
-  padding: 0 2px 8px;
-  display: grid;
-  gap: 6px;
-  max-height: 38vh;
-  overflow-y: auto;
-}
-.review-list[hidden] { display: none; }
-.review-list li {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 8px 12px;
-}
-.review-q {
-  color: var(--muted);
-  font-size: 0.82rem;
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.review-a {
-  font-weight: 700;
-  color: var(--accent);
-  font-size: 0.95rem;
-  white-space: nowrap;
 }
 
 /* ---------- depuración ---------- */
@@ -336,32 +368,27 @@ html, body {
 }
 .btn-exit-present[hidden] { display: none; }
 
+body.present { overflow: hidden; }
+
 body.present .topbar,
 body.present .camera-panel,
-body.present .section-title,
-body.present .review-list,
 body.present .debug-drawer { display: none; }
 
 body.present .layout {
-  grid-template-columns: 1fr;
+  display: block;
   max-width: none;
+  height: 100vh;
+  height: 100dvh;
   padding: 0;
   margin: 0;
-  gap: 0;
 }
 
 body.present .answer-panel {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
-body.present .answer-board {
-  flex: 1;
-  align-content: center;
-  gap: 3.5vh;
-  padding: 8vh 5vw;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg);
 }
 
 body.present .board-empty {
@@ -369,13 +396,83 @@ body.present .board-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
 }
 
-body.present .board-q { font-size: clamp(1.1rem, 2.6vw, 1.9rem); padding-right: 140px; }
-body.present .board-meta { font-size: 1rem; top: 12px; right: 16px; }
+body.present .focus-answer {
+  flex: 1 1 auto;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 5vh 5vw 3vh;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 40%, #17281d 0%, var(--bg) 66%);
+}
 
-body.present .board-row[data-pos="0"] .board-a { font-size: clamp(3.2rem, 15vw, 9.5rem); }
-body.present .board-row[data-pos="1"] .board-a { font-size: clamp(1.9rem, 7vw, 4.2rem); }
-body.present .board-row[data-pos="2"] .board-a { font-size: clamp(1.5rem, 5vw, 3rem); }
-body.present .board-row[data-pos="3"] .board-a { font-size: clamp(1.2rem, 3.6vw, 2.2rem); }
+body.present .focus-question {
+  margin: 0 auto 1.5vh;
+  max-width: 1500px;
+  font-size: clamp(1.45rem, 2.6vw, 2.5rem);
+  line-height: 1.22;
+  color: #d8dde7;
+}
+
+body.present .focus-kicker {
+  font-size: clamp(0.9rem, 1.2vw, 1.25rem);
+  letter-spacing: 0.28em;
+}
+
+body.present .focus-value {
+  margin: 0.6vh auto;
+  max-width: 1650px;
+  font-size: clamp(4rem, 9vw, 9rem);
+  line-height: 0.98;
+}
+
+body.present .focus-meta {
+  font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+}
+
+body.present .timeline-shell {
+  flex: 0 0 31vh;
+  min-height: 250px;
+  margin: 0;
+  padding: 12px 22px 18px;
+  border-top: 1px solid var(--line);
+  background: #0b0d11;
+}
+
+body.present .timeline-header {
+  margin: 0 4px 9px;
+  font-size: clamp(0.85rem, 1vw, 1.05rem);
+}
+
+body.present .answer-board {
+  height: calc(31vh - 55px);
+  gap: 14px;
+  padding-bottom: 8px;
+}
+
+body.present .board-row {
+  flex-basis: clamp(300px, 23vw, 430px);
+  min-height: 0;
+  height: 100%;
+  padding: 14px 18px;
+}
+
+body.present .board-n { font-size: clamp(0.9rem, 1vw, 1.05rem); }
+body.present .board-q {
+  font-size: clamp(1.05rem, 1.35vw, 1.38rem);
+  -webkit-line-clamp: 3;
+}
+body.present .board-a {
+  font-size: clamp(2rem, 2.8vw, 3.2rem);
+  -webkit-line-clamp: 2;
+}
+body.present .board-meta { font-size: clamp(0.82rem, 0.9vw, 0.98rem); }
+
+@media (max-height: 720px) {
+  body.present .timeline-shell { flex-basis: 35vh; min-height: 220px; }
+  body.present .answer-board { height: calc(35vh - 52px); }
+  body.present .focus-value { font-size: clamp(3.4rem, 8vw, 6.5rem); }
+}
