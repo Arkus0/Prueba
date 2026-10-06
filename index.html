@@ -47,11 +47,22 @@
     </section>
 
     <section class="answer-panel">
-      <div id="answer-board" class="answer-board" aria-live="polite"></div>
-      <p id="board-empty" class="board-empty">Escaneando… las respuestas aparecerán aquí: la última en grande y las anteriores debajo.</p>
+      <p id="board-empty" class="board-empty">Escaneando… la primera respuesta aparecerá aquí.</p>
 
-      <h2 class="section-title">Repaso · <span id="review-count">0</span> respuestas</h2>
-      <ul id="review-list" class="review-list" hidden></ul>
+      <article id="focus-answer" class="focus-answer" hidden aria-live="polite">
+        <p id="focus-question" class="focus-question"></p>
+        <span class="focus-kicker">RESPUESTA IA</span>
+        <p id="focus-value" class="focus-value"></p>
+        <p id="focus-meta" class="focus-meta"></p>
+      </article>
+
+      <div class="timeline-shell">
+        <div class="timeline-header">
+          <span>PREGUNTAS DE LA SESIÓN</span>
+          <span><strong id="timeline-count">0</strong> respondidas · nuevas →</span>
+        </div>
+        <div id="answer-board" class="answer-board" aria-label="Historial cronológico de preguntas y respuestas"></div>
+      </div>
     </section>
   </main>
 
