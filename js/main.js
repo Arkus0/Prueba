@@ -4,6 +4,7 @@
 import { LogicEngine } from './logic.js';
 import { llmCall, loadSettings, saveSettings } from './llm.js';
 import { createOcrEngine, grabFrame } from './ocr.js';
+import { OcrGate } from './capture-gate.js';
 import * as ui from './ui.js';
 
 const $ = (id) => document.getElementById(id);
@@ -121,7 +122,7 @@ const DIFF_W = 64;
 const DIFF_H = 36;
 const diffCanvas = document.createElement('canvas');
 let prevLum = null;
-let lastOcrAt = 0;
+const ocrGate = new OcrGate();
 
 function clamp01(v) {
   return Math.max(0, Math.min(1, v));
@@ -161,11 +162,20 @@ function roiChanged() {
 async function loop() {
   if (!running) return;
   const t0 = performance.now();
-  const period = Number(loadSettings().ocrPeriodMs) || 2000;
+  const period = Number(loadSettings().ocrPeriodMs) || 1500;
+  const ready = !!(ocr && els.video.readyState >= 2);
+  const changed = ready ? roiChanged() : false;
+  const shouldOcr = ready && ocrGate.shouldRun({
+    changed,
+    now: t0,
+    periodMs: period,
+    hasOpenGroup: engine.hasOpenGroup(),
+  });
+
   let didOcr = false;
-  if (ocr && els.video.readyState >= 2 && t0 - lastOcrAt >= period * 0.9 && roiChanged()) {
-    lastOcrAt = t0;
+  if (shouldOcr) {
     didOcr = true;
+    ocrGate.markRun(t0);
     try {
       const canvas = grabFrame(els.video, crop, els.workCanvas);
       if (canvas) {
@@ -180,8 +190,11 @@ async function loop() {
       ui.logEvent(`OCR: ${e.message}`);
     }
   }
-  const wait = didOcr ? Math.max(300, period - (performance.now() - t0)) : 700;
-  setTimeout(loop, wait);
+
+  // En reposo solo hacemos la comparación visual barata. Cuando hay una pregunta
+  // abierta o estamos confirmando un cambio, volvemos pronto para conseguir las
+  // lecturas estables que exige LogicEngine.
+  setTimeout(loop, didOcr ? 350 : 700);
 }
 
 (async function initOcr() {
