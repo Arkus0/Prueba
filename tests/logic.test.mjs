@@ -319,6 +319,61 @@ test('una sola pregunta numerada no se parte en varias', async () => {
   assert.ok(calls[0].includes('B) París'));
 });
 
+test('pantalla real de campus: 4 preguntas numeradas, opciones sin letra y ruido de interfaz', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = [
+    'techtitute.com/campus- + 14',
+    '1. ¿Qué es la inferencia?',
+    '00:49:48',
+    'Seleccione la respuesta adecuada',
+    'A. Una falacia.',
+    'El proceso por el cual obtenemos conclusiones por medio de premisas',
+    'Una premisa que infiere algo sobre el sujeto de la misma',
+    'Un concepto.',
+    '2. ¿Qué término hace referencia a la siguiente definición?',
+    'Mediante esta inducción se establece una verdad en tanto al índice de probabilidad de ser que tenga frente a las demás',
+    'Seleccione la respuesta adecuada',
+    'Inferencia probabilística',
+    'Inferencia difusa',
+    'Inferencia trivaluada',
+    'Inferencia multivaluada',
+    '3. ¿Cuál de las siguientes es una de las conversiones u operaciones permitidas dentro de la lógica tradicional?',
+    'Seleccione la respuesta adecuada',
+    'El interposicionamiento lógico',
+    'La contrariedad lógica',
+    'La inversión lógica',
+    'La observancia lógica',
+    '4. ¿Cuántas conversiones permite la lógica tradicional?',
+    'Seleccione la respuesta adecuada',
+    '2',
+    '3',
+    '6',
+    '4',
+  ].join('\n');
+  engine.feed(pantalla, 0);
+  engine.feed(pantalla, 2000);
+  engine.feed(pantalla, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 4);
+  // pregunta 1: la única con letra real (A); el resto se sintetiza
+  assert.ok(calls[0].includes('A) Una falacia.'));
+  assert.ok(calls[0].includes('B) El proceso por el cual'));
+  assert.ok(calls[0].includes('D) Un concepto.'));
+  // sin ruido ni instrucciones en el payload
+  assert.ok(!calls.some(c => c.includes('techtitute') || c.includes('00:49:48') || c.includes('Seleccione')));
+  // pregunta 2: definición en el enunciado y 4 opciones sintetizadas
+  assert.ok(calls[1].includes('Mediante esta inducción'));
+  assert.ok(calls[1].includes('A) Inferencia probabilística'));
+  assert.ok(calls[1].includes('D) Inferencia multivaluada'));
+  // pregunta 3
+  assert.ok(calls[2].includes('C) La inversión lógica'));
+  // pregunta 4: opciones numéricas sueltas
+  assert.ok(calls[3].includes('A) 2'));
+  assert.ok(calls[3].includes('B) 3'));
+  assert.ok(calls[3].includes('C) 6'));
+  assert.ok(calls[3].includes('D) 4'));
+});
+
 test('con varias preguntas en pantalla, cada una se envía al estabilizarse y se revisa si crece', async () => {
   const { engine, calls, events } = makeEngine();
   const q1 = ['1. ¿Capital de Francia?', 'A) Roma', 'B) París', 'C) Berlín', 'D) Lisboa'].join('\n');

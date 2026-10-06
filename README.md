@@ -57,7 +57,11 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
 - **Varias preguntas a la vez**: si en pantalla hay 3, 4 o más preguntas apiladas
   (numeradas «1.», «2.» o simplemente seguidas), se separan, se rastrea cada una por
   separado y se consulta el modelo una vez por pregunta (en orden, hasta 8 en cola).
-  Las respuestas van apareciendo en la tarjeta y quedan en el historial.
+  Las respuestas van apareciendo en la tarjeta y quedan en el historial. En
+  pantallas de cuestionario con preguntas numeradas se analiza la estructura por
+  bloques: las líneas de instrucción («Seleccione la respuesta adecuada») separan
+  enunciado de opciones, las opciones **sin letra** reciben letras sintetizadas
+  (A, B, C…) y el ruido de interfaz (URLs del navegador, relojes) se descarta.
 - **Preguntas normales**: se responden directamente en 1-3 frases.
 - **Sin duplicados**: una pregunta que sigue en pantalla no se consulta dos veces.
   Si reaparece, se vuelve a mostrar la respuesta en caché.

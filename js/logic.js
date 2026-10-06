@@ -85,13 +85,14 @@ function normContains(hay, needle) {
 }
 
 // Limpia el OCR crudo: recorta espacios, tira líneas sin contenido alfanumérico y
-// une palabras cortadas por guion de fin de línea.
+// ruido de interfaz, y une palabras cortadas por guion de fin de línea.
 export function normalizeLines(rawText) {
   const out = [];
   for (let raw of String(rawText || '').split(/\r?\n/)) {
     const line = raw.replace(/[\u0000-\u001f]/g, ' ').replace(/\s+/g, ' ').trim();
     if (!line) continue;
     if (!/[a-zA-Z0-9ÁÉÍÓÚÜÑ¿?]/i.test(line)) continue;
+    if (isNoiseLine(line)) continue;
     const prev = out[out.length - 1];
     if (prev && /[a-záéíóúüñ]-$/.test(prev) && /^[a-záéíóúüñ]/.test(line)) {
       out[out.length - 1] = prev.slice(0, -1) + line;
@@ -153,16 +154,39 @@ function leadingNumber(text) {
   return m ? m[1] : null;
 }
 
+// Línea de instrucción típica de formularios ("Seleccione la respuesta adecuada").
+const INSTRUCTION_RE = /^(seleccione|selecciona|elige|elija|escoge|escribe|marca|responde|indica|choose|select)\b/i;
+function isInstructionLine(line) {
+  return INSTRUCTION_RE.test(String(line).trim());
+}
+
+// Ruido de interfaz: relojes, barras de navegador y dominios sueltos.
+function isNoiseLine(line) {
+  const t = String(line).trim();
+  if (/^\d{1,2}:\d{2}(:\d{2})?$/.test(t)) return true;
+  if (/[?¿]/.test(t) || t.length >= 60) return false;
+  if (/\b(https?:\/\/|www\.)\S+/i.test(t)) return true;
+  if (/^\S+\.(com|es|org|net|edu)\b/i.test(t)) return true;
+  return false;
+}
+
+// ¿La línea es el arranque numerado de una pregunta ("1. ¿...?")?
+function isNumberedQuestionStart(line) {
+  const m = String(line).match(NUMBERED_START);
+  return !!(m && isQuestionText(m[2]));
+}
+
 // ¿Esta línea arranca una pregunta nueva distinta de la que se está acumulando?
 // Solo cuenta si el bloque actual ya tiene opciones (si no, es la primera pregunta).
 function startsNewQuestion(line, currentHasOptions) {
   if (!currentHasOptions) return false;
-  const numbered = String(line).match(NUMBERED_START);
-  if (numbered && isQuestionText(numbered[2])) return true;
+  if (isNumberedQuestionStart(line)) return true;
   return isQuestionText(line) && normalizeForCompare(line).length >= 8;
 }
 
 function classifyLine(line) {
+  // un arranque numerado de pregunta nunca es una opción (evita p.ej. "4." → "A")
+  if (isNumberedQuestionStart(line)) return { line, kind: 'header', numbered: true };
   const strict = parseOptionLineStrict(line);
   if (strict) return { line, kind: 'option', opt: strict, strict: true };
   const loose = parseOptionLineLoose(line);
@@ -171,8 +195,28 @@ function classifyLine(line) {
 }
 
 // Parte un snapshot del OCR en bloques de pregunta: cabecera + opciones. Soporta
-// varias preguntas visibles a la vez (numeradas o simplemente apiladas).
+// varias preguntas visibles a la vez. Con varias preguntas numeradas usa análisis
+// por bloques que sintetiza letras para opciones que llegan sin ellas.
 export function segmentSnapshot(lines) {
+  const numberedAt = [];
+  lines.forEach((line, i) => {
+    if (isNumberedQuestionStart(line)) numberedAt.push(i);
+  });
+  if (numberedAt.length >= 2) {
+    const segments = [];
+    const pre = lines.slice(0, numberedAt[0]);
+    if (pre.length) segments.push(...legacySegment(pre));
+    for (let k = 0; k < numberedAt.length; k++) {
+      const end = k + 1 < numberedAt.length ? numberedAt[k + 1] : lines.length;
+      segments.push(parseNumberedBlock(lines.slice(numberedAt[k], end)));
+    }
+    return segments.filter((s) => s.header || s.options.length);
+  }
+  return legacySegment(lines);
+}
+
+// Segmentación por heurísticas de contenido (preguntas apiladas sin numerar).
+function legacySegment(lines) {
   const segments = [];
   let cur = [];
   const close = () => {
@@ -195,6 +239,53 @@ export function segmentSnapshot(lines) {
   }
   close();
   return segments.filter(Boolean).map(buildSegment).filter((s) => s.header || s.options.length);
+}
+
+// Analiza el bloque de una pregunta numerada: enunciado, línea de instrucción como
+// separador y zona de opciones donde las líneas sin letra reciben letras sintéticas
+// consecutivas a partir de la última letra real vista.
+function parseNumberedBlock(lines) {
+  const cls = lines.map(classifyLine);
+  // separador de la zona de opciones: última línea de instrucción o primera opción con letra
+  let cut = -1;
+  for (let i = 1; i < cls.length; i++) {
+    if (isInstructionLine(cls[i].line)) cut = i;
+  }
+  if (cut < 0) {
+    for (let i = 1; i < cls.length; i++) {
+      if (cls[i].kind === 'option') { cut = i; break; }
+    }
+  }
+  if (cut < 0) {
+    // sin separador: cola final de líneas cortas no interrogativas como opciones
+    let runStart = cls.length;
+    for (let i = cls.length - 1; i >= 1; i--) {
+      const l = cls[i].line;
+      if (isQuestionText(l) || l.length > 100 || isInstructionLine(l)) break;
+      runStart = i;
+    }
+    if (cls.length - runStart >= 2) cut = runStart;
+  }
+  const headerItems = cut >= 1 ? cls.slice(0, cut) : cls;
+  const optionItems = cut >= 1 ? cls.slice(cut) : [];
+
+  const headerLines = headerItems
+    .filter((i) => !isInstructionLine(i.line))
+    .map((i) => i.line);
+  const options = [];
+  let next = 0;
+  for (const it of optionItems) {
+    if (isInstructionLine(it.line)) continue;
+    if (it.kind === 'option') {
+      options.push({ letter: it.opt.letter, text: it.opt.text });
+      const idx = LETTERS.indexOf(it.opt.letter);
+      if (idx >= 0) next = Math.max(next, idx + 1);
+    } else if (next < LETTERS.length) {
+      options.push({ letter: LETTERS[next], text: it.line });
+      next++;
+    }
+  }
+  return { headerLines, header: headerLines.join(' '), options };
 }
 
 // Convierte las líneas clasificadas de un bloque en { headerLines, header, options },
