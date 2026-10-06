@@ -262,3 +262,87 @@ test('la cola acota las tareas pendientes y descarta las más antiguas', async (
   assert.ok(calls.length <= 4 && calls.length >= 2);
   assert.ok(events.some(e => e.name === 'dropped') || calls.length === 4);
 });
+
+// ---------------------------------------------------------------------------
+// Varias preguntas tipo test visibles a la vez
+// ---------------------------------------------------------------------------
+
+test('dos preguntas numeradas a la vez: se separan y se consulta una por una', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = [
+    '1. ¿Qué rama de la filosofía estudia el conocimiento?',
+    'A) La ética', 'B) La epistemología', 'C) La estética', 'D) La lógica',
+    '2. ¿Quién escribió la Crítica de la razón pura?',
+    'A) Hegel', 'B) Kant', 'C) Hume', 'D) Nietzsche',
+  ].join('\n');
+  engine.feed(pantalla, 0);
+  engine.feed(pantalla, 2000);
+  engine.feed(pantalla, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 2);
+  assert.ok(calls[0].includes('epistemología'));
+  assert.ok(calls[0].includes('1.'));
+  assert.ok(calls[1].includes('Kant'));
+  assert.ok(calls[1].includes('2.'));
+  assert.ok(!calls[1].includes('epistemología'));
+});
+
+test('tres preguntas apiladas sin numerar: tres consultas independientes', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = [
+    '¿Cuál es la capital de Australia?',
+    'A) Sídney', 'B) Melbourne', 'C) Canberra', 'D) Perth',
+    '¿Qué planeta está más cerca del Sol?',
+    'A) Venus', 'B) Marte', 'C) Mercurio', 'D) Tierra',
+    '¿Cuánto es 17 × 24?',
+    'A 388', 'B 408', 'C 418', 'D 428',
+  ].join('\n');
+  engine.feed(pantalla, 0);
+  engine.feed(pantalla, 2000);
+  engine.feed(pantalla, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 3);
+  assert.ok(calls.some(c => c.includes('Canberra')));
+  assert.ok(calls.some(c => c.includes('Mercurio')));
+  assert.ok(calls.some(c => c.includes('428')));
+});
+
+test('una sola pregunta numerada no se parte en varias', async () => {
+  const { engine, calls } = makeEngine();
+  const pantalla = '1. ¿Cuál es la capital de Francia?\nA) Roma\nB) París\nC) Berlín\nD) Lisboa';
+  engine.feed(pantalla, 0);
+  engine.feed(pantalla, 2000);
+  engine.feed(pantalla, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 1);
+  assert.ok(calls[0].startsWith('1.'));
+  assert.ok(calls[0].includes('B) París'));
+});
+
+test('con varias preguntas en pantalla, cada una se envía al estabilizarse y se revisa si crece', async () => {
+  const { engine, calls, events } = makeEngine();
+  const q1 = ['1. ¿Capital de Francia?', 'A) Roma', 'B) París', 'C) Berlín', 'D) Lisboa'].join('\n');
+  // la segunda solo tiene enunciado y dos opciones (A,B consecutivas = estable)
+  const media = q1 + '\n2. ¿Capital de Italia?\nA) Nápoles\nB) Roma';
+  engine.feed(media, 0);
+  engine.feed(media, 2000);
+  engine.feed(media, 4000);
+  await engine.idle();
+  assert.equal(calls.length, 2);
+  assert.ok(calls.some(c => c.includes('París')));
+  assert.ok(calls.some(c => c.includes('Nápoles')));
+
+  // se revelan las opciones restantes de la segunda: una revisión con las 4
+  const completa2 = q1 + '\n2. ¿Capital de Italia?\nA) Nápoles\nB) Roma\nC) Turín\nD) Milán';
+  engine.feed(completa2, 6000);
+  engine.feed(completa2, 8000);
+  engine.feed(completa2, 10000);
+  await engine.idle();
+  assert.equal(calls.length, 3);
+  assert.ok(calls[2].includes('Turín'));
+  const answers = events.filter(e => e.name === 'answer');
+  // la pregunta 1 re-detectada re-muestra su caché; la 2 genera la revisión
+  assert.equal(answers.length, 4);
+  assert.ok(answers.some(a => a.data.fromCache && a.data.item.header.includes('Francia')));
+  assert.ok(answers.some(a => a.data.revision && a.data.item.header.includes('Italia')));
+});

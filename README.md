@@ -54,14 +54,18 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
   enunciado en una sola pregunta (aunque aparezcan por fases en pantalla) y se envían
   juntas al modelo, que responde **solo con la opción elegida** (p. ej.
   `RESPUESTA: C) Mercurio`), sin explicación, para leerse de un vistazo.
+- **Varias preguntas a la vez**: si en pantalla hay 3, 4 o más preguntas apiladas
+  (numeradas «1.», «2.» o simplemente seguidas), se separan, se rastrea cada una por
+  separado y se consulta el modelo una vez por pregunta (en orden, hasta 8 en cola).
+  Las respuestas van apareciendo en la tarjeta y quedan en el historial.
 - **Preguntas normales**: se responden directamente en 1-3 frases.
 - **Sin duplicados**: una pregunta que sigue en pantalla no se consulta dos veces.
   Si reaparece, se vuelve a mostrar la respuesta en caché.
-- **Revisión**: si se envió una pregunta simple y después aparecen sus opciones, se
-  hace una única consulta de revisión con las opciones completas (se marca como
-  "actualizada con opciones").
+- **Revisión**: si se envió una pregunta y después aparecen más opciones (o la
+  pregunta simple gana opciones), se hace una única consulta de revisión con el
+  contenido completo (se marca como "actualizada con opciones").
 - **Cola pequeña**: si se acumulan preguntas, se procesan en orden con un máximo de
-  3 pendientes; las más antiguas se descartan (quedan registradas en el log).
+  8 pendientes; las más antiguas se descartan (quedan registradas en el log).
 - **Nueva sesión (↻)**: olvida las preguntas ya respondidas y el historial — úsalo
   al empezar otra presentación.
 - **☰** muestra el OCR crudo (con confianza) y el log de eventos, útil para ajustar
