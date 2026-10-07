@@ -50,7 +50,26 @@ export function loadSettings() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+
+    const saved = JSON.parse(raw);
+    // Migración de la configuración por defecto antigua. Evita que una instalación
+    // existente siga en gpt-4o-mini y, sobre todo, no reutiliza una clave OpenAI
+    // contra OpenRouter.
+    const isLegacyDefault =
+      saved.baseUrl === 'https://api.openai.com/v1' &&
+      saved.model === 'gpt-4o-mini';
+
+    if (isLegacyDefault) {
+      const migrated = {
+        ...DEFAULT_SETTINGS,
+        ocrPeriodMs: saved.ocrPeriodMs ?? DEFAULT_SETTINGS.ocrPeriodMs,
+        cameraId: saved.cameraId ?? DEFAULT_SETTINGS.cameraId,
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+      return migrated;
+    }
+
+    return { ...DEFAULT_SETTINGS, ...saved };
   } catch {
     return { ...DEFAULT_SETTINGS };
   }
