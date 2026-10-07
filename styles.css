@@ -334,7 +334,8 @@ html, body {
   color: var(--muted);
   margin-bottom: 12px;
 }
-.settings-dialog input {
+.settings-dialog input,
+.settings-dialog select {
   background: var(--bg);
   border: 1px solid var(--line);
   color: var(--text);
