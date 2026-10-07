@@ -83,15 +83,24 @@
       <h2>Ajustes</h2>
       <label>
         URL base de la API (OpenAI-compatible)
-        <input id="set-baseurl" name="baseUrl" type="url" placeholder="https://api.openai.com/v1" required>
+        <input id="set-baseurl" name="baseUrl" type="url" placeholder="https://openrouter.ai/api/v1" required>
       </label>
       <label>
         Modelo
-        <input id="set-model" name="model" type="text" placeholder="gpt-4o-mini" required>
+        <input id="set-model" name="model" type="text" placeholder="anthropic/claude-sonnet-5.5" required>
       </label>
       <label>
         Clave de API (se guarda solo en este dispositivo)
-        <input id="set-apikey" name="apiKey" type="password" placeholder="sk-…" autocomplete="off">
+        <input id="set-apikey" name="apiKey" type="password" placeholder="sk-or-v1-…" autocomplete="off">
+      </label>
+      <label>
+        Esfuerzo de razonamiento
+        <select id="set-reasoning" name="reasoningEffort">
+          <option value="low">Bajo — más rápido</option>
+          <option value="medium">Medio</option>
+          <option value="high">Alto — recomendado</option>
+          <option value="max">Máximo — más lento</option>
+        </select>
       </label>
       <label>
         Cámara
@@ -101,8 +110,8 @@
         Periodo de escaneo (ms)
         <input id="set-period" name="ocrPeriodMs" type="number" min="800" max="10000" step="100">
       </label>
-      <p class="settings-note">Funciona con cualquier endpoint compatible: OpenAI, Groq, OpenRouter,
-        Ollama local (<code>http://IP-DEL-PC:11434/v1</code>), etc.</p>
+      <p class="settings-note">Por defecto usa OpenRouter + Claude Sonnet 5.5 con razonamiento alto.
+        Puedes cambiar a cualquier endpoint OpenAI-compatible. El modo máximo aumenta latencia y coste.</p>
       <div class="dialog-actions">
         <button type="button" id="btn-settings-cancel" class="btn btn-ghost">Cancelar</button>
         <button type="submit" id="btn-settings-save" class="btn btn-primary">Guardar</button>
