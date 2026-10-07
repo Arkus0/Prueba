@@ -26,18 +26,21 @@ webcam del PC → zona seleccionable → OCR (Tesseract.js, spa+eng)
    la cámara. Si quieres usarla desde otro dispositivo de la WiFi, ejecuta
    `python servir.py --https` (certificado autofirmado; ver más abajo).
 
-2. **Configura el LLM**: toca **⚙ Ajustes** y rellena:
+2. **Configura el LLM**: la app viene preparada por defecto para **OpenRouter +
+   Claude Sonnet 5.5**:
 
-   | Campo | OpenAI | Groq | OpenRouter | Ollama (local, en este PC) |
-   |---|---|---|---|---|
-   | URL base | `https://api.openai.com/v1` | `https://api.groq.com/openai/v1` | `https://openrouter.ai/api/v1` | `http://localhost:11434/v1` |
-   | Modelo | `gpt-4o-mini` | `llama-3.1-8b-instant` | cualquiera del catálogo | el que tengas descargado |
-   | API key | tu clave | tu clave | tu clave | (vacío) |
+   - URL base: `https://openrouter.ai/api/v1`
+   - Modelo: `anthropic/claude-sonnet-5.5`
+   - Esfuerzo de razonamiento: **alto**
+   - Salida máxima: 1200 tokens (la respuesta final sigue siendo breve por prompt)
 
-   Para Ollama, arranca el servidor con `OLLAMA_ORIGINS=* ollama serve` para aceptar
-   peticiones desde el navegador. En **Cámara** elige la webcam concreta si hay varias
-   (tras cambiarla, recarga la página). La clave se guarda **solo en el navegador de
-   este PC**.
+   Solo tienes que introducir tu clave `sk-or-v1-...`. En Ajustes puedes cambiar el
+   esfuerzo a bajo/medio/máximo o usar cualquier otro endpoint OpenAI-compatible.
+   **Máximo** prioriza calidad sobre latencia; para una charla en directo recomendamos
+   **alto**. La clave se guarda solo en el navegador de este PC.
+
+   Para Ollama, arranca el servidor con `OLLAMA_ORIGINS=* ollama serve` si decides
+   cambiar a un modelo local. En **Cámara** elige la webcam concreta si hay varias.
 
 3. **Inicia**: pulsa *Iniciar cámara*, concede el permiso, apunta la webcam a la
    pantalla con las preguntas y ajusta el recuadro verde con el ratón para ceñirlo a
