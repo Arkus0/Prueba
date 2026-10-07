@@ -355,6 +355,7 @@ function openSettings() {
   $('set-baseurl').value = s.baseUrl;
   $('set-model').value = s.model;
   $('set-apikey').value = s.apiKey;
+  $('set-reasoning').value = s.reasoningEffort || 'high';
   $('set-period').value = s.ocrPeriodMs;
   refreshCameraList(s.cameraId);
   dialog.showModal();
@@ -369,9 +370,10 @@ $('settings-form').addEventListener('submit', (e) => {
     baseUrl: $('set-baseurl').value.trim(),
     model: $('set-model').value.trim(),
     apiKey: $('set-apikey').value.trim(),
+    reasoningEffort: $('set-reasoning').value || 'high',
     temperature: 0,
-    maxTokens: 400,
-    ocrPeriodMs: clamp(Number($('set-period').value) || 2000, 800, 10000),
+    maxTokens: 1200,
+    ocrPeriodMs: clamp(Number($('set-period').value) || 1500, 800, 10000),
     cameraId: $('set-camera').value || '',
   });
   dialog.close();
