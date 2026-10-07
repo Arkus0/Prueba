@@ -36,11 +36,12 @@ RESPUESTA: [letra] [texto de la opción]`;
 const STORAGE_KEY = 'ocrqa.settings';
 
 export const DEFAULT_SETTINGS = {
-  baseUrl: 'https://api.openai.com/v1',
-  model: 'gpt-4o-mini',
+  baseUrl: 'https://openrouter.ai/api/v1',
+  model: 'anthropic/claude-sonnet-5.5',
   apiKey: '',
+  reasoningEffort: 'high',
   temperature: 0,
-  maxTokens: 400,
+  maxTokens: 1200,
   ocrPeriodMs: 1500,
   cameraId: '',
 };
@@ -85,6 +86,7 @@ export async function llmCall(payload, { signal, settings } = {}) {
         model: s.model,
         temperature: s.temperature,
         max_tokens: s.maxTokens,
+        ...(s.reasoningEffort ? { reasoning: { effort: s.reasoningEffort } } : {}),
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: payload },
